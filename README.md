@@ -191,7 +191,7 @@ The `Site Navigation` global controls the website header and left documentation 
 
 Edit it from `/admin/globals/site-navigation`.
 
-The Storybook top-nav link is environment-aware. In development it points to `http://localhost:6006`. In production it uses `NEXT_PUBLIC_STORYBOOK_URL` if set; when that variable is unset, the link is hidden so visitors are never sent to an unreachable `localhost` address. This is resolved at render time (see `applyStorybookUrl` in `lib/site-navigation-data.ts`), so it overrides whatever URL is stored in the CMS.
+The Storybook top-nav link is environment-aware. In development it points to `http://localhost:6006`. In production it points to `/storybook/` (set via `NEXT_PUBLIC_STORYBOOK_URL`); when that variable is unset, the link is hidden so visitors are never sent to an unreachable `localhost` address. This is resolved at render time (see `applyStorybookUrl` in `lib/site-navigation-data.ts`), so it overrides whatever URL is stored in the CMS. See [Storybook hosting](#storybook-hosting-multi-zone) for how `/storybook/` is served.
 
 ## Deployment
 
@@ -206,7 +206,7 @@ The `apps/web` website is deployed to Vercel and backed by a Neon (Postgres) dat
 This is a pnpm + Turborepo monorepo, so three settings are required and must not be reverted:
 
 1. **Root Directory** is set to `apps/web` in the Vercel project so Vercel installs at the pnpm workspace root and builds the web app.
-2. **`turbo.json` `globalEnv`** lists every runtime variable (`DATABASE_URI`, `PAYLOAD_SECRET`, `PAYLOAD_SEED_*`, `PAYLOAD_ALLOWED_ORIGINS`, `NEXT_PUBLIC_STORYBOOK_URL`). Turbo strips environment variables from tasks unless they are declared here, which otherwise makes the Payload config throw at build time.
+2. **`turbo.json` `globalEnv`** lists every runtime variable (`DATABASE_URI`, `PAYLOAD_SECRET`, `PAYLOAD_SEED_*`, `PAYLOAD_ALLOWED_ORIGINS`, `NEXT_PUBLIC_STORYBOOK_URL`, `STORYBOOK_ORIGIN`). Turbo strips environment variables from tasks unless they are declared here, which otherwise makes the Payload config throw at build time.
 3. **`.vercelignore`** excludes `node_modules`, build caches, and the `apps/native-prototype/ios` and `android` folders (CocoaPods generates thousands of files) so CLI deploys stay under Vercel's file limit. All workspace `package.json` files are kept so `pnpm install --frozen-lockfile` succeeds.
 
 ### Production environment variables
@@ -220,7 +220,8 @@ Set these on the Vercel project (Production scope):
 | `PAYLOAD_SEED_ADMIN` | `false` in production (the database is already seeded). |
 | `PAYLOAD_SEED_CONTENT` | `false` in production. |
 | `PAYLOAD_ALLOWED_ORIGINS` | Must include the production origin (`https://brankas-library.vercel.app`) or `/admin` login fails the CSRF origin check. Add custom domains here too. |
-| `NEXT_PUBLIC_STORYBOOK_URL` | Optional. Hosted Storybook URL. When unset, the Storybook nav link points to `http://localhost:6006` in development and is hidden in production. |
+| `NEXT_PUBLIC_STORYBOOK_URL` | Set to `/storybook/` in production so the nav link targets the proxied Storybook. When unset, the link points to `http://localhost:6006` in development and is hidden in production. |
+| `STORYBOOK_ORIGIN` | Optional. Origin the `/storybook` rewrites proxy to. Defaults to `https://brankas-storybook.vercel.app`; override only if the Storybook project URL changes. |
 
 ### Database schema
 
@@ -231,6 +232,25 @@ Payload's Postgres adapter auto-pushes the schema only in development. The produ
 pnpm --filter @brankas/web dev
 # Visit http://localhost:3000 once to trigger schema push + seeding.
 ```
+
+### Storybook hosting (multi-zone)
+
+Storybook is hosted on the same domain at https://brankas-library.vercel.app/storybook using the Next.js multi-zone pattern. It is a **separate Vercel project** built from the same repository:
+
+- Project: `brankas-storybook`
+- Root Directory: `apps/storybook`
+- Build command: `turbo run build --filter=@brankas/storybook` (builds the workspace packages first, then Storybook)
+- Output directory: `storybook-static`
+- It deploys from the same GitHub repo, so pushes to `main` rebuild it too.
+
+The web app proxies it onto the main domain (see `apps/web/next.config.mjs` and `apps/web/src/middleware.ts`):
+
+- `next.config.mjs` rewrites `/storybook/` and `/storybook/:path*` to `STORYBOOK_ORIGIN`, and sets `skipTrailingSlashRedirect: true`.
+- `middleware.ts` redirects the bare `/storybook` to `/storybook/`.
+
+The trailing slash matters: Storybook's manager HTML references its assets with relative URLs, so the document must be served at `/storybook/` for them to resolve under the prefix. A `redirects()` rule in `next.config` cannot add the slash because Next matches `/storybook` against `/storybook/` as well, which loops — hence the middleware.
+
+To host Storybook on a plain subdomain instead, drop the rewrites/middleware and set `NEXT_PUBLIC_STORYBOOK_URL` to the Storybook project URL directly.
 
 ### Rotating secrets
 
