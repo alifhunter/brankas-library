@@ -39,6 +39,13 @@ export default async function ReleasePage({ params }: ReleasePageProps) {
           </div>
         </header>
 
+        {release.coverImage?.url ? (
+          <figure className="article-detail-hero">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img alt={release.coverImage.alt ?? release.title} src={release.coverImage.url} />
+          </figure>
+        ) : null}
+
         <section className="detail-card detail-card-wide release-article">
           <h2>{release.title}</h2>
           <RichText content={release.content} fallback={release.summary} />

@@ -1,8 +1,16 @@
 import configPromise from '@payload-config';
 import { getPayload } from 'payload';
 
+export type MediaImage = {
+  alt?: string | null;
+  height?: number | null;
+  url?: string | null;
+  width?: number | null;
+};
+
 export type ReleaseContent = {
   content: LexicalContent | null;
+  coverImage: MediaImage | null;
   dateLabel: string;
   slug: string;
   summary: string;
@@ -38,6 +46,7 @@ export type LexicalNode = {
 
 type PayloadRelease = {
   content?: LexicalContent | null;
+  coverImage?: MediaImage | string | null;
   releaseDate?: string | null;
   slug?: string | null;
   summary?: string | null;
@@ -51,7 +60,7 @@ export async function getPublishedReleases(): Promise<ReleaseContent[]> {
     const payload = await getPayload({ config: configPromise });
     const result = await payload.find({
       collection: 'releases',
-      depth: 0,
+      depth: 1,
       limit: 20,
       sort: '-releaseDate',
       where: {
@@ -72,7 +81,7 @@ export async function getRelease(slug: string): Promise<ReleaseContent | null> {
     const payload = await getPayload({ config: configPromise });
     const result = await payload.find({
       collection: 'releases',
-      depth: 0,
+      depth: 1,
       limit: 1,
       where: {
         and: [
@@ -103,12 +112,31 @@ function normalizeRelease(release: PayloadRelease): ReleaseContent {
 
   return {
     content: release.content ?? null,
+    coverImage: normalizeMedia(release.coverImage),
     dateLabel: formatReleaseDate(release.releaseDate),
     slug: release.slug ?? slugFromText(version),
     summary: release.summary ?? '',
     tags: release.tags?.map((tag) => tag.label ?? '').filter(Boolean) ?? [],
     title: release.title ?? version,
     version,
+  };
+}
+
+/**
+ * Relationship fields resolve to a media object when the query depth is >= 1,
+ * or to a bare ID string when the related doc is missing or depth is 0. Only
+ * keep usable image objects (those with a URL).
+ */
+export function normalizeMedia(value: MediaImage | string | null | undefined): MediaImage | null {
+  if (!value || typeof value === 'string' || !value.url) {
+    return null;
+  }
+
+  return {
+    alt: value.alt ?? null,
+    height: value.height ?? null,
+    url: value.url,
+    width: value.width ?? null,
   };
 }
 

@@ -72,6 +72,7 @@ const defaultSiteNavigation = {
         { label: 'Token reference', href: '/tokens' },
         { label: 'Pattern guidance', href: '/patterns' },
         { label: 'Playground', href: '/playground' },
+        { label: 'Articles', href: '/articles' },
         { label: 'Releases', href: '/change-log' },
       ],
     },
@@ -79,6 +80,7 @@ const defaultSiteNavigation = {
   topNav: [
     { label: 'Documentation', href: '/' },
     { label: 'Playground', href: '/playground' },
+    { label: 'Articles', href: '/articles' },
     { label: 'Storybook', href: seedStorybookUrl },
     { label: 'Changelog', href: '/change-log' },
   ],
@@ -96,6 +98,7 @@ export async function seedAdminUser(payload: Payload): Promise<void> {
   await seedHomePage(payload);
   await seedStandardWebsitePages(payload);
   await seedReleases(payload);
+  await seedArticles(payload);
   await seedComponentPages(payload);
   await seedFoundations(payload);
   await seedSiteNavigation(payload);
@@ -613,6 +616,56 @@ async function seedReleases(payload: Payload): Promise<void> {
           id: release.id,
           data: {
             slug: normalizeSeedSlug(release.version),
+          },
+        }),
+      ),
+  );
+}
+
+async function seedArticles(payload: Payload): Promise<void> {
+  const existingArticles = await payload.find({
+    collection: 'articles',
+    depth: 0,
+    limit: 100,
+  });
+  const existingSlugs = new Set(
+    existingArticles.docs.map((article) => normalizeSeedSlug(article.slug ?? article.title)),
+  );
+  const starterArticles = [
+    {
+      category: 'guideline' as const,
+      content:
+        'Brankas components and patterns are built to be composed. Start from the design tokens, reach for the closest existing pattern, and only drop to raw components when a layout genuinely has no precedent. This keeps product surfaces consistent and makes future theming changes propagate automatically.',
+      excerpt: 'How to compose Brankas tokens, components, and patterns without drifting from the system.',
+      publishedAt: '2026-05-01T00:00:00.000Z',
+      slug: 'composing-with-brankas',
+      title: 'Composing interfaces with Brankas',
+    },
+    {
+      category: 'announcement' as const,
+      content:
+        'The Brankas design system website is now live, backed by a self-hosted Payload CMS. Editorial content — guidelines, foundations, and release notes — is authored in the CMS while component previews stay package-backed from @brankas/react. Images embedded in rich text are uploaded to Vercel Blob.',
+      excerpt: 'The Brankas design system site and CMS are live, with package-backed previews and CMS-authored content.',
+      publishedAt: '2026-06-19T00:00:00.000Z',
+      slug: 'brankas-library-is-live',
+      title: 'Brankas Library is live',
+    },
+  ];
+
+  await Promise.all(
+    starterArticles
+      .filter((article) => !existingSlugs.has(article.slug))
+      .map((article) =>
+        payload.create({
+          collection: 'articles',
+          data: {
+            category: article.category,
+            content: createLexicalContent(article.content),
+            excerpt: article.excerpt,
+            publishedAt: article.publishedAt,
+            slug: article.slug,
+            status: 'published',
+            title: article.title,
           },
         }),
       ),

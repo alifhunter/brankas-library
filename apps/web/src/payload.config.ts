@@ -1,5 +1,6 @@
 import { postgresAdapter } from '@payloadcms/db-postgres';
 import { lexicalEditor } from '@payloadcms/richtext-lexical';
+import { vercelBlobStorage } from '@payloadcms/storage-vercel-blob';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { buildConfig } from 'payload';
@@ -96,6 +97,19 @@ export default buildConfig({
   onInit: async (payload) => {
     await seedAdminUser(payload);
   },
+  // Media uploads go to Vercel Blob in any environment where the token is set
+  // (Vercel deployments + local dev). Vercel's serverless filesystem is
+  // ephemeral and read-only, so local-disk uploads would not persist there.
+  // Without a token (e.g. CI without secrets) it falls back to local storage.
+  plugins: [
+    vercelBlobStorage({
+      enabled: Boolean(process.env.BLOB_READ_WRITE_TOKEN),
+      collections: {
+        [Media.slug]: true,
+      },
+      token: process.env.BLOB_READ_WRITE_TOKEN,
+    }),
+  ],
   secret: payloadSecret,
   sharp,
   typescript: {

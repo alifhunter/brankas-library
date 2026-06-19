@@ -130,6 +130,7 @@ export const defaultSiteNavigation: SiteNavigation = {
         { label: 'Token reference', href: '/tokens' },
         { label: 'Pattern guidance', href: '/patterns' },
         { label: 'Playground', href: '/playground' },
+        { label: 'Articles', href: '/articles' },
         { label: 'Releases', href: '/change-log' },
       ],
     },
@@ -137,6 +138,7 @@ export const defaultSiteNavigation: SiteNavigation = {
   topNav: [
     { label: 'Documentation', href: '/' },
     { label: 'Playground', href: '/playground' },
+    { label: 'Articles', href: '/articles' },
     { label: 'Storybook', href: 'http://localhost:6006' },
     { label: 'Changelog', href: '/change-log' },
   ],
