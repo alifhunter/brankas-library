@@ -258,7 +258,7 @@ Acceptance criteria:
 - [x] Website page content can drive the home page and generic `/{slug}` pages.
 - [x] Component page content can drive `/components/[slug]` pages while live previews stay package-backed.
 - [x] Navbar and sidebar menus can be managed from Payload.
-- [ ] Editorial content can be created in Payload against a running Postgres database.
+- [x] Editorial content can be created in Payload against a running Postgres database (Neon in production; `/admin` login verified).
 - [ ] Published articles render on the website.
 - [ ] Draft previews render before publishing.
 - [ ] CMS content can reference components and tokens without owning their API documentation.

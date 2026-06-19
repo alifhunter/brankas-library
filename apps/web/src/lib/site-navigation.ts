@@ -2,6 +2,7 @@ import configPromise from '@payload-config';
 import { getPayload } from 'payload';
 
 import {
+  applyStorybookUrl,
   defaultSiteNavigation,
   normalizeSiteNavigation,
   type PayloadSiteNavigation,
@@ -17,6 +18,6 @@ export async function getSiteNavigation(): Promise<SiteNavigation> {
 
     return normalizeSiteNavigation(navigation as PayloadSiteNavigation);
   } catch {
-    return defaultSiteNavigation;
+    return applyStorybookUrl(defaultSiteNavigation);
   }
 }

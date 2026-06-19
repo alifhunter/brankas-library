@@ -17,6 +17,49 @@ export type SiteNavigation = {
   }>;
 };
 
+/**
+ * Storybook runs on a separate host from the website.
+ *
+ * - In development it runs locally on port 6006.
+ * - In production set `NEXT_PUBLIC_STORYBOOK_URL` to the hosted Storybook URL.
+ *
+ * When no URL is configured in production we hide the Storybook link instead
+ * of pointing visitors at an unreachable `localhost` address. The site
+ * navigation is server-rendered, so this is resolved per environment at
+ * request/build time rather than baked into the seeded CMS data.
+ */
+const DEV_STORYBOOK_URL = 'http://localhost:6006';
+
+export function resolveStorybookUrl(): string | null {
+  const configured = process.env.NEXT_PUBLIC_STORYBOOK_URL?.trim();
+  if (configured) {
+    return configured;
+  }
+  if (process.env.NODE_ENV === 'production') {
+    return null;
+  }
+  return DEV_STORYBOOK_URL;
+}
+
+/**
+ * Rewrites (or removes) the "Storybook" top-nav entry based on the current
+ * environment, regardless of what URL is stored in the CMS. Applied to both
+ * CMS-backed and fallback navigation so the link is always environment-correct.
+ */
+export function applyStorybookUrl(navigation: SiteNavigation): SiteNavigation {
+  const url = resolveStorybookUrl();
+  const topNav = navigation.topNav
+    .map((item) => {
+      if (item.label !== 'Storybook') {
+        return item;
+      }
+      return url ? { ...item, href: url } : null;
+    })
+    .filter((item): item is SiteNavigation['topNav'][number] => item !== null);
+
+  return { ...navigation, topNav };
+}
+
 export const defaultSiteNavigation: SiteNavigation = {
   brand: {
     brandName: 'Brankas',
@@ -129,7 +172,7 @@ export function normalizeSiteNavigation(navigation: PayloadSiteNavigation): Site
       .filter((section) => section.title && section.items.length > 0) ??
     defaultSiteNavigation.sidebarSections;
 
-  return {
+  return applyStorybookUrl({
     brand: {
       brandName: navigation.brand?.brandName ?? defaultSiteNavigation.brand.brandName,
       homeHref: navigation.brand?.homeHref ?? defaultSiteNavigation.brand.homeHref,
@@ -138,7 +181,7 @@ export function normalizeSiteNavigation(navigation: PayloadSiteNavigation): Site
     sidebarSections:
       sidebarSections.length > 0 ? sidebarSections : defaultSiteNavigation.sidebarSections,
     topNav: topNav.length > 0 ? topNav : defaultSiteNavigation.topNav,
-  };
+  });
 }
 
 function normalizeItems(

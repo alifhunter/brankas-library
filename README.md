@@ -191,6 +191,68 @@ The `Site Navigation` global controls the website header and left documentation 
 
 Edit it from `/admin/globals/site-navigation`.
 
+The Storybook top-nav link is environment-aware. In development it points to `http://localhost:6006`. In production it uses `NEXT_PUBLIC_STORYBOOK_URL` if set; when that variable is unset, the link is hidden so visitors are never sent to an unreachable `localhost` address. This is resolved at render time (see `applyStorybookUrl` in `lib/site-navigation-data.ts`), so it overrides whatever URL is stored in the CMS.
+
+## Deployment
+
+The `apps/web` website is deployed to Vercel and backed by a Neon (Postgres) database.
+
+- Production: https://brankas-library.vercel.app
+- Repository: https://github.com/alifhunter/brankas-library
+- Pushes to `main` auto-deploy through the connected Vercel Git integration.
+
+### Vercel project configuration
+
+This is a pnpm + Turborepo monorepo, so three settings are required and must not be reverted:
+
+1. **Root Directory** is set to `apps/web` in the Vercel project so Vercel installs at the pnpm workspace root and builds the web app.
+2. **`turbo.json` `globalEnv`** lists every runtime variable (`DATABASE_URI`, `PAYLOAD_SECRET`, `PAYLOAD_SEED_*`, `PAYLOAD_ALLOWED_ORIGINS`, `NEXT_PUBLIC_STORYBOOK_URL`). Turbo strips environment variables from tasks unless they are declared here, which otherwise makes the Payload config throw at build time.
+3. **`.vercelignore`** excludes `node_modules`, build caches, and the `apps/native-prototype/ios` and `android` folders (CocoaPods generates thousands of files) so CLI deploys stay under Vercel's file limit. All workspace `package.json` files are kept so `pnpm install --frozen-lockfile` succeeds.
+
+### Production environment variables
+
+Set these on the Vercel project (Production scope):
+
+| Variable | Purpose |
+| --- | --- |
+| `DATABASE_URI` | Neon Postgres connection string (`...?sslmode=require`). |
+| `PAYLOAD_SECRET` | Signs Payload auth tokens. Use a long random value. |
+| `PAYLOAD_SEED_ADMIN` | `false` in production (the database is already seeded). |
+| `PAYLOAD_SEED_CONTENT` | `false` in production. |
+| `PAYLOAD_ALLOWED_ORIGINS` | Must include the production origin (`https://brankas-library.vercel.app`) or `/admin` login fails the CSRF origin check. Add custom domains here too. |
+| `NEXT_PUBLIC_STORYBOOK_URL` | Optional. Hosted Storybook URL. When unset, the Storybook nav link points to `http://localhost:6006` in development and is hidden in production. |
+
+### Database schema
+
+Payload's Postgres adapter auto-pushes the schema only in development. The production database schema was created by running the dev server once against the Neon database, which pushes the schema and seeds the admin user and starter content. To re-initialize a fresh database:
+
+```sh
+# Point apps/web/.env.local DATABASE_URI at the target database, then:
+pnpm --filter @brankas/web dev
+# Visit http://localhost:3000 once to trigger schema push + seeding.
+```
+
+### Rotating secrets
+
+Treat the `DATABASE_URI` password and `PAYLOAD_SECRET` as rotatable credentials.
+
+**Rotate `PAYLOAD_SECRET`:**
+
+1. Generate a strong value: `openssl rand -base64 32`.
+2. Update it on Vercel: `vercel env rm PAYLOAD_SECRET production` then `vercel env add PAYLOAD_SECRET production` (paste the new value). Also update `apps/web/.env.local` for local dev.
+3. Redeploy: `vercel deploy --prod` (or push to `main`).
+4. Existing admin sessions are invalidated by the change; log in again at `/admin`.
+
+**Rotate the Neon database password:**
+
+1. In the Neon console, reset the role password (or create a new role) to get a new connection string.
+2. Update `DATABASE_URI` on Vercel (`vercel env rm` / `vercel env add`, Production scope) and in `apps/web/.env.local`.
+3. Redeploy and confirm `/admin` login still works.
+
+After any rotation, verify production: load `https://brankas-library.vercel.app/` and sign in at `/admin`.
+
+> Note: never commit real secrets. `apps/web/.env.local` is gitignored; only `.env.example` (placeholder values) is tracked.
+
 ## Contributing
 
 When adding or changing library assets:

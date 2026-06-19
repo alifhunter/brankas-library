@@ -60,7 +60,9 @@ The repository now contains the Phase 1 monorepo scaffold, a working Phase 2 tok
 
 ## Active Phase
 
-Continue Phase 6 by validating Payload editing against a running Postgres database, then connect articles and releases to public website routes. Phase 5 visual review, Phase 4 pattern guidance, expanded component behavior tests, and visual screenshot review remain active hardening work.
+The `apps/web` site is now deployed to Vercel at https://brankas-library.vercel.app, backed by a Neon Postgres database, with the GitHub repository at https://github.com/alifhunter/brankas-library (pushes to `main` auto-deploy). Payload `/admin` login is verified working in production against Neon. See the Deployment section of `README.md` for project configuration, environment variables, and secret rotation.
+
+Continue Phase 6 by connecting articles and releases to public website routes. Phase 5 visual review, Phase 4 pattern guidance, expanded component behavior tests, and visual screenshot review remain active hardening work.
 
 ## In Progress
 
@@ -75,7 +77,7 @@ Continue Phase 6 by validating Payload editing against a running Postgres databa
 - [x] Connect Payload website page content to the main app.
 - [x] Connect Payload component page content to `/components/[slug]`.
 - [x] Connect Payload site navigation to the navbar and sidebar.
-- [ ] Validate Payload admin login against local Postgres.
+- [x] Validate Payload admin login against Postgres (verified in production against Neon).
 - [ ] Render published article and release content on the website.
 - [x] Defer token documentation metadata until preview/docs content needs it.
 
@@ -92,7 +94,8 @@ Continue Phase 6 by validating Payload editing against a running Postgres databa
 - [x] Start Phase 5 with package-backed live preview and playground home page.
 - [x] Continue Phase 5 with starter component, token, and pattern detail pages.
 - [x] Start Phase 6 with embedded Payload CMS configuration.
-- [ ] Start local Postgres and verify `/admin` login.
+- [x] Provision Postgres (Neon) and verify `/admin` login.
+- [x] Deploy `apps/web` to Vercel and connect GitHub for auto-deploy.
 - [ ] Add CMS-driven article and release pages.
 - [ ] Add `@brankas/react/mobile` entrypoint when mobile components begin.
 
@@ -120,6 +123,8 @@ Continue Phase 6 by validating Payload editing against a running Postgres databa
 | 2026-04-30 | Route website pages through CMS         | Site navigation owns navbar/sidebar links; website pages can choose sidebar/no-sidebar/custom layouts, including tokens/patterns. |
 | 2026-05-08 | Hardcoded Storybook URL in topnav       | The Storybook navbar link is hardcoded to `http://localhost:6006` in `lib/site-navigation-data.ts` and `payload/seedAdmin.ts`. Works while local Storybook dev is running but breaks once deployed. Swap the URL in both files (or edit `/admin/globals/site-navigation`) when a hosted Storybook exists. Could be moved to a `NEXT_PUBLIC_STORYBOOK_URL` env var later. |
 | 2026-05-13 | Add Phase 8 — Designer Prototyping      | Target workflow: Expo Snack + Claude Cowork + pre-made starter templates. Designers need only Expo Go on their phone — no local Node/Xcode/terminal. Requires publishing `@brankas/native`, `@brankas/icons-native`, and `@brankas/tokens` to a private npm scope (`@banksinarmas/*`) so Snack can install them. Master Snack + 5–8 forkable templates (Login, Onboarding, Dashboard, Transfer, Profile, QRIS scan, History, Settings). Higher-fidelity options layered on top: Expo demo app + EAS Update for navigation-heavy flows, or Vite + react-native-web deployed to Vercel for stakeholders who don't want Expo Go installed. |
+| 2026-06-19 | Deploy web app to Vercel + GitHub       | Pushed repo to private GitHub `alifhunter/brankas-library`; deployed `apps/web` to Vercel (https://brankas-library.vercel.app) backed by Neon Postgres. Monorepo deploy required Root Directory `apps/web`, env vars declared in `turbo.json` `globalEnv`, and a `.vercelignore` excluding native `ios`/`android` to stay under Vercel's file limit. Seeded Neon schema + admin via a one-time local dev run; prod seeding disabled. `/admin` login verified. Rotation guidance added to `README.md`. |
+| 2026-06-19 | Environment-aware Storybook nav link    | Resolved the 2026-05-08 hardcoded-localhost issue. `NEXT_PUBLIC_STORYBOOK_URL` now drives the Storybook top-nav link; `applyStorybookUrl` in `lib/site-navigation-data.ts` rewrites it at render time (overriding the CMS-stored value). Dev defaults to `http://localhost:6006`; production hides the link when the variable is unset. |
 
 ## Validation Checklist
 
@@ -134,7 +139,7 @@ Use this checklist when updating the library:
 - [ ] Mobile and desktop React components use explicit subpath exports.
 - [ ] Mobile and desktop React components share primitive and semantic tokens.
 - [ ] The website consumes library packages instead of duplicating styling.
-- [ ] Payload admin works against a running Postgres database.
+- [x] Payload admin works against a running Postgres database.
 - [ ] Payload REST and GraphQL routes respond in local development.
 - [ ] Home page edits in Payload appear on `/`.
 - [ ] Published `Website Pages` entries render at `/{slug}`.

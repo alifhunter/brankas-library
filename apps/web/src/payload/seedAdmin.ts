@@ -1,9 +1,13 @@
 import type { Payload } from 'payload';
 
 import { componentDocs, getMergedComponentDocs } from '../app/(frontend)/library-data';
+import { resolveStorybookUrl } from '../lib/site-navigation-data';
 
 const seedUsername = 'brankas';
 const seedPassword = 'brankas';
+// Seeded value; the navbar re-resolves this per environment at render time
+// (see applyStorybookUrl), so this only needs to be a sensible default.
+const seedStorybookUrl = resolveStorybookUrl() ?? 'http://localhost:6006';
 type SeedWebsitePage = {
   changelog?: {
     dateLabel: string;
@@ -75,7 +79,7 @@ const defaultSiteNavigation = {
   topNav: [
     { label: 'Documentation', href: '/' },
     { label: 'Playground', href: '/playground' },
-    { label: 'Storybook', href: 'http://localhost:6006' },
+    { label: 'Storybook', href: seedStorybookUrl },
     { label: 'Changelog', href: '/change-log' },
   ],
 };
@@ -652,7 +656,7 @@ async function seedSiteNavigation(payload: Payload): Promise<void> {
     }
     if (!topNav.some((item) => item.label === 'Storybook')) {
       const insertAt = topNav.findIndex((item) => item.label === 'Changelog');
-      const storybook = { href: 'http://localhost:6006', label: 'Storybook' };
+      const storybook = { href: seedStorybookUrl, label: 'Storybook' };
       if (insertAt >= 0) {
         topNav.splice(insertAt, 0, storybook);
       } else {
