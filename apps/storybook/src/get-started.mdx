@@ -1,0 +1,209 @@
+import { Meta } from '@storybook/addon-docs/blocks';
+
+<Meta title="Get Started" />
+
+<style>{`
+  .gs-page {
+    max-width: 880px;
+    margin: 0 auto;
+    padding: 32px 24px 64px;
+    font-family: 'Inter', system-ui, sans-serif;
+    color: #0f172a;
+  }
+  .gs-page h1 { font-size: 32px; line-height: 1.15; margin: 0 0 12px; letter-spacing: -0.02em; }
+  .gs-page h2 { font-size: 22px; margin: 40px 0 12px; letter-spacing: -0.01em; }
+  .gs-page h3 { font-size: 16px; margin: 24px 0 8px; }
+  .gs-page p { line-height: 1.6; color: #334155; margin: 0 0 12px; }
+  .gs-page code { background: #f1f5f9; color: #0f172a; padding: 2px 6px; border-radius: 4px; font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 13px; }
+  .gs-page pre { background: #0f172a !important; color: #e2e8f0 !important; padding: 16px !important; border-radius: 8px !important; overflow: auto; line-height: 1.5; font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 13px; }
+  .gs-page pre code { background: transparent; color: inherit; padding: 0; font-size: 13px; }
+  .gs-eyebrow {
+    display: inline-block;
+    background: rgba(28, 119, 195, 0.1);
+    color: #1c77c3;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    padding: 4px 10px;
+    border-radius: 999px;
+    margin-bottom: 12px;
+  }
+  .gs-tabs {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin: 12px 0 20px;
+  }
+  .gs-tab {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    padding: 16px 20px;
+  }
+  .gs-tab strong { display: block; font-size: 14px; margin-bottom: 4px; }
+  .gs-tab p { font-size: 13px; margin: 0; }
+  .gs-list { padding-left: 18px; color: #334155; line-height: 1.7; }
+  .gs-callout {
+    background: #f6f9fe;
+    border-left: 4px solid #1c77c3;
+    padding: 12px 16px;
+    border-radius: 0 8px 8px 0;
+    font-size: 14px;
+    color: #082238;
+    margin: 16px 0;
+  }
+`}</style>
+
+<div className="gs-page">
+
+  <span className="gs-eyebrow">Get Started</span>
+  <h1>Install and use the design system in your app.</h1>
+  <p>
+    Choose your runtime, install the packages, wire up tokens, and import a component. Both web
+    and native consume the same <code>@brankas/tokens</code> source of truth — colors, spacing,
+    typography, and shadows stay aligned across platforms.
+  </p>
+
+  <div className="gs-tabs">
+    <div className="gs-tab">
+      <strong>Web (React)</strong>
+      <p>
+        Use <code>@brankas/react</code> in Next.js, Vite, Remix, or any React app. CSS variables
+        drive theming; no bundler-specific config required.
+      </p>
+    </div>
+    <div className="gs-tab">
+      <strong>Mobile (React Native)</strong>
+      <p>
+        Use <code>@brankas/native</code> in any React Native app (bare or Expo). Tokens compile to
+        plain JS objects consumed by <code>StyleSheet.create</code>.
+      </p>
+    </div>
+  </div>
+
+  <h2>Web — React</h2>
+
+  <h3>1. Install</h3>
+
+  <pre>{`pnpm add @brankas/react @brankas/tokens`}</pre>
+
+  <p>Peer dependencies you likely already have:</p>
+
+  <ul className="gs-list">
+    <li><code>react</code> ≥ 19</li>
+    <li><code>react-dom</code> ≥ 19</li>
+  </ul>
+
+  <h3>2. Import tokens once at the app entry</h3>
+
+  <pre>{`// app/layout.tsx (Next.js) or main.tsx (Vite)
+import '@brankas/tokens/tokens.css';`}</pre>
+
+  <p>
+    This injects every CSS variable (<code>{'--brankas-color-*'}</code>,{' '}
+    <code>{'--brankas-spacing-*'}</code>, <code>{'--brankas-typography-*'}</code>) at{' '}
+    <code>:root</code>. Everything downstream reads from these — change one variable and the
+    whole system shifts.
+  </p>
+
+  <h3>3. Use components</h3>
+
+  <pre>{`import { Button, Toaster, toast } from '@brankas/react/desktop';
+
+export default function Page() {
+  return (
+    <>
+      <Toaster position="top-right" />
+      <Button
+        variant="primary"
+        onClick={() => toast.success('Saved')}
+      >
+        Save changes
+      </Button>
+    </>
+  );
+}`}</pre>
+
+  <div className="gs-callout">
+    <strong>Tree-shaking note.</strong> Import from <code>@brankas/react/desktop</code> (or
+    <code>/shared</code>) rather than the package root so bundlers only pull what you use.
+  </div>
+
+  <h2>Mobile — React Native</h2>
+
+  <h3>1. Install</h3>
+
+  <pre>{`pnpm add @brankas/native @brankas/tokens react-native-svg`}</pre>
+
+  <p>Peer dependencies:</p>
+
+  <ul className="gs-list">
+    <li><code>react</code> ≥ 19</li>
+    <li><code>react-native</code> ≥ 0.80 (New Architecture / Fabric recommended)</li>
+    <li><code>react-native-svg</code> ≥ 15</li>
+  </ul>
+
+  <h3>2. Use the theme directly — no CSS bundle</h3>
+
+  <p>
+    Tokens compile to plain JavaScript. The <code>@brankas/native</code> package re-exports them
+    pre-shaped for React Native (hex colors, numeric spacing, RN shadow objects):
+  </p>
+
+  <pre>{`import { color, spacing, radius, typography, shadow } from '@brankas/native';
+
+const styles = StyleSheet.create({
+  card: {
+    backgroundColor: color.background.default,
+    padding: spacing[16],
+    borderRadius: radius[12],
+    ...shadow.mobile.selection, // shadowColor/Offset/Opacity/Radius + elevation
+  },
+});`}</pre>
+
+  <h3>3. Use components</h3>
+
+  <pre>{`import { Button } from '@brankas/native';
+
+export function PaywallScreen() {
+  return (
+    <Button
+      variant="primary"
+      onPress={() => navigate('Checkout')}
+    >
+      Continue
+    </Button>
+  );
+}`}</pre>
+
+  <div className="gs-callout">
+    <strong>Variants.</strong> The native Button ships seven variants: <code>primary</code>,{' '}
+    <code>secondary</code>, <code>tertiary</code>, <code>tertiaryInvert</code>,{' '}
+    <code>tertiaryBlue</code>, <code>tertiaryRed</code>, and <code>glassmorphism</code>. See{' '}
+    <strong>Mobile UI → Button</strong> for the full matrix.
+  </div>
+
+  <h2>What if I need to extend tokens?</h2>
+
+  <p>
+    Tokens are defined in <code>packages/tokens/source/</code> using the W3C Design Tokens Format
+    (<code>*.tokens.json</code>). The build script generates the TS exports, CSS variables, and
+    the docs you're reading now.
+  </p>
+
+  <p>
+    If a value doesn't exist in <code>@brankas/tokens</code>, propose it in a tokens PR rather
+    than hard-coding the literal in your component. See <strong>Contribute</strong> for the
+    workflow.
+  </p>
+
+  <h2>Where to go next</h2>
+
+  <ul className="gs-list">
+    <li>Browse <strong>Foundations</strong> to see every token group rendered as a swatch / sample.</li>
+    <li>Browse <strong>Desktop UI</strong> or <strong>Mobile UI</strong> for component APIs and live controls.</li>
+    <li>Read <strong>Contribute</strong> for how to add a component, file a bug, or propose a token change.</li>
+  </ul>
+
+</div>

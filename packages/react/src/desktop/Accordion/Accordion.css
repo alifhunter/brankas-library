@@ -1,0 +1,180 @@
+.ui-accordion {
+  width: min(100%, 767px);
+  display: grid;
+  gap: 0;
+  padding: var(--space-5);
+  border: 1px solid var(--color-border-subtle);
+  border-radius: var(--radius-sm);
+  background: var(--color-background-default);
+}
+
+.ui-accordion--open {
+  gap: var(--space-4);
+}
+
+.ui-accordion--hover {
+  box-shadow: var(--shadow-soft);
+}
+
+.ui-accordion__header {
+  min-height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+}
+
+.ui-accordion__trigger {
+  flex: 1 1 auto;
+  min-width: 0;
+  border: 0;
+  background: transparent;
+  padding: 0;
+  margin: 0;
+  cursor: pointer;
+  text-align: left;
+}
+
+.ui-accordion__trigger:focus-visible {
+  outline: 2px solid var(--color-blue-b100);
+  outline-offset: 2px;
+  border-radius: var(--radius-xs);
+}
+
+.ui-accordion__left {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.ui-accordion__leading-icon {
+  width: 24px;
+  height: 24px;
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-icon-subtlest);
+}
+
+.ui-accordion__leading-mark {
+  font-size: 16px;
+  line-height: 1;
+}
+
+.ui-accordion__title {
+  margin: 0;
+  color: var(--color-text-default);
+  font-family: var(--brankas-typography-desktop-body-md-semibold-font-family);
+  font-size: var(--brankas-typography-desktop-body-md-semibold-font-size);
+  font-weight: var(--brankas-typography-desktop-body-md-semibold-font-weight);
+  line-height: var(--brankas-typography-desktop-body-md-semibold-line-height);
+  letter-spacing: var(--brankas-typography-desktop-body-md-semibold-letter-spacing);
+}
+
+.ui-accordion__right {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: var(--space-3);
+  flex-shrink: 0;
+}
+
+.ui-accordion__action {
+  min-width: 102px;
+}
+
+.ui-accordion__chevron-shell {
+  width: 28px;
+  height: 28px;
+  flex-shrink: 0;
+  padding: var(--space-1);
+  border: 0;
+  border-radius: var(--radius-pill);
+  background: var(--color-background-default);
+  color: var(--color-icon-default);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: var(--shadow-soft);
+}
+
+.ui-accordion__chevron-shell:hover {
+  background: var(--color-background-subtlest);
+}
+
+.ui-accordion__chevron-shell:focus-visible {
+  outline: 2px solid var(--color-blue-b100);
+  outline-offset: 2px;
+}
+
+.ui-accordion__chevron {
+  width: 20px;
+  height: 20px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.6;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  transition: transform 120ms ease;
+}
+
+.ui-accordion__chevron--open {
+  transform: rotate(180deg);
+}
+
+.ui-accordion__content {
+  width: 100%;
+}
+
+.ui-accordion__placeholder {
+  width: 100%;
+  padding: var(--space-4) var(--space-3);
+  border: 2px dashed var(--color-border-information);
+  border-radius: var(--radius-md);
+  background: var(--color-background-cool);
+  text-align: center;
+  display: grid;
+  gap: 2px;
+}
+
+.ui-accordion__placeholder-title {
+  margin: 0;
+  color: var(--color-text-information);
+  font-family: var(--brankas-typography-desktop-body-sm-semibold-font-family);
+  font-size: var(--brankas-typography-desktop-body-sm-semibold-font-size);
+  font-weight: var(--brankas-typography-desktop-body-sm-semibold-font-weight);
+  line-height: var(--brankas-typography-desktop-body-sm-semibold-line-height);
+  letter-spacing: var(--brankas-typography-desktop-body-sm-semibold-letter-spacing);
+}
+
+.ui-accordion__placeholder-subtitle {
+  margin: 0;
+  color: var(--color-text-information);
+  font-family: var(--brankas-typography-desktop-body-sm-regular-font-family);
+  font-size: var(--brankas-typography-desktop-body-sm-regular-font-size);
+  font-weight: var(--brankas-typography-desktop-body-sm-regular-font-weight);
+  line-height: var(--brankas-typography-desktop-body-sm-regular-line-height);
+  letter-spacing: var(--brankas-typography-desktop-body-sm-regular-letter-spacing);
+}
+
+@media (max-width: 768px) {
+  .ui-accordion {
+    padding: var(--space-4);
+  }
+
+  .ui-accordion__header {
+    flex-wrap: wrap;
+  }
+
+  .ui-accordion__right {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .ui-accordion__action {
+    min-width: 0;
+  }
+}

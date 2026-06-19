@@ -1,0 +1,35 @@
+.ui-loader {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  /* Inherits color from var on the element, which the SVG strokes via currentColor */
+}
+
+.ui-loader__svg {
+  display: block;
+  animation: ui-loader-spin 900ms linear infinite;
+}
+
+@keyframes ui-loader-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ui-loader__svg {
+    animation-duration: 4s;
+  }
+}
+
+.ui-loader__sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}

@@ -1,0 +1,53 @@
+{
+  "name": "@brankas/native",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    },
+    "./theme": {
+      "types": "./dist/theme/index.d.ts",
+      "default": "./dist/theme/index.js"
+    }
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "dev": "tsc -p tsconfig.json --watch",
+    "lint": "eslint src",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "test": "jest",
+    "clean": "rm -rf dist"
+  },
+  "peerDependencies": {
+    "react": ">=19.0.0",
+    "react-native": ">=0.80.0",
+    "react-native-gesture-handler": ">=2.17.0",
+    "react-native-reanimated": ">=3.10.0",
+    "react-native-safe-area-context": ">=4.10.0",
+    "react-native-svg": ">=15.0.0"
+  },
+  "dependencies": {
+    "@brankas/tokens": "workspace:*"
+  },
+  "devDependencies": {
+    "@react-native/babel-preset": "0.85.3",
+    "@react-native/jest-preset": "0.85.3",
+    "@testing-library/react-native": "^13.3.3",
+    "@types/jest": "^29.5.14",
+    "@types/react": "^19.2.2",
+    "babel-jest": "^29.7.0",
+    "jest": "^29.7.0",
+    "react": "19.2.0",
+    "react-native": "0.85.3",
+    "react-native-gesture-handler": "^2.27.1",
+    "react-native-reanimated": "^4.0.2",
+    "react-native-safe-area-context": "^5.4.0",
+    "react-native-svg": "^15.11.2",
+    "react-test-renderer": "19.2.0"
+  }
+}

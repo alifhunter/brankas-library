@@ -1,0 +1,83 @@
+.ui-dropdown {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  background: var(--color-background-default);
+  border: 1px solid var(--color-border-subtle);
+  border-radius: var(--radius-xs);
+  box-shadow: 10px 10px 30px rgb(174 174 192 / 25%);
+  overflow-y: auto;
+  font-family: var(--brankas-typography-desktop-body-md-regular-font-family);
+}
+
+.ui-dropdown__list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Item */
+.ui-dropdown__item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0 8px;
+  padding: 12px 6px;
+  border-radius: var(--radius-xs);
+  color: var(--color-text-default);
+  font-family: var(--brankas-typography-desktop-body-md-regular-font-family);
+  font-size: var(--brankas-typography-desktop-body-md-regular-font-size);
+  font-weight: var(--brankas-typography-desktop-body-md-regular-font-weight);
+  line-height: 1.4;
+  letter-spacing: -0.01em;
+  cursor: pointer;
+  transition: background-color 120ms ease;
+}
+
+.ui-dropdown__item:hover {
+  background: var(--color-background-subtlest);
+}
+
+.ui-dropdown__item:focus-visible {
+  outline: 2px solid var(--color-blue-b100);
+  outline-offset: -2px;
+}
+
+.ui-dropdown__item--danger {
+  color: var(--color-text-error);
+}
+
+.ui-dropdown__item--disabled {
+  color: var(--color-text-gray);
+  cursor: not-allowed;
+}
+
+.ui-dropdown__item--disabled:hover {
+  background: transparent;
+}
+
+.ui-dropdown__item-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+  color: currentColor;
+}
+
+.ui-dropdown__item-icon--trailing {
+  margin-left: auto;
+}
+
+.ui-dropdown__item-label {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}

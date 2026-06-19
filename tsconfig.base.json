@@ -1,0 +1,29 @@
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "lib": ["ES2022", "DOM", "DOM.Iterable"],
+    "module": "ESNext",
+    "moduleResolution": "Bundler",
+    "jsx": "react-jsx",
+    "strict": true,
+    "noEmit": true,
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "forceConsistentCasingInFileNames": true,
+    "noUncheckedIndexedAccess": true,
+    "exactOptionalPropertyTypes": true,
+    "baseUrl": ".",
+    "paths": {
+      "@brankas/tokens": ["packages/tokens/src/index.ts"],
+      "@brankas/react": ["packages/react/src/index.ts"],
+      "@brankas/native": ["packages/native/src/index.ts"],
+      "@brankas/native/theme": ["packages/native/src/theme/index.ts"],
+      "@brankas/icons-native": ["packages/icons-native/src/index.ts"],
+      "@brankas/patterns": ["packages/patterns/src/index.ts"],
+      "@brankas/config/*": ["packages/config/*"]
+    }
+  }
+}

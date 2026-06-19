@@ -1,0 +1,154 @@
+# Brankas Library Checkpoint
+
+## Current Status
+
+Project direction has been clarified. Brankas Library will be a React/Next-first design system with importable tokens, components, and patterns; a live preview and playground website; and a self-hosted Payload CMS for articles and editorial content.
+
+The repository now contains the Phase 1 monorepo scaffold, a working Phase 2 token generation pipeline, an expanded Phase 3 desktop React component set, initial Phase 4 desktop product patterns, an expanded Phase 5 live preview/playground website with starter detail pages, and the Phase 6 Payload CMS foundation inside the web app.
+
+## Completed
+
+- [x] Created root-level README, plan, and checkpoint documentation.
+- [x] Defined the project as a reusable design library for other teams to import and use.
+- [x] Chose React/Next-first as the primary consumer target.
+- [x] Chose Payload CMS self-hosted for articles and editorial content.
+- [x] Decided that the design library comes before the website.
+- [x] Decided that Tailwind is not required for token authoring or styling.
+- [x] Decided that canonical token files will be user-provided DTCG-style JSON.
+- [x] Decided that token files will be split by layer: primitives, semantic, and components.
+- [x] Decided to differentiate mobile and desktop React components while sharing the same tokens.
+- [x] Created pnpm workspace and Turborepo configuration.
+- [x] Created `apps/web` and `apps/storybook`.
+- [x] Created `packages/tokens`, `packages/react`, `packages/patterns`, and `packages/config`.
+- [x] Installed workspace dependencies and generated `pnpm-lock.yaml`.
+- [x] Added token generation script for DTCG-style JSON files.
+- [x] Moved authored primitive and semantic token JSON files to `packages/tokens/source`.
+- [x] Generated CSS variables from token sources.
+- [x] Generated TypeScript token exports from token sources.
+- [x] Validated token aliases during generation.
+- [x] Added `@brankas/react/desktop` and `@brankas/react/shared` exports.
+- [x] Implemented first desktop Accordion, Avatar, Badge, Breadcrumbs, and Button components.
+- [x] Implemented desktop Banner, Carousel, Checkbox, Chips selection, Coachmark, Dialog, Date picker, Empty states, File upload, Label / Status, Loader, Overlay, Pagination, Progress bar, Progress indicator, Toggle, and Radio button components.
+- [x] Reworked the second desktop component batch from Figma context instead of keeping the original generic scaffold.
+- [x] Implemented desktop Search, Search result panel, Sidebar, Sidebar menu, Dropdown, Select, Skeleton, Tabs, Table cell, Text field, Text area, Toast, and Tooltip from provided Figma node context.
+- [x] Added Storybook examples for the implemented desktop components.
+- [x] Added React component test runner and initial behavior/key-state coverage for desktop components.
+- [x] Added `@brankas/patterns/desktop` entrypoint.
+- [x] Implemented starter desktop Page header, Filter toolbar, Form section, Empty list state, and Detail panel patterns.
+- [x] Added Storybook examples for starter desktop patterns.
+- [x] Built first Next.js home preview for tokens, desktop components, desktop patterns, and playground controls.
+- [x] Imported token CSS variables into the website from `@brankas/tokens/tokens.css`.
+- [x] Confirmed the website consumes `@brankas/react/desktop` and `@brankas/patterns/desktop`.
+- [x] Added starter component detail pages at `/components/[slug]`.
+- [x] Added starter token reference page at `/tokens`.
+- [x] Added starter pattern guidance page at `/patterns`.
+- [x] Installed Payload CMS dependencies in `apps/web`.
+- [x] Added Payload config with Postgres, Lexical rich text, and media support.
+- [x] Added Payload collections for users, media, articles, and releases.
+- [x] Added Payload `Website Pages` collection for editable site pages.
+- [x] Added Payload `Component Pages` collection for editable component detail pages.
+- [x] Added Payload `Site Navigation` global for editable navbar and sidebar menus.
+- [x] Added Payload admin route at `/admin`.
+- [x] Added Payload REST, GraphQL, and GraphQL playground routes.
+- [x] Added local admin seed credentials for username `brankas` and password `brankas`.
+- [x] Connected the home page to Payload content with code fallback when the database is unavailable.
+- [x] Added generic CMS-backed `/{slug}` website page rendering.
+- [x] Connected component detail pages to Payload content with code fallback when the database is unavailable.
+- [x] Connected website navbar and sidebar to Payload with code fallback when the database is unavailable.
+- [x] Added CMS layout selection for website pages.
+- [x] Made `/tokens`, `/patterns`, and `/change-log` CMS-backed website pages while keeping package-backed previews.
+
+## Active Phase
+
+Continue Phase 6 by validating Payload editing against a running Postgres database, then connect articles and releases to public website routes. Phase 5 visual review, Phase 4 pattern guidance, expanded component behavior tests, and visual screenshot review remain active hardening work.
+
+## In Progress
+
+- [x] Add initial component behavior tests.
+- [ ] Expand component behavior tests across the full desktop component set.
+- [ ] Add visual regression or screenshot comparison for Figma parity.
+- [ ] Add component-level token source files when component-specific token overrides are needed.
+- [ ] Expand pattern guidance with usage rules and anti-patterns.
+- [x] Add first dedicated website pages for component, token, and pattern details.
+- [ ] Add deeper playground controls for themes and viewport sizes.
+- [x] Configure Payload CMS inside `apps/web`.
+- [x] Connect Payload website page content to the main app.
+- [x] Connect Payload component page content to `/components/[slug]`.
+- [x] Connect Payload site navigation to the navbar and sidebar.
+- [ ] Validate Payload admin login against local Postgres.
+- [ ] Render published article and release content on the website.
+- [x] Defer token documentation metadata until preview/docs content needs it.
+
+## Next
+
+- [x] Add token source folders for primitives, semantic tokens, and component tokens.
+- [x] Add user-provided token JSON files.
+- [x] Build token generation outputs for CSS variables and TypeScript exports.
+- [x] Implement the first React components using generated token outputs.
+- [x] Add Storybook examples for the first components.
+- [x] Expand desktop coverage with the second component batch.
+- [x] Add Search after source link and expected behavior are provided.
+- [x] Start Phase 4 with starter desktop product patterns.
+- [x] Start Phase 5 with package-backed live preview and playground home page.
+- [x] Continue Phase 5 with starter component, token, and pattern detail pages.
+- [x] Start Phase 6 with embedded Payload CMS configuration.
+- [ ] Start local Postgres and verify `/admin` login.
+- [ ] Add CMS-driven article and release pages.
+- [ ] Add `@brankas/react/mobile` entrypoint when mobile components begin.
+
+## Decision Log
+
+| Date       | Decision                                | Notes                                                                                                                             |
+| ---------- | --------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------- |
+| 2026-04-29 | Initialize documentation                | Start with root-level markdown files for a design/library asset project.                                                          |
+| 2026-04-29 | Use React/Next-first direction          | Prioritize React components and a Next.js preview/playground website.                                                             |
+| 2026-04-29 | Use Payload CMS self-hosted             | CMS will support articles, releases, and editorial guidance.                                                                      |
+| 2026-04-29 | Build design library first              | The website must consume library tokens and components, not define separate styling.                                              |
+| 2026-04-29 | Avoid Tailwind requirement              | Token authoring and styling should not depend on Tailwind.                                                                        |
+| 2026-04-29 | Use DTCG-style JSON tokens              | User will provide canonical token files.                                                                                          |
+| 2026-04-29 | Split tokens by layer                   | Use separate primitive, semantic, and component token files.                                                                      |
+| 2026-04-29 | Split mobile and desktop UI             | Use explicit React subpath exports while sharing primitive and semantic tokens.                                                   |
+| 2026-04-29 | Start Phase 3 with desktop UI           | Implement Accordion, Avatar, Badge, Breadcrumbs, and Button first.                                                                |
+| 2026-04-29 | Continue desktop batch                  | Add remaining provided desktop components; keep Search pending until details exist.                                               |
+| 2026-04-29 | Correct desktop batch from Figma        | Fetch Figma context for provided nodes and align component sizing, variants, and states.                                          |
+| 2026-04-29 | Continue desktop input/navigation batch | Add Search, Sidebar, Dropdown, Select, Skeleton, Tabs, Table cell, Text field, Text area, Toast, and Tooltip from Figma context.  |
+| 2026-04-29 | Expand Phase 5 detail pages             | Add route-based component detail pages, token references, and pattern guidance while keeping previews package-backed.             |
+| 2026-04-30 | Start Phase 6 Payload CMS               | Embed Payload in `apps/web` with Postgres, admin routes, articles, releases, media, and a local seeded admin account.             |
+| 2026-04-30 | Connect CMS to website pages            | Add editable website pages, CMS-backed home content, generic `/{slug}` rendering, and default Payload admin layout separation.    |
+| 2026-04-30 | Connect CMS navigation                  | Add `Site Navigation` global and render top navbar and documentation sidebar from Payload.                                        |
+| 2026-04-30 | Connect CMS component pages             | Add `Component Pages` collection and render `/components/[slug]` content from Payload while keeping previews package-backed.      |
+| 2026-04-30 | Route website pages through CMS         | Site navigation owns navbar/sidebar links; website pages can choose sidebar/no-sidebar/custom layouts, including tokens/patterns. |
+| 2026-05-08 | Hardcoded Storybook URL in topnav       | The Storybook navbar link is hardcoded to `http://localhost:6006` in `lib/site-navigation-data.ts` and `payload/seedAdmin.ts`. Works while local Storybook dev is running but breaks once deployed. Swap the URL in both files (or edit `/admin/globals/site-navigation`) when a hosted Storybook exists. Could be moved to a `NEXT_PUBLIC_STORYBOOK_URL` env var later. |
+| 2026-05-13 | Add Phase 8 — Designer Prototyping      | Target workflow: Expo Snack + Claude Cowork + pre-made starter templates. Designers need only Expo Go on their phone — no local Node/Xcode/terminal. Requires publishing `@brankas/native`, `@brankas/icons-native`, and `@brankas/tokens` to a private npm scope (`@banksinarmas/*`) so Snack can install them. Master Snack + 5–8 forkable templates (Login, Onboarding, Dashboard, Transfer, Profile, QRIS scan, History, Settings). Higher-fidelity options layered on top: Expo demo app + EAS Update for navigation-heavy flows, or Vite + react-native-web deployed to Vercel for stakeholders who don't want Expo Go installed. |
+
+## Validation Checklist
+
+Use this checklist when updating the library:
+
+- [ ] Token source files follow DTCG-style JSON.
+- [ ] Token files are split into primitive, semantic, and component layers.
+- [ ] Generated CSS variables match token source values and aliases.
+- [ ] Generated TypeScript exports match token source values and aliases.
+- [ ] Components use generated token outputs.
+- [ ] New desktop components are represented in Storybook.
+- [ ] Mobile and desktop React components use explicit subpath exports.
+- [ ] Mobile and desktop React components share primitive and semantic tokens.
+- [ ] The website consumes library packages instead of duplicating styling.
+- [ ] Payload admin works against a running Postgres database.
+- [ ] Payload REST and GraphQL routes respond in local development.
+- [ ] Home page edits in Payload appear on `/`.
+- [ ] Published `Website Pages` entries render at `/{slug}`.
+- [ ] Website page layout selection correctly shows or hides the sidebar.
+- [ ] Published `Component Pages` entries render at `/components/[slug]`.
+- [ ] `Site Navigation` edits in Payload appear in the navbar and sidebar.
+- [ ] Published CMS articles and releases render on the website.
+- [ ] Payload CMS content does not replace source-controlled component API docs.
+- [ ] New assets are named clearly and consistently.
+- [ ] Accessibility expectations are documented for interactive components.
+- [ ] Related README or plan sections are updated.
+- [ ] Decisions are recorded when they affect future contributors.
+- [ ] Local links and references still work.
+- [ ] `@brankas/native`, `@brankas/icons-native`, and `@brankas/tokens` publish cleanly to the private npm scope.
+- [ ] The master Brankas Mobile UI Kit Snack imports the latest published version and renders without errors.
+- [ ] Starter template Snacks (Login, Onboarding, Dashboard, Transfer, Profile, QRIS scan, History, Settings) load on iOS and Android via Expo Go.
+- [ ] The "How to prototype" guide is reachable from the Storybook Introduction page.

@@ -1,0 +1,237 @@
+import { Meta } from '@storybook/addon-docs/blocks';
+
+<Meta title="Contribute" />
+
+<style>{`
+  .ct-page {
+    max-width: 880px;
+    margin: 0 auto;
+    padding: 32px 24px 64px;
+    font-family: 'Inter', system-ui, sans-serif;
+    color: #0f172a;
+  }
+  .ct-page h1 { font-size: 32px; line-height: 1.15; margin: 0 0 12px; letter-spacing: -0.02em; }
+  .ct-page h2 { font-size: 22px; margin: 40px 0 12px; letter-spacing: -0.01em; }
+  .ct-page h3 { font-size: 16px; margin: 24px 0 8px; }
+  .ct-page p { line-height: 1.6; color: #334155; margin: 0 0 12px; }
+  .ct-page code { background: #f1f5f9; color: #0f172a; padding: 2px 6px; border-radius: 4px; font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 13px; }
+  .ct-page pre { background: #0f172a !important; color: #e2e8f0 !important; padding: 16px !important; border-radius: 8px !important; overflow: auto; line-height: 1.5; font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 13px; }
+  .ct-page pre code { background: transparent; color: inherit; padding: 0; font-size: 13px; }
+  .ct-eyebrow {
+    display: inline-block;
+    background: rgba(45, 170, 80, 0.1);
+    color: #2daa50;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    padding: 4px 10px;
+    border-radius: 999px;
+    margin-bottom: 12px;
+  }
+  .ct-list { padding-left: 18px; color: #334155; line-height: 1.7; }
+  .ct-list code { font-size: 12px; }
+  .ct-checklist {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  .ct-checklist li {
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+    padding: 8px 0;
+    border-bottom: 1px solid #f1f5f9;
+    font-size: 14px;
+    color: #334155;
+  }
+  .ct-checklist li::before {
+    content: '☐';
+    color: #94a3b8;
+    font-size: 16px;
+    line-height: 1;
+    margin-top: 2px;
+  }
+  .ct-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 16px;
+    margin-top: 12px;
+  }
+  .ct-card {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    padding: 16px 20px;
+  }
+  .ct-card strong { display: block; font-size: 14px; margin-bottom: 4px; }
+  .ct-card p { font-size: 13px; margin: 0; }
+  .ct-callout {
+    background: #f2fdf5;
+    border-left: 4px solid #2daa50;
+    padding: 12px 16px;
+    border-radius: 0 8px 8px 0;
+    font-size: 14px;
+    color: #04150a;
+    margin: 16px 0;
+  }
+  .ct-callout-warn {
+    background: #fffaf0;
+    border-left: 4px solid #e08e45;
+    padding: 12px 16px;
+    border-radius: 0 8px 8px 0;
+    font-size: 14px;
+    color: #2a1a05;
+    margin: 16px 0;
+  }
+`}</style>
+
+<div className="ct-page">
+
+  <span className="ct-eyebrow">Contribute</span>
+  <h1>Add components, fix bugs, propose tokens.</h1>
+  <p>
+    The library is a pnpm + Turborepo monorepo. Everything ships from one place, gets tested in
+    one place, and is documented in one place — this Storybook. Below is the workflow for the
+    three things you'll most often want to do.
+  </p>
+
+  <h2>Repo layout</h2>
+
+  <pre>{`brankas-library/
+├── apps/
+│   ├── storybook/         ← you're reading this
+│   └── web/               ← public docs site (/components, /patterns)
+└── packages/
+    ├── tokens/            ← W3C design tokens → CSS vars + TS exports
+    ├── react/             ← @brankas/react       (web components)
+    ├── native/            ← @brankas/native      (React Native components)
+    ├── icons-native/      ← @brankas/icons-native (SVG icons for native)
+    └── patterns/          ← @brankas/patterns    (composed recipes)`}</pre>
+
+  <h2>Add a new component</h2>
+
+  <p>
+    Every component follows the same 5-file pattern. Use an existing component as your
+    reference (e.g. <code>packages/react/src/desktop/Button/</code> or{' '}
+    <code>packages/native/src/Button/</code>).
+  </p>
+
+  <h3>Web component checklist</h3>
+
+  <ul className="ct-checklist">
+    <li>Drop the component into <code>packages/react/src/desktop/&lt;Name&gt;/</code>.</li>
+    <li>Create <code>Name.tsx</code>, <code>Name.types.ts</code>, <code>Name.css</code>, <code>Name.test.tsx</code>, <code>Name.stories.tsx</code>.</li>
+    <li>Use semantic CSS tokens — never hard-code colors, spacing, or typography.</li>
+    <li>Forward refs and accept <code>className</code> + <code>style</code> for composition.</li>
+    <li>Wire ARIA roles, keyboard handlers, and <code>prefers-reduced-motion</code> where animations exist.</li>
+    <li>Add <code>parameters.docs.description.component</code> in the story meta so MCP/autodocs can read it.</li>
+    <li>Export from <code>packages/react/src/desktop/index.ts</code>.</li>
+    <li><code>pnpm typecheck</code>, <code>pnpm --filter @brankas/react test</code>, and <code>pnpm --filter @brankas/storybook build</code> all pass.</li>
+  </ul>
+
+  <h3>Mobile (React Native) component checklist</h3>
+
+  <ul className="ct-checklist">
+    <li>Drop the component into <code>packages/native/src/&lt;Name&gt;/</code>.</li>
+    <li>Create <code>Name.tsx</code>, <code>Name.types.ts</code>, <code>Name.styles.ts</code> (StyleSheet), <code>Name.test.tsx</code>, <code>Name.stories.tsx</code>.</li>
+    <li>Consume <code>color</code>, <code>spacing</code>, <code>radius</code>, <code>typography</code>, <code>shadow</code> from <code>@brankas/native</code> — never RN literals.</li>
+    <li>Use <code>Pressable</code> for tap targets; expose <code>onPress</code>, <code>disabled</code>, <code>accessibilityRole</code>/<code>State</code>.</li>
+    <li>Title stories <code>'Mobile UI/Name'</code> so they group correctly in the sidebar.</li>
+    <li>Add <code>parameters.docs.description.component</code> in the story meta.</li>
+    <li>Export from <code>packages/native/src/index.ts</code>.</li>
+    <li><code>pnpm typecheck</code>, <code>pnpm --filter @brankas/native test</code>, and Storybook build all pass.</li>
+  </ul>
+
+  <div className="ct-callout">
+    <strong>One platform at a time.</strong> A web Button and a native Button live in
+    separate packages on purpose — they have different runtimes, gesture models, and
+    accessibility APIs. Don't try to share the implementation; share the tokens.
+  </div>
+
+  <h2>Change or add a token</h2>
+
+  <p>
+    Tokens live in <code>packages/tokens/source/</code> as W3C Design Tokens Format JSON. There
+    are three layers; pick the right one:
+  </p>
+
+  <div className="ct-grid">
+    <div className="ct-card">
+      <strong>primitives/</strong>
+      <p>Raw values (color scales, base spacing, base radii, font scales, shadow sizes).</p>
+    </div>
+    <div className="ct-card">
+      <strong>semantic/</strong>
+      <p>Purpose-named aliases (<code>color.text.default</code>, <code>shadow.card</code>). Components consume these.</p>
+    </div>
+    <div className="ct-card">
+      <strong>components/</strong>
+      <p>Component-specific token namespaces. Use sparingly — most needs are covered by semantics.</p>
+    </div>
+  </div>
+
+  <h3>Workflow</h3>
+
+  <ol className="ct-list">
+    <li>Edit or add <code>*.tokens.json</code> under the right layer.</li>
+    <li>Run <code>pnpm --filter @brankas/tokens build</code> — generates <code>src/generated/tokens.ts</code> + <code>dist/tokens.css</code>.</li>
+    <li>Run <code>pnpm typecheck</code> to confirm no consumer broke.</li>
+    <li>Update the relevant Storybook foundation page if you added a new group.</li>
+  </ol>
+
+  <div className="ct-callout-warn">
+    <strong>Renaming is breaking.</strong> Removing or renaming a token cascades to every
+    consumer. Prefer adding a new alias and deprecating the old one in a follow-up PR.
+  </div>
+
+  <h2>Fix a bug</h2>
+
+  <ol className="ct-list">
+    <li>Reproduce it locally — open the component's story in Storybook.</li>
+    <li>Add a failing test in <code>Name.test.tsx</code> that captures the bug.</li>
+    <li>Fix until green; keep the test in to prevent regressions.</li>
+    <li>If it's a visual/interaction bug, capture the fix in a new story showing the edge case.</li>
+  </ol>
+
+  <h2>Run everything locally</h2>
+
+  <pre>{`# install
+pnpm install
+
+# storybook (this app)
+pnpm --filter @brankas/storybook dev   # → http://localhost:6006
+
+# tokens watch
+pnpm --filter @brankas/tokens dev
+
+# web docs
+pnpm --filter @brankas/web dev          # → http://localhost:3000
+
+# unit tests
+pnpm --filter @brankas/react test
+pnpm --filter @brankas/native test
+
+# full typecheck across the monorepo
+pnpm typecheck`}</pre>
+
+  <h2>Code style</h2>
+
+  <ul className="ct-list">
+    <li><strong>TypeScript strict</strong> — <code>exactOptionalPropertyTypes: true</code>; use conditional spreads, not <code>| undefined</code>.</li>
+    <li><strong>No comments unless the WHY is non-obvious</strong> — names should explain WHAT.</li>
+    <li><strong>Default to composition</strong> — small primitives + tokens beat a configurable monolith.</li>
+    <li><strong>Tests are documentation</strong> — every public behaviour has a test asserting it.</li>
+    <li><strong>Stories cover the matrix</strong> — variants × sizes × states. Each combination should be reachable from controls or a dedicated story.</li>
+  </ul>
+
+  <h2>Getting help</h2>
+
+  <p>
+    Questions on architecture or naming? Open a draft PR with the proposed change and ask for
+    review before polishing. It's faster to redirect at the design stage than after the work is
+    done. For visual specs, link to the Figma frame in the story's <code>parameters.design</code>
+    so reviewers can compare side-by-side.
+  </p>
+
+</div>

@@ -1,0 +1,34 @@
+{
+  "name": "@brankas/icons-native",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    }
+  },
+  "scripts": {
+    "build": "pnpm run icons:build && tsc -p tsconfig.json",
+    "icons:build": "node ./scripts/build-icons.mjs",
+    "dev": "tsc -p tsconfig.json --watch",
+    "lint": "eslint src",
+    "typecheck": "pnpm run icons:build && tsc -p tsconfig.json --noEmit",
+    "test": "echo \"No tests configured\"",
+    "clean": "rm -rf dist src/icons/generated"
+  },
+  "peerDependencies": {
+    "react": ">=19.0.0",
+    "react-native": ">=0.80.0",
+    "react-native-svg": ">=15.0.0"
+  },
+  "devDependencies": {
+    "@types/react": "^19.2.2",
+    "react": "19.2.0",
+    "react-native": "0.85.3",
+    "react-native-svg": "^15.11.2"
+  }
+}

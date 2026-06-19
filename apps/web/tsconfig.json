@@ -1,0 +1,23 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "allowJs": true,
+    "baseUrl": ".",
+    "incremental": true,
+    "noEmit": true,
+    "paths": {
+      "@brankas/config/*": ["../../packages/config/*"],
+      "@brankas/patterns": ["../../packages/patterns/src/index.ts"],
+      "@brankas/react": ["../../packages/react/src/index.ts"],
+      "@brankas/tokens": ["../../packages/tokens/src/index.ts"],
+      "@payload-config": ["./src/payload.config.ts"]
+    },
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ]
+  },
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
+  "exclude": ["node_modules"]
+}

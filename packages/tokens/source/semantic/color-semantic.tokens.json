@@ -1,0 +1,181 @@
+{
+  "color": {
+    "$type": "color",
+    "text": {
+      "default": {
+        "$value": "{color.neutral.1000}"
+      },
+      "subtle": {
+        "$value": "{color.neutral.800}"
+      },
+      "subtlest": {
+        "$value": "{color.neutral.600}"
+      },
+      "success": {
+        "$value": "{color.green.500}"
+      },
+      "error": {
+        "$value": "{color.red.500}"
+      },
+      "warning": {
+        "$value": "{color.orange.500}"
+      },
+      "informational": {
+        "$value": "{color.blue.500}"
+      },
+      "disabled": {
+        "$value": "{color.neutral.100}"
+      },
+      "brand": {
+        "$value": "{color.primary.logo}"
+      },
+      "inverse": {
+        "$value": "{color.neutral.0}"
+      },
+      "selected": {
+        "$value": "{color.blue.500}"
+      },
+      "gray": {
+        "$value": "{color.neutral.400}"
+      }
+    },
+    "icon": {
+      "default": {
+        "$value": "{color.neutral.1000}"
+      },
+      "subtle": {
+        "$value": "{color.neutral.800}"
+      },
+      "selected": {
+        "$value": "{color.blue.500}"
+      },
+      "subtlest": {
+        "$value": "{color.neutral.600}"
+      },
+      "success": {
+        "$value": "{color.green.500}"
+      },
+      "error": {
+        "$value": "{color.red.500}"
+      },
+      "warning": {
+        "$value": "{color.orange.500}"
+      },
+      "informational": {
+        "$value": "{color.blue.500}"
+      },
+      "disabled": {
+        "$value": "{color.neutral.100}"
+      },
+      "brand": {
+        "$value": "{color.primary.logo}"
+      },
+      "inverse": {
+        "$value": "{color.neutral.0}"
+      },
+      "gray": {
+        "$value": "{color.neutral.400}"
+      }
+    },
+    "border": {
+      "brand": {
+        "$value": "{color.primary.logo}"
+      },
+      "selected": {
+        "$value": "{color.blue.500}"
+      },
+      "informational": {
+        "$value": "{color.blue.500}"
+      },
+      "success": {
+        "$value": "{color.green.500}"
+      },
+      "inverse": {
+        "$value": "{color.neutral.0}"
+      },
+      "subtlest": {
+        "$value": "{color.neutral.50}"
+      },
+      "warning": {
+        "$value": "{color.orange.500}"
+      },
+      "error": {
+        "$value": "{color.red.500}"
+      },
+      "disabled": {
+        "$value": "{color.neutral.100}"
+      },
+      "subtle": {
+        "$value": "{color.neutral.100}"
+      },
+      "focused": {
+        "$value": "{color.blue.500}"
+      },
+      "default": {
+        "$value": "{color.cool-gray.100}"
+      }
+    },
+    "background": {
+      "default": {
+        "$value": "{color.neutral.0}"
+      },
+      "sublest": {
+        "$value": "{color.neutral.50}"
+      },
+      "success-light": {
+        "$value": "{color.green.50}"
+      },
+      "error-light": {
+        "$value": "{color.red.50}"
+      },
+      "warning-light": {
+        "$value": "{color.yellow.50}"
+      },
+      "information-light": {
+        "$value": "{color.blue.50}"
+      },
+      "disabled": {
+        "$value": "{color.neutral.50}"
+      },
+      "selected-light": {
+        "$value": "{color.blue.50}"
+      },
+      "success": {
+        "$value": "{color.green.500}"
+      },
+      "error": {
+        "$value": "{color.red.500}"
+      },
+      "warning": {
+        "$value": "{color.orange.500}"
+      },
+      "information": {
+        "$value": "{color.blue.500}"
+      },
+      "primary-blue": {
+        "$value": "{color.primary.blue}"
+      },
+      "primary-red": {
+        "$value": "{color.primary.red}"
+      },
+      "selected": {
+        "$value": "{color.blue.500}"
+      },
+      "subtle": {
+        "$value": "{color.neutral.100}"
+      },
+      "black": {
+        "$value": "{color.neutral.1000}"
+      },
+      "cool-light": {
+        "$value": "{color.cool-gray.0}"
+      },
+      "cool": {
+        "$value": "{color.cool-gray.50}"
+      },
+      "hover": {
+        "$value": "{color.cool-gray.0}"
+      }
+    }
+  }
+}

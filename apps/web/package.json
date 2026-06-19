@@ -1,0 +1,35 @@
+{
+  "name": "@brankas/web",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "next build --webpack",
+    "cms:generate:importmap": "payload generate:importmap",
+    "cms:generate:types": "payload generate:types",
+    "cms:seed": "payload run src/payload/seed.ts",
+    "dev": "next dev",
+    "lint": "eslint src next.config.mjs",
+    "typecheck": "tsc --noEmit",
+    "test": "echo \"No web tests configured yet\"",
+    "clean": "rm -rf .next"
+  },
+  "dependencies": {
+    "@brankas/patterns": "workspace:*",
+    "@brankas/react": "workspace:*",
+    "@brankas/tokens": "workspace:*",
+    "@payloadcms/db-postgres": "^3.84.1",
+    "@payloadcms/next": "^3.84.1",
+    "@payloadcms/richtext-lexical": "^3.84.1",
+    "graphql": "^16.13.2",
+    "next": "^16.0.0",
+    "payload": "^3.84.1",
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0",
+    "sharp": "^0.34.5"
+  },
+  "devDependencies": {
+    "@types/react": "^19.2.2",
+    "@types/react-dom": "^19.2.2"
+  }
+}

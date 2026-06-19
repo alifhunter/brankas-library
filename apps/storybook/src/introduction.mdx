@@ -1,0 +1,177 @@
+import { Meta } from '@storybook/addon-docs/blocks';
+
+<Meta title="Introduction" />
+
+<style>{`
+  .intro-page {
+    max-width: 880px;
+    margin: 0 auto;
+    padding: 32px 24px 64px;
+    font-family: 'Inter', system-ui, sans-serif;
+    color: #0f172a;
+  }
+  .intro-page h1 { font-size: 36px; line-height: 1.15; margin: 0 0 16px; letter-spacing: -0.02em; }
+  .intro-page h2 { font-size: 22px; margin: 40px 0 12px; letter-spacing: -0.01em; }
+  .intro-page h3 { font-size: 16px; margin: 24px 0 8px; }
+  .intro-page p { line-height: 1.6; color: #334155; margin: 0 0 12px; }
+  .intro-page code { background: #f1f5f9; color: #0f172a; padding: 2px 6px; border-radius: 4px; font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 13px; }
+  .intro-page pre { background: #0f172a !important; color: #e2e8f0 !important; padding: 16px !important; border-radius: 8px !important; overflow: auto; line-height: 1.5; font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 13px; }
+  .intro-page pre code { background: transparent; color: inherit; padding: 0; font-size: 13px; }
+  .intro-hero {
+    background: linear-gradient(135deg, #fff5f5 0%, #ffe5e5 60%, #ffd6d6 100%);
+    border-radius: 16px;
+    padding: 40px 32px;
+    margin-bottom: 32px;
+  }
+  .intro-hero p { font-size: 16px; line-height: 1.5; max-width: 56ch; }
+  .intro-eyebrow {
+    display: inline-block;
+    background: rgba(193, 14, 14, 0.1);
+    color: #c10e0e;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    padding: 4px 10px;
+    border-radius: 999px;
+    margin-bottom: 12px;
+  }
+  .intro-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 16px;
+    margin-top: 16px;
+  }
+  .intro-card {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    padding: 20px;
+    transition: border-color 120ms ease, box-shadow 120ms ease;
+  }
+  .intro-card:hover {
+    border-color: #cbd5e1;
+    box-shadow: 0 4px 12px rgba(15, 23, 42, 0.06);
+  }
+  .intro-card strong { display: block; font-size: 14px; margin-bottom: 6px; }
+  .intro-card p { font-size: 13px; line-height: 1.5; margin: 0; }
+  .intro-list { padding-left: 18px; color: #334155; line-height: 1.7; }
+  .intro-list code { font-size: 12px; }
+  .intro-meta {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+    font-size: 13px;
+    color: #64748b;
+    margin-top: 24px;
+  }
+  .intro-meta a { color: #1c77c3; }
+`}</style>
+
+<div className="intro-page">
+
+  <section className="intro-hero">
+    <span className="intro-eyebrow">Brankas Design System</span>
+    <h1>Components that make Bank Sinarmas products feel on brand.</h1>
+    <p>
+      A single source of truth for tokens, foundations, and components used across Brankas web
+      and mobile products. Web components ship from <code>@brankas/react</code>; mobile
+      components ship from <code>@brankas/native</code>. Both share the same tokens and the
+      same Storybook you're reading now.
+    </p>
+  </section>
+
+  <h2>Browse the system</h2>
+
+  <div className="intro-grid">
+    <div className="intro-card">
+      <strong>Foundations</strong>
+      <p>Color, typography, spacing, radius, shadow (incl. <code>shadow.mobile.*</code>), breakpoints, and design tokens. Shared by web and native.</p>
+    </div>
+    <div className="intro-card">
+      <strong>Desktop UI</strong>
+      <p>~30 production-ready React components — buttons, forms, tables, dialogs, toasts, tooltips, and more. Ships from <code>@brankas/react</code>.</p>
+    </div>
+    <div className="intro-card">
+      <strong>Mobile UI</strong>
+      <p>React Native components rendered in-browser via <code>react-native-web</code>. Ships from <code>@brankas/native</code> for iOS/Android.</p>
+    </div>
+    <div className="intro-card">
+      <strong>Patterns</strong>
+      <p>Interactive recipes (multi-step flow, undo toast, sortable table, live search) on the web docs at <code>/patterns</code>.</p>
+    </div>
+  </div>
+
+  <h2>Quick start</h2>
+
+  <p>See <strong>Get Started</strong> in the sidebar for the full install, import, and theming walkthrough. Or jump straight in:</p>
+
+  <pre
+    style={{
+      background: '#0f172a',
+      color: '#e2e8f0',
+      padding: '16px',
+      borderRadius: '8px',
+      overflow: 'auto',
+      lineHeight: 1.5,
+      fontFamily: 'ui-monospace, SFMono-Regular, Menlo, monospace',
+      fontSize: '13px',
+      margin: '0 0 16px',
+    }}
+  >
+    {`# Web
+pnpm add @brankas/react @brankas/tokens
+
+# React Native
+pnpm add @brankas/native @brankas/tokens react-native-svg`}
+  </pre>
+
+  <h2>How components are built</h2>
+
+  <p>Every component follows a five-file pattern under <code>packages/&lt;react|native&gt;/src/&lt;variant&gt;/&lt;Name&gt;/</code>:</p>
+
+  <ul className="intro-list">
+    <li><code>Name.tsx</code> — implementation</li>
+    <li><code>Name.types.ts</code> — TypeScript prop types</li>
+    <li><code>Name.css</code> (web) or <code>Name.styles.ts</code> (native) — scoped styles using semantic tokens</li>
+    <li><code>Name.test.tsx</code> — vitest (web) or jest (native) + Testing Library coverage</li>
+    <li><code>Name.stories.tsx</code> — the Storybook stories you see in this sidebar</li>
+  </ul>
+
+  <h2>Conventions</h2>
+
+  <h3>Tokens, not literals</h3>
+  <p>
+    Every color, font, spacing, and radius pulls from CSS custom properties so theming is a
+    one-line swap. If you see a hex code in component CSS, that's a bug — file it.
+  </p>
+
+  <h3>Controlled and uncontrolled</h3>
+  <p>
+    Stateful components (Tabs, DatePicker, Search, Toggle, Checkbox, Pagination, etc.) support
+    both forms via the standard <code>value</code> / <code>defaultValue</code> + <code>onChange</code>{' '}
+    pattern. Pick whichever fits your app.
+  </p>
+
+  <h3>Accessibility is non-negotiable</h3>
+  <p>
+    Every interactive component ships with the right ARIA semantics, keyboard support, focus
+    management, and <code>prefers-reduced-motion</code> handling. The Storybook a11y addon catches
+    regressions during development.
+  </p>
+
+  <h2>Tools we ship with</h2>
+
+  <ul className="intro-list">
+    <li><strong>Vitest</strong> — every component has a test file under <code>{'*.test.tsx'}</code>.</li>
+    <li><strong>Storybook a11y addon</strong> — axe-core runs against every story automatically.</li>
+    <li><strong>Storybook MCP addon</strong> — Claude Code can list, search, and read stories.</li>
+    <li><strong>Figma MCP</strong> — components are mapped to their Figma source frames.</li>
+  </ul>
+
+  <div className="intro-meta">
+    <span>Need help? Check <code>CHECKPOINT.md</code> for recent decisions.</span>
+    <span>Web docs: <a href="http://localhost:3000">localhost:3000</a></span>
+  </div>
+
+</div>

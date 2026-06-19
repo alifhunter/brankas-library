@@ -1,0 +1,121 @@
+{
+  "font": {
+    "family": {
+      "$type": "fontFamily",
+      "inter": {
+        "$value": "Inter, system-ui, sans-serif"
+      }
+    },
+    "weight": {
+      "$type": "fontWeight",
+      "regular": {
+        "$value": 400
+      },
+      "medium": {
+        "$value": 500
+      },
+      "semibold": {
+        "$value": 600
+      },
+      "bold": {
+        "$value": 700
+      }
+    },
+    "size": {
+      "$type": "dimension",
+      "10": {
+        "$value": "10px"
+      },
+      "12": {
+        "$value": "12px"
+      },
+      "14": {
+        "$value": "14px"
+      },
+      "16": {
+        "$value": "16px"
+      },
+      "18": {
+        "$value": "18px"
+      },
+      "20": {
+        "$value": "20px"
+      },
+      "24": {
+        "$value": "24px"
+      },
+      "28": {
+        "$value": "28px"
+      },
+      "32": {
+        "$value": "32px"
+      },
+      "40": {
+        "$value": "40px"
+      },
+      "48": {
+        "$value": "48px"
+      },
+      "60": {
+        "$value": "60px"
+      }
+    },
+    "lineHeight": {
+      "$type": "dimension",
+      "10": {
+        "$value": "16px"
+      },
+      "12": {
+        "$value": "18px"
+      },
+      "14": {
+        "$value": "20px"
+      },
+      "16": {
+        "$value": "24px"
+      },
+      "18": {
+        "$value": "24px"
+      },
+      "20": {
+        "$value": "28px"
+      },
+      "24": {
+        "$value": "32px"
+      },
+      "28": {
+        "$value": "36px"
+      },
+      "32": {
+        "$value": "40px"
+      },
+      "40": {
+        "$value": "48px"
+      },
+      "48": {
+        "$value": "60px"
+      },
+      "60": {
+        "$value": "72px"
+      }
+    },
+    "letterSpacing": {
+      "$type": "dimension",
+      "-0.015em": {
+        "$value": "-0.015em"
+      },
+      "-0.01em": {
+        "$value": "-0.01em"
+      },
+      "-0.02em": {
+        "$value": "-0.02em"
+      },
+      "-0.03em": {
+        "$value": "-0.03em"
+      },
+      "0": {
+        "$value": "0"
+      }
+    }
+  }
+}

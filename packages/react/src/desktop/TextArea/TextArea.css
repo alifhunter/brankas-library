@@ -1,0 +1,151 @@
+.ui-textarea {
+  display: grid;
+  gap: 8px;
+  width: min(100%, 340px);
+  font-family: var(--brankas-typography-desktop-body-md-regular-font-family);
+  color: var(--color-text-default);
+}
+
+.ui-textarea__title-group {
+  display: grid;
+  gap: 4px;
+}
+
+.ui-textarea__label {
+  font-family: var(--brankas-typography-desktop-body-md-medium-font-family);
+  font-size: var(--brankas-typography-desktop-body-md-medium-font-size);
+  font-weight: var(--brankas-typography-desktop-body-md-medium-font-weight);
+  line-height: var(--brankas-typography-desktop-body-md-medium-line-height);
+  color: var(--color-text-default);
+}
+
+.ui-textarea__required {
+  color: var(--color-text-error);
+}
+
+/* Control shell */
+.ui-textarea__control-shell {
+  display: flex;
+  width: 100%;
+  background: var(--color-background-default);
+  border: 1px solid var(--color-border-subtle);
+  border-radius: var(--radius-sm);
+  transition: border-color 120ms ease, box-shadow 120ms ease;
+}
+
+.ui-textarea__input {
+  flex: 1;
+  min-width: 0;
+  width: 100%;
+  min-height: 110px;
+  padding: 12px;
+  background: transparent;
+  border: 0;
+  outline: none;
+  resize: vertical;
+  color: var(--color-text-default);
+  font-family: var(--brankas-typography-desktop-body-md-regular-font-family);
+  font-size: var(--brankas-typography-desktop-body-md-regular-font-size);
+  font-weight: var(--brankas-typography-desktop-body-md-regular-font-weight);
+  line-height: var(--brankas-typography-desktop-body-md-regular-line-height);
+}
+
+.ui-textarea__input::placeholder {
+  color: var(--color-text-gray);
+}
+
+/* States — real DOM driven via :focus-within plus state-class overrides */
+.ui-textarea__control-shell:focus-within,
+.ui-textarea--state-focused .ui-textarea__control-shell,
+.ui-textarea--state-focused-filled .ui-textarea__control-shell {
+  border-color: var(--color-blue-b100);
+  border-width: 2px;
+  /* compensate so the textarea doesn't shift by 1px when border grows */
+  padding: 0;
+}
+
+.ui-textarea--error .ui-textarea__control-shell,
+.ui-textarea--state-error .ui-textarea__control-shell {
+  border-color: var(--color-border-error);
+}
+
+.ui-textarea--disabled .ui-textarea__control-shell,
+.ui-textarea--state-disabled .ui-textarea__control-shell {
+  background: var(--color-background-disabled);
+  border-color: var(--color-border-subtle);
+}
+
+.ui-textarea--disabled .ui-textarea__input,
+.ui-textarea--state-disabled .ui-textarea__input {
+  color: var(--color-text-gray);
+  cursor: not-allowed;
+  resize: none;
+}
+
+.ui-textarea--disabled .ui-textarea__input::placeholder,
+.ui-textarea--state-disabled .ui-textarea__input::placeholder {
+  color: var(--color-text-gray);
+}
+
+/* Helper / counter rows */
+.ui-textarea__helper {
+  margin: 0;
+  font-family: var(--brankas-typography-desktop-body-sm-regular-font-family);
+  font-size: var(--brankas-typography-desktop-body-sm-regular-font-size);
+  font-weight: var(--brankas-typography-desktop-body-sm-regular-font-weight);
+  line-height: var(--brankas-typography-desktop-body-xs-regular-line-height);
+  color: var(--color-text-subtle);
+}
+
+.ui-textarea__counter {
+  font-family: var(--brankas-typography-desktop-body-sm-regular-font-family);
+  font-size: var(--brankas-typography-desktop-body-sm-regular-font-size);
+  font-weight: var(--brankas-typography-desktop-body-sm-regular-font-weight);
+  line-height: var(--brankas-typography-desktop-body-xs-regular-line-height);
+  color: var(--color-text-subtlest);
+  white-space: nowrap;
+}
+
+.ui-textarea__counter--standalone {
+  justify-self: end;
+  text-align: right;
+}
+
+.ui-textarea__bottom-row {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.ui-textarea__helper-spacer {
+  flex: 1;
+}
+
+/* Error row */
+.ui-textarea__error-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.ui-textarea__error-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+  color: var(--color-background-error);
+}
+
+.ui-textarea__error-message {
+  flex: 1;
+  min-width: 0;
+  margin: 0;
+  color: var(--color-text-error);
+  font-family: var(--brankas-typography-desktop-body-sm-regular-font-family);
+  font-size: var(--brankas-typography-desktop-body-sm-regular-font-size);
+  font-weight: var(--brankas-typography-desktop-body-sm-regular-font-weight);
+  line-height: var(--brankas-typography-desktop-body-xs-regular-line-height);
+}

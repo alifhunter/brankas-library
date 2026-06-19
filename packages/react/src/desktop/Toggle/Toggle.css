@@ -1,0 +1,156 @@
+.ui-toggle {
+  --toggle-width: 40px;
+  --toggle-height: 24px;
+  --toggle-padding: 2px;
+  --toggle-thumb-size: 20px;
+  --toggle-track-color: var(--color-toggle-track-off);
+  --toggle-track-border-color: transparent;
+  --toggle-thumb-color: var(--color-icon-inverse);
+  --toggle-shadow: none;
+  display: inline-grid;
+  gap: var(--space-1);
+  max-width: 360px;
+  font-family: var(--brankas-typography-desktop-body-md-medium-font-family);
+  color: var(--color-text-default);
+}
+
+.ui-toggle--size-small {
+  --toggle-width: 32px;
+  --toggle-height: 20px;
+  --toggle-padding: 2px;
+  --toggle-thumb-size: 16px;
+}
+
+.ui-toggle__main {
+  display: inline-flex;
+  align-items: flex-start;
+  gap: var(--space-3);
+  position: relative;
+  cursor: pointer;
+}
+
+.ui-toggle__input {
+  position: absolute;
+  inset: 0 auto auto 0;
+  width: var(--toggle-width);
+  height: var(--toggle-height);
+  opacity: 0;
+  margin: 0;
+  cursor: inherit;
+}
+
+.ui-toggle__control {
+  position: relative;
+  width: var(--toggle-width);
+  height: var(--toggle-height);
+  flex: 0 0 var(--toggle-width);
+  border-radius: 999px;
+  background: var(--toggle-track-color);
+  box-shadow:
+    inset 0 0 0 2px var(--toggle-track-border-color),
+    var(--toggle-shadow);
+  transition:
+    background-color 160ms ease,
+    box-shadow 160ms ease;
+}
+
+.ui-toggle__thumb {
+  position: absolute;
+  top: var(--toggle-padding);
+  left: var(--toggle-padding);
+  width: var(--toggle-thumb-size);
+  height: var(--toggle-thumb-size);
+  border-radius: 999px;
+  background: var(--toggle-thumb-color);
+  transition:
+    transform 160ms ease,
+    background-color 160ms ease;
+}
+
+.ui-toggle__content {
+  display: grid;
+  gap: var(--space-1);
+  line-height: 1.4;
+}
+
+.ui-toggle__label {
+  min-height: var(--toggle-height);
+  display: inline-flex;
+  align-items: center;
+  font-size: var(--brankas-typography-desktop-body-md-medium-font-size);
+  font-weight: var(--brankas-typography-desktop-body-md-medium-font-weight);
+  color: var(--color-text-default);
+}
+
+.ui-toggle__description,
+.ui-toggle__helper {
+  font-size: var(--brankas-typography-desktop-body-sm-regular-font-size);
+  font-weight: var(--brankas-typography-desktop-body-sm-regular-font-weight);
+  color: var(--color-text-subtle);
+}
+
+.ui-toggle__helper {
+  padding-left: calc(var(--toggle-width) + var(--space-3));
+}
+
+.ui-toggle--state-hover {
+  --toggle-track-color: var(--color-toggle-track-off-strong);
+  --toggle-shadow: var(--shadow-toggle-hover);
+}
+
+.ui-toggle--state-focused {
+  --toggle-track-color: var(--color-toggle-track-off-strong);
+  --toggle-track-border-color: var(--color-blue-b100);
+}
+
+.ui-toggle--state-disabled {
+  --toggle-track-color: var(--color-background-disabled);
+}
+
+.ui-toggle__input:checked + .ui-toggle__control {
+  --toggle-track-color: var(--color-background-selected);
+}
+
+.ui-toggle__input:checked + .ui-toggle__control .ui-toggle__thumb {
+  transform: translateX(calc(var(--toggle-width) - var(--toggle-thumb-size) - (var(--toggle-padding) * 2)));
+}
+
+.ui-toggle--state-hover:has(.ui-toggle__input:checked) .ui-toggle__control {
+  --toggle-track-color: var(--color-blue-b600);
+}
+
+.ui-toggle--state-focused:has(.ui-toggle__input:checked) .ui-toggle__control {
+  --toggle-track-color: var(--color-blue-b600);
+}
+
+.ui-toggle__input:focus-visible + .ui-toggle__control {
+  --toggle-track-color: var(--color-toggle-track-off-strong);
+  --toggle-track-border-color: var(--color-blue-b100);
+}
+
+.ui-toggle__input:focus-visible:checked + .ui-toggle__control {
+  --toggle-track-color: var(--color-blue-b600);
+}
+
+.ui-toggle__input:hover + .ui-toggle__control {
+  --toggle-shadow: var(--shadow-toggle-hover);
+}
+
+.ui-toggle__input:hover:not(:checked) + .ui-toggle__control {
+  --toggle-track-color: var(--color-toggle-track-off-strong);
+}
+
+.ui-toggle__input:hover:checked + .ui-toggle__control {
+  --toggle-track-color: var(--color-blue-b600);
+}
+
+.ui-toggle--disabled,
+.ui-toggle--disabled .ui-toggle__main {
+  cursor: not-allowed;
+}
+
+.ui-toggle--disabled .ui-toggle__label,
+.ui-toggle--disabled .ui-toggle__description,
+.ui-toggle--disabled .ui-toggle__helper {
+  color: var(--color-text-subtlest);
+}

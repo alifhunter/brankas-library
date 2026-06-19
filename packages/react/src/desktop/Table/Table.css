@@ -1,0 +1,158 @@
+.ui-table {
+  width: 100%;
+  border-collapse: collapse;
+  border-spacing: 0;
+  background: var(--color-background-default);
+  font-family: var(--brankas-typography-desktop-body-md-regular-font-family);
+  color: var(--color-text-default);
+}
+
+.ui-table__head {
+  background: var(--color-background-cool-light);
+}
+
+.ui-table__head--sticky {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+}
+
+.ui-table__body {
+  background: var(--color-background-default);
+}
+
+/* Cells — shared structure */
+.ui-table__cell,
+.ui-table__header-cell {
+  border-bottom: 1px solid var(--color-border-subtle);
+  vertical-align: middle;
+  text-align: left;
+  white-space: nowrap;
+}
+
+.ui-table__cell--align-left {
+  text-align: left;
+}
+.ui-table__cell--align-center {
+  text-align: center;
+}
+.ui-table__cell--align-right {
+  text-align: right;
+}
+
+/* Size variants — heights and padding from Figma */
+.ui-table__cell--size-small {
+  height: 24px;
+  padding: 4px 8px;
+  font-family: var(--brankas-typography-desktop-body-sm-regular-font-family);
+  font-size: var(--brankas-typography-desktop-body-sm-regular-font-size);
+  font-weight: var(--brankas-typography-desktop-body-sm-regular-font-weight);
+  line-height: var(--brankas-typography-desktop-body-xs-regular-line-height);
+}
+
+.ui-table__cell--size-medium {
+  height: 40px;
+  padding: 8px;
+  font-family: var(--brankas-typography-desktop-body-sm-regular-font-family);
+  font-size: var(--brankas-typography-desktop-body-sm-regular-font-size);
+  font-weight: var(--brankas-typography-desktop-body-sm-regular-font-weight);
+  line-height: var(--brankas-typography-desktop-body-xs-regular-line-height);
+}
+
+.ui-table__cell--size-large {
+  height: 48px;
+  padding: 12px 8px;
+  font-family: var(--brankas-typography-desktop-body-md-regular-font-family);
+  font-size: var(--brankas-typography-desktop-body-md-regular-font-size);
+  font-weight: var(--brankas-typography-desktop-body-md-regular-font-weight);
+  line-height: var(--brankas-typography-desktop-body-md-regular-line-height);
+}
+
+/* Header-specific overrides — uses medium weight + subtle color from Figma */
+.ui-table__header-cell {
+  color: var(--color-text-subtle);
+}
+
+.ui-table__header-cell.ui-table__cell--size-small,
+.ui-table__header-cell.ui-table__cell--size-medium {
+  font-family: var(--brankas-typography-desktop-body-sm-medium-font-family);
+  font-weight: var(--brankas-typography-desktop-body-sm-medium-font-weight);
+}
+
+.ui-table__header-cell.ui-table__cell--size-large {
+  font-family: var(--brankas-typography-desktop-body-md-medium-font-family);
+  font-weight: var(--brankas-typography-desktop-body-md-medium-font-weight);
+}
+
+/* Row hover — applies the subtle hover color from Figma to all cells in the row */
+.ui-table__body .ui-table__row:hover > .ui-table__cell {
+  background: var(--color-background-subtle);
+}
+
+/* Selected row */
+.ui-table__row--selected > .ui-table__cell {
+  background: var(--color-background-selected-light);
+}
+
+.ui-table__body .ui-table__row--selected:hover > .ui-table__cell {
+  background: var(--color-background-selected-light);
+}
+
+/* Zebra striping (alternates body rows; first row stays white) */
+.ui-table--zebra .ui-table__body .ui-table__row:nth-child(even) > .ui-table__cell {
+  background: var(--color-background-subtlest);
+}
+
+.ui-table--zebra .ui-table__body .ui-table__row:nth-child(even):hover > .ui-table__cell {
+  background: var(--color-background-subtle);
+}
+
+/* Sortable header trigger */
+.ui-table__header-cell--sortable {
+  cursor: pointer;
+}
+
+.ui-table__sort-trigger {
+  appearance: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 0;
+  background: transparent;
+  border: 0;
+  color: inherit;
+  font-family: inherit;
+  font-size: inherit;
+  font-weight: inherit;
+  line-height: inherit;
+  cursor: pointer;
+  text-align: inherit;
+}
+
+.ui-table__cell--align-right .ui-table__sort-trigger {
+  flex-direction: row-reverse;
+}
+
+.ui-table__cell--align-center .ui-table__sort-trigger {
+  justify-content: center;
+}
+
+.ui-table__sort-trigger:hover {
+  color: var(--color-text-default);
+}
+
+.ui-table__sort-trigger:focus-visible {
+  outline: 2px solid var(--color-blue-b100);
+  outline-offset: 2px;
+  border-radius: var(--radius-xs);
+}
+
+.ui-table__sort-icon {
+  flex-shrink: 0;
+  color: var(--color-icon-subtle);
+}
+
+.ui-table__sort-icon--asc,
+.ui-table__sort-icon--desc {
+  color: var(--color-icon-default);
+}

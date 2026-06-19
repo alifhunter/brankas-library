@@ -1,0 +1,86 @@
+.ui-avatar {
+  width: 64px;
+  height: 64px;
+  border: 1px solid var(--color-border-subtle);
+  border-radius: var(--radius-pill);
+  overflow: clip;
+  background: var(--color-background-subtlest);
+  color: var(--color-icon-subtlest);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  position: relative;
+}
+
+.ui-avatar--size-small {
+  width: 32px;
+  height: 32px;
+}
+
+.ui-avatar--size-medium {
+  width: 48px;
+  height: 48px;
+}
+
+.ui-avatar--size-large {
+  width: 64px;
+  height: 64px;
+}
+
+.ui-avatar--image {
+  background: var(--color-background-default);
+}
+
+.ui-avatar__image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.ui-avatar__icon {
+  display: block;
+  color: var(--color-icon-subtlest);
+  fill: currentColor;
+}
+
+.ui-avatar__icon--small {
+  width: 16px;
+  height: 16px;
+}
+
+.ui-avatar__icon--medium {
+  width: 24px;
+  height: 24px;
+}
+
+.ui-avatar__icon--large {
+  width: 32px;
+  height: 32px;
+}
+
+.ui-avatar__initials {
+  font-family: var(--brankas-typography-desktop-body-md-semibold-font-family);
+  font-weight: var(--brankas-typography-desktop-body-md-semibold-font-weight);
+  color: var(--color-text-subtlest);
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.ui-avatar__initials--small {
+  font-size: var(--brankas-typography-desktop-body-sm-semibold-font-size);
+  line-height: 1.4;
+  letter-spacing: -0.12px;
+}
+
+.ui-avatar__initials--medium {
+  font-size: var(--brankas-typography-desktop-body-md-semibold-font-size);
+  line-height: 1.4;
+  letter-spacing: -0.14px;
+}
+
+.ui-avatar__initials--large {
+  font-size: var(--brankas-typography-desktop-heading-h5-semibold-font-size);
+  line-height: 1.4;
+  letter-spacing: -0.18px;
+}

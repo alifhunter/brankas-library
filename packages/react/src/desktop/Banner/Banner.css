@@ -1,0 +1,204 @@
+.ui-banner {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-2);
+  color: var(--color-text-default);
+}
+
+.ui-banner--variant-section {
+  width: min(100%, 328px);
+  padding: var(--space-4);
+  border-radius: var(--radius-sm);
+}
+
+.ui-banner--variant-page {
+  width: min(100%, 320px);
+  padding: var(--space-4);
+  align-items: center;
+}
+
+.ui-banner--variant-message {
+  width: min(100%, 1052px);
+  gap: var(--space-4);
+  padding: var(--space-5);
+  border-left: 4px solid transparent;
+  border-radius: var(--radius-xs);
+}
+
+.ui-banner--section-intent-informational {
+  background: var(--color-background-information-light);
+}
+
+.ui-banner--section-intent-warning {
+  background: var(--color-background-warning-light);
+}
+
+.ui-banner--section-intent-error {
+  background: var(--color-background-error-light);
+}
+
+.ui-banner--page-intent-warning {
+  background: var(--color-background-warning-light);
+}
+
+.ui-banner--page-intent-error {
+  background: var(--color-background-error-light);
+}
+
+.ui-banner--message-intent-orange {
+  background: var(--color-background-warning-light);
+  border-left-color: var(--color-background-warning);
+}
+
+.ui-banner--message-intent-red {
+  background: var(--color-background-error-light);
+  border-left-color: var(--color-background-error);
+}
+
+.ui-banner--message-intent-blue {
+  background: var(--color-background-information-light);
+  border-left-color: var(--color-background-information);
+}
+
+.ui-banner__icon {
+  width: 24px;
+  height: 24px;
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.ui-banner__icon-svg {
+  display: block;
+}
+
+.ui-banner__content {
+  flex: 1;
+  min-width: 0;
+  display: grid;
+  gap: var(--space-1);
+}
+
+.ui-banner__title {
+  margin: 0;
+  color: var(--color-text-default);
+  font-family: var(--brankas-typography-desktop-body-lg-semibold-font-family);
+  font-size: var(--brankas-typography-desktop-body-lg-semibold-font-size);
+  font-weight: var(--brankas-typography-desktop-body-lg-semibold-font-weight);
+  line-height: var(--brankas-typography-desktop-body-lg-semibold-line-height);
+  letter-spacing: var(--brankas-typography-desktop-body-lg-semibold-letter-spacing);
+}
+
+.ui-banner__message-row {
+  min-width: 0;
+}
+
+.ui-banner__message-row--message {
+  width: 100%;
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-1);
+}
+
+.ui-banner__message {
+  margin: 0;
+  flex: 1;
+  min-width: 0;
+  color: var(--color-text-default);
+  font-family: var(--brankas-typography-desktop-body-md-regular-font-family);
+  font-size: var(--brankas-typography-desktop-body-md-regular-font-size);
+  font-weight: var(--brankas-typography-desktop-body-md-regular-font-weight);
+  line-height: var(--brankas-typography-desktop-body-md-regular-line-height);
+  letter-spacing: -0.015em;
+}
+
+.ui-banner__message--small {
+  font-size: var(--brankas-typography-desktop-body-sm-regular-font-size);
+  line-height: var(--brankas-typography-desktop-body-xs-regular-line-height);
+  letter-spacing: var(--brankas-typography-desktop-body-sm-regular-letter-spacing);
+}
+
+.ui-banner__message--page {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.ui-banner__message--collapsed {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.ui-banner__link {
+  border: 0;
+  background: transparent;
+  padding: 0;
+  margin: 0;
+  color: var(--color-text-information);
+  font-family: var(--brankas-typography-desktop-body-md-medium-font-family);
+  font-size: var(--brankas-typography-desktop-body-md-medium-font-size);
+  font-weight: var(--brankas-typography-desktop-body-md-medium-font-weight);
+  line-height: var(--brankas-typography-desktop-body-md-medium-line-height);
+  letter-spacing: var(--brankas-typography-desktop-body-md-medium-letter-spacing);
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.ui-banner__link:focus-visible {
+  outline: 2px solid var(--color-blue-b100);
+  outline-offset: 2px;
+  border-radius: var(--radius-xs);
+}
+
+.ui-banner__close {
+  width: 24px;
+  height: 24px;
+  padding: 0;
+  border: 0;
+  border-radius: var(--radius-pill);
+  background: transparent;
+  color: var(--color-icon-subtlest);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.ui-banner--section-size-small .ui-banner__close {
+  width: 20px;
+  height: 20px;
+}
+
+.ui-banner--variant-message .ui-banner__close {
+  width: 16px;
+  height: 16px;
+}
+
+.ui-banner__close-icon {
+  display: block;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+}
+
+.ui-banner__close:hover {
+  background: color-mix(in srgb, var(--color-background-black) 4%, transparent);
+}
+
+.ui-banner__close:focus-visible {
+  outline: 2px solid var(--color-blue-b100);
+  outline-offset: 1px;
+}
+
+@media (max-width: 768px) {
+  .ui-banner--variant-message {
+    padding: var(--space-4);
+  }
+
+  .ui-banner__message-row--message {
+    flex-wrap: wrap;
+  }
+}

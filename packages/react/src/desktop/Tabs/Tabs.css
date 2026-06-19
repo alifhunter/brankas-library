@@ -1,0 +1,146 @@
+.ui-tabs {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: 100%;
+  font-family: var(--brankas-typography-desktop-body-md-regular-font-family);
+  color: var(--color-text-default);
+}
+
+.ui-tabs--vertical {
+  flex-direction: row;
+  gap: 24px;
+}
+
+/* Tablist container */
+.ui-tabs__list {
+  display: flex;
+  align-items: center;
+}
+
+.ui-tabs__list--horizontal {
+  gap: 24px;
+  border-bottom: 1px solid var(--color-border-subtle);
+}
+
+.ui-tabs__list--vertical {
+  flex-direction: column;
+  align-items: stretch;
+  gap: 16px;
+  border-left: 1px solid var(--color-border-subtle);
+}
+
+.ui-tabs__list--chips {
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+/* Tab button — shared */
+.ui-tabs__tab {
+  appearance: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background: transparent;
+  border: 0;
+  cursor: pointer;
+  color: var(--color-text-subtlest);
+  font-family: var(--brankas-typography-desktop-body-md-regular-font-family);
+  font-size: var(--brankas-typography-desktop-body-md-regular-font-size);
+  font-weight: var(--brankas-typography-desktop-body-md-regular-font-weight);
+  line-height: var(--brankas-typography-desktop-body-md-regular-line-height);
+  white-space: nowrap;
+  transition: color 120ms ease, background-color 120ms ease, border-color 120ms ease;
+}
+
+.ui-tabs__tab:focus-visible {
+  outline: 2px solid var(--color-blue-b100);
+  outline-offset: 2px;
+  border-radius: var(--radius-xs);
+}
+
+.ui-tabs__tab--disabled {
+  cursor: not-allowed;
+  color: var(--color-text-gray);
+}
+
+/* Horizontal layout */
+.ui-tabs__tab--horizontal {
+  padding: 12px 0 16px;
+  border-bottom: 2px solid transparent;
+  /* Push the underline 1px down so it sits flush with the list's border-bottom */
+  margin-bottom: -1px;
+}
+
+.ui-tabs__tab--horizontal.ui-tabs__tab--active {
+  color: var(--color-primary-blue);
+  font-family: var(--brankas-typography-desktop-body-md-semibold-font-family);
+  font-weight: var(--brankas-typography-desktop-body-md-semibold-font-weight);
+  border-bottom-color: var(--color-primary-blue);
+}
+
+/* Vertical layout */
+.ui-tabs__tab--vertical {
+  justify-content: flex-start;
+  padding: 12px 16px;
+  border-left: 2px solid transparent;
+  /* Sit flush with the list's border-left */
+  margin-left: -1px;
+}
+
+.ui-tabs__tab--vertical.ui-tabs__tab--active {
+  color: var(--color-primary-blue);
+  font-family: var(--brankas-typography-desktop-body-md-semibold-font-family);
+  font-weight: var(--brankas-typography-desktop-body-md-semibold-font-weight);
+  border-left-color: var(--color-primary-blue);
+}
+
+/* Chips layout */
+.ui-tabs__tab--chips {
+  padding: 8px 16px;
+  background: var(--color-background-default);
+  border: 1px solid var(--color-neutral-n200);
+  border-radius: var(--radius-pill);
+  color: var(--color-text-default);
+}
+
+.ui-tabs__tab--chips:hover:not(.ui-tabs__tab--active):not(.ui-tabs__tab--disabled) {
+  background: var(--color-background-hover);
+}
+
+.ui-tabs__tab--chips.ui-tabs__tab--active {
+  border-color: transparent;
+  /* Dark blue gradient pill per Figma */
+  background: linear-gradient(-90deg, var(--color-primary-blue) 0%, #364452 100%);
+  color: var(--color-text-inverse);
+  font-family: var(--brankas-typography-desktop-body-md-semibold-font-family);
+  font-weight: var(--brankas-typography-desktop-body-md-semibold-font-weight);
+}
+
+.ui-tabs__tab--chips.ui-tabs__tab--disabled {
+  background: var(--color-background-disabled);
+  border-color: var(--color-border-subtle);
+}
+
+/* Badge alignment inside tab */
+.ui-tabs__tab-badge {
+  flex-shrink: 0;
+}
+
+/* Panels */
+.ui-tabs__panels {
+  display: block;
+  width: 100%;
+  min-width: 0;
+}
+
+.ui-tabs__panels--vertical {
+  flex: 1;
+}
+
+.ui-tabs__panel:focus-visible {
+  outline: 2px solid var(--color-blue-b100);
+  outline-offset: 4px;
+  border-radius: var(--radius-xs);
+}

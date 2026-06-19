@@ -1,0 +1,249 @@
+.ui-fileupload {
+  display: grid;
+  gap: 12px;
+  width: 398px;
+  font-family: var(--brankas-typography-desktop-body-md-regular-font-family);
+  color: var(--color-text-default);
+}
+
+.ui-fileupload__heading {
+  display: grid;
+  gap: 4px;
+}
+
+.ui-fileupload__title {
+  font-size: var(--brankas-typography-desktop-body-md-regular-font-size);
+  font-weight: var(--brankas-typography-desktop-body-md-regular-font-weight);
+  line-height: var(--brankas-typography-desktop-body-md-regular-line-height);
+  color: var(--color-text-default);
+}
+
+.ui-fileupload__description {
+  font-size: var(--brankas-typography-desktop-body-sm-regular-font-size);
+  font-weight: var(--brankas-typography-desktop-body-sm-regular-font-weight);
+  line-height: var(--brankas-typography-desktop-body-xs-regular-line-height);
+  color: var(--color-text-subtlest);
+}
+
+.ui-fileupload__input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Button variant */
+.ui-fileupload__button-row {
+  display: inline-flex;
+  align-items: center;
+}
+
+/* Dropzone variant */
+.ui-fileupload__dropzone {
+  display: grid;
+  gap: 12px;
+  justify-items: center;
+  text-align: center;
+  padding: 16px;
+  border: 1px dashed var(--color-cool-gray-cg-100);
+  border-radius: var(--radius-sm);
+  background: var(--color-background-default);
+  transition: background-color 120ms ease, border-color 120ms ease;
+}
+
+.ui-fileupload__dropzone--drag-over {
+  background: var(--color-background-selected-light);
+  border-color: var(--color-border-selected);
+  border-style: solid;
+}
+
+.ui-fileupload--disabled .ui-fileupload__dropzone {
+  background: var(--color-background-disabled);
+  color: var(--color-text-gray);
+}
+
+.ui-fileupload__dropzone-icon {
+  display: inline-flex;
+  width: 40px;
+  height: 40px;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-icon-subtle);
+}
+
+.ui-fileupload--disabled .ui-fileupload__dropzone-icon {
+  color: var(--color-icon-disabled);
+}
+
+.ui-fileupload__dropzone-text {
+  display: grid;
+  gap: 4px;
+  width: 100%;
+}
+
+.ui-fileupload__dropzone-title {
+  font-size: var(--brankas-typography-desktop-body-md-regular-font-size);
+  line-height: var(--brankas-typography-desktop-body-md-regular-line-height);
+}
+
+.ui-fileupload--disabled .ui-fileupload__dropzone-title,
+.ui-fileupload--disabled .ui-fileupload__dropzone-subtitle {
+  color: var(--color-text-gray);
+}
+
+.ui-fileupload__dropzone-subtitle {
+  font-size: var(--brankas-typography-desktop-body-sm-regular-font-size);
+  line-height: var(--brankas-typography-desktop-body-xs-regular-line-height);
+  color: var(--color-text-subtlest);
+}
+
+.ui-fileupload__dropzone-actions {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* File card */
+.ui-fileupload__files {
+  display: grid;
+  gap: 8px;
+}
+
+.ui-fileupload__card {
+  display: grid;
+  gap: 8px;
+  padding: 16px;
+  background: var(--color-background-default);
+  border: 1px solid var(--color-cool-gray-cg-100);
+  border-radius: var(--radius-sm);
+}
+
+.ui-fileupload__card-row {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.ui-fileupload__card-icon {
+  display: inline-flex;
+  width: 24px;
+  height: 24px;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-icon-subtle);
+}
+
+.ui-fileupload__card-name-block {
+  display: grid;
+  flex: 1;
+  min-width: 0;
+  gap: 2px;
+}
+
+.ui-fileupload__card-name {
+  font-family: var(--brankas-typography-desktop-body-md-regular-font-family);
+  font-size: var(--brankas-typography-desktop-body-md-regular-font-size);
+  font-weight: var(--brankas-typography-desktop-body-md-regular-font-weight);
+  line-height: var(--brankas-typography-desktop-body-md-regular-line-height);
+  color: var(--color-text-default);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.ui-fileupload__card--done .ui-fileupload__card-name {
+  color: var(--color-text-information);
+}
+
+.ui-fileupload__card--error .ui-fileupload__card-name {
+  color: var(--color-text-error);
+}
+
+.ui-fileupload__card-meta {
+  font-family: var(--brankas-typography-desktop-body-sm-regular-font-family);
+  font-size: var(--brankas-typography-desktop-body-sm-regular-font-size);
+  line-height: var(--brankas-typography-desktop-body-xs-regular-line-height);
+  color: var(--color-text-subtlest);
+}
+
+.ui-fileupload__card-close {
+  appearance: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 24px;
+  height: 24px;
+  padding: 0;
+  background: transparent;
+  border: 0;
+  border-radius: var(--radius-pill);
+  color: var(--color-icon-subtle);
+  cursor: pointer;
+}
+
+.ui-fileupload__card-close:hover {
+  background: var(--color-background-subtlest);
+}
+
+.ui-fileupload__card-close:focus-visible {
+  outline: 2px solid var(--color-blue-b100);
+}
+
+/* Progress bar */
+.ui-fileupload__progress-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.ui-fileupload__progress-track {
+  flex: 1;
+  min-width: 0;
+  height: 4px;
+  border-radius: var(--radius-pill);
+  background: var(--color-background-cool);
+  overflow: hidden;
+}
+
+.ui-fileupload__progress-fill {
+  height: 100%;
+  border-radius: var(--radius-pill);
+  background: linear-gradient(-90deg, #33a2ff 2.5%, #1d77c3 100%);
+  transition: width 200ms ease;
+}
+
+.ui-fileupload__progress-pct {
+  width: 36px;
+  font-size: var(--brankas-typography-desktop-body-sm-regular-font-size);
+  line-height: 1.4;
+  color: var(--color-neutral-n800);
+  text-align: right;
+}
+
+/* Helper / error rows */
+.ui-fileupload__helper {
+  font-size: var(--brankas-typography-desktop-body-sm-regular-font-size);
+  line-height: var(--brankas-typography-desktop-body-xs-regular-line-height);
+  color: var(--color-text-subtle);
+}
+
+.ui-fileupload__error {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  color: var(--color-text-error);
+  font-size: var(--brankas-typography-desktop-body-sm-regular-font-size);
+  line-height: var(--brankas-typography-desktop-body-xs-regular-line-height);
+}
+
+.ui-fileupload__error svg {
+  flex-shrink: 0;
+  color: var(--color-background-error);
+}

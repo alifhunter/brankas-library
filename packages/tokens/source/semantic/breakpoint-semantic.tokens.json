@@ -1,0 +1,25 @@
+{
+  "breakpoint": {
+    "$type": "dimension",
+    "base": {
+      "$value": "{breakpoint.0}",
+      "$description": "Mobile. All small screens, single column."
+    },
+    "sm": {
+      "$value": "{breakpoint.640}",
+      "$description": "Large phones / small tablets. Adjust spacing or font sizes before main tablet layout."
+    },
+    "md": {
+      "$value": "{breakpoint.768}",
+      "$description": "Tablets. Layout can expand to 2 columns, navigation might change."
+    },
+    "l": {
+      "$value": "{breakpoint.1024}",
+      "$description": "Laptops / small desktops. Standard desktop monitors."
+    },
+    "xl": {
+      "$value": "{breakpoint.1280}",
+      "$description": "Standard desktops. Further spacing adjustments or showing more information."
+    }
+  }
+}

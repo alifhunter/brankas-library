@@ -1,0 +1,112 @@
+.ui-progress-indicator {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  background: var(--color-background-default);
+  border-bottom: 1px solid var(--color-cool-gray-cg-100);
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.ui-progress-indicator::-webkit-scrollbar {
+  display: none;
+}
+
+.ui-progress-indicator__list {
+  display: inline-flex;
+  align-items: center;
+  gap: 16px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.ui-progress-indicator__step {
+  display: inline-flex;
+  align-items: center;
+  padding-bottom: 16px;
+  border-bottom: 2px solid transparent;
+  /* Compensate for parent border-bottom so the underline visually overlaps */
+  margin-bottom: -1px;
+}
+
+.ui-progress-indicator__trigger {
+  appearance: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 0;
+  background: transparent;
+  border: 0;
+  color: inherit;
+  font-family: var(--brankas-typography-desktop-body-lg-medium-font-family);
+  font-size: var(--brankas-typography-desktop-body-lg-medium-font-size);
+  font-weight: var(--brankas-typography-desktop-body-lg-medium-font-weight);
+  line-height: var(--brankas-typography-desktop-body-lg-medium-line-height);
+  white-space: nowrap;
+}
+
+.ui-progress-indicator__step--interactive .ui-progress-indicator__trigger {
+  cursor: pointer;
+}
+
+.ui-progress-indicator__step--interactive .ui-progress-indicator__trigger:focus-visible {
+  outline: 2px solid var(--color-blue-b100);
+  outline-offset: 2px;
+  border-radius: var(--radius-xs);
+}
+
+.ui-progress-indicator__marker {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  border-radius: var(--radius-pill);
+  font-family: var(--brankas-typography-desktop-body-sm-medium-font-family);
+  font-size: var(--brankas-typography-desktop-body-sm-medium-font-size);
+  font-weight: var(--brankas-typography-desktop-body-sm-medium-font-weight);
+  line-height: 1.4;
+  letter-spacing: -0.01em;
+  flex-shrink: 0;
+}
+
+.ui-progress-indicator__label {
+  font-family: var(--brankas-typography-desktop-body-lg-medium-font-family);
+  font-size: var(--brankas-typography-desktop-body-lg-medium-font-size);
+  font-weight: var(--brankas-typography-desktop-body-lg-medium-font-weight);
+  line-height: var(--brankas-typography-desktop-body-lg-medium-line-height);
+}
+
+/* States */
+.ui-progress-indicator__step--current {
+  border-bottom-color: var(--color-primary-blue);
+}
+
+.ui-progress-indicator__step--current .ui-progress-indicator__marker {
+  background: var(--color-primary-blue);
+  color: var(--color-text-inverse);
+}
+
+.ui-progress-indicator__step--current .ui-progress-indicator__label {
+  color: var(--color-primary-blue);
+}
+
+.ui-progress-indicator__step--completed .ui-progress-indicator__marker {
+  background: var(--color-primary-blue);
+  color: var(--color-text-inverse);
+}
+
+.ui-progress-indicator__step--completed .ui-progress-indicator__label {
+  color: var(--color-text-default);
+}
+
+.ui-progress-indicator__step--upcoming .ui-progress-indicator__marker {
+  background: var(--color-background-subtle);
+  color: var(--color-text-subtlest);
+}
+
+.ui-progress-indicator__step--upcoming .ui-progress-indicator__label {
+  color: var(--color-text-gray);
+}

@@ -1,0 +1,182 @@
+/* ===== Toast (visual primitive) ===== */
+.ui-toast {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 328px;
+  max-width: 480px;
+  height: 44px;
+  padding: 12px 16px;
+  border-radius: 12px;
+  color: var(--color-text-inverse);
+  font-family: var(--brankas-typography-desktop-body-md-regular-font-family);
+  font-size: var(--brankas-typography-desktop-body-md-regular-font-size);
+  font-weight: var(--brankas-typography-desktop-body-md-regular-font-weight);
+  line-height: var(--brankas-typography-desktop-body-md-regular-line-height);
+  letter-spacing: -0.015em;
+  filter: drop-shadow(0 4px 6px rgb(16 24 40 / 3%))
+    drop-shadow(0 12px 16px rgb(16 24 40 / 8%));
+}
+
+.ui-toast--general {
+  background: var(--color-neutral-n1000);
+}
+
+.ui-toast--success {
+  background: var(--color-background-success);
+}
+
+.ui-toast--warning {
+  background: var(--color-background-warning);
+}
+
+.ui-toast--information {
+  background: var(--color-background-information);
+}
+
+.ui-toast--error {
+  background: var(--color-background-error);
+}
+
+.ui-toast__icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+  /* SVGs are filled with currentColor backgrounds set explicitly white on dark toast bg.
+     They use `fill="currentColor"` for circle/path; we override here so the icon reads as white. */
+  color: var(--color-text-inverse);
+}
+
+.ui-toast__message {
+  flex: 1;
+  min-width: 0;
+}
+
+.ui-toast__action {
+  appearance: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4px 8px;
+  background: transparent;
+  border: 0;
+  border-radius: var(--radius-xs);
+  color: var(--color-text-inverse);
+  font-family: var(--brankas-typography-desktop-body-md-semibold-font-family);
+  font-size: var(--brankas-typography-desktop-body-md-semibold-font-size);
+  font-weight: var(--brankas-typography-desktop-body-md-semibold-font-weight);
+  line-height: var(--brankas-typography-desktop-body-md-semibold-line-height);
+  cursor: pointer;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  white-space: nowrap;
+}
+
+.ui-toast__action:hover {
+  background: rgb(255 255 255 / 12%);
+}
+
+.ui-toast__action:focus-visible {
+  outline: 2px solid rgb(255 255 255 / 60%);
+  outline-offset: 1px;
+}
+
+.ui-toast__close {
+  appearance: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+  padding: 0;
+  background: transparent;
+  border: 0;
+  border-radius: var(--radius-pill);
+  color: var(--color-text-inverse);
+  cursor: pointer;
+  opacity: 0.85;
+}
+
+.ui-toast__close:hover {
+  opacity: 1;
+}
+
+.ui-toast__close:focus-visible {
+  outline: 2px solid rgb(255 255 255 / 60%);
+  outline-offset: 2px;
+}
+
+/* ===== Toaster (positioning + stack) ===== */
+.ui-toaster {
+  position: fixed;
+  z-index: 2147483000;
+  display: flex;
+  flex-direction: column;
+  gap: var(--ui-toaster-gap, 12px);
+  pointer-events: none;
+}
+
+.ui-toaster__item {
+  pointer-events: auto;
+  animation: ui-toast-in 220ms ease-out;
+}
+
+@keyframes ui-toast-in {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ui-toaster__item {
+    animation: none;
+  }
+}
+
+/* Position variants */
+.ui-toaster--top-left {
+  top: var(--ui-toaster-offset, 24px);
+  left: var(--ui-toaster-offset, 24px);
+  align-items: flex-start;
+}
+
+.ui-toaster--top-center {
+  top: var(--ui-toaster-offset, 24px);
+  left: 50%;
+  transform: translateX(-50%);
+  align-items: center;
+}
+
+.ui-toaster--top-right {
+  top: var(--ui-toaster-offset, 24px);
+  right: var(--ui-toaster-offset, 24px);
+  align-items: flex-end;
+}
+
+.ui-toaster--bottom-left {
+  bottom: var(--ui-toaster-offset, 24px);
+  left: var(--ui-toaster-offset, 24px);
+  align-items: flex-start;
+}
+
+.ui-toaster--bottom-center {
+  bottom: var(--ui-toaster-offset, 24px);
+  left: 50%;
+  transform: translateX(-50%);
+  align-items: center;
+}
+
+.ui-toaster--bottom-right {
+  bottom: var(--ui-toaster-offset, 24px);
+  right: var(--ui-toaster-offset, 24px);
+  align-items: flex-end;
+}

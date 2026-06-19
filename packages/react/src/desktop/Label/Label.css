@@ -1,0 +1,68 @@
+.ui-label {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  padding: 4px 8px;
+  border-radius: var(--radius-pill);
+  font-family: var(--brankas-typography-desktop-body-sm-semibold-font-family);
+  font-size: var(--brankas-typography-desktop-body-sm-semibold-font-size);
+  font-weight: var(--brankas-typography-desktop-body-sm-semibold-font-weight);
+  line-height: var(--brankas-typography-desktop-body-xs-semibold-line-height);
+  white-space: nowrap;
+}
+
+.ui-label--neutral {
+  background: var(--color-background-subtle);
+  color: var(--color-text-default);
+}
+
+.ui-label--information {
+  background: var(--color-background-information-light);
+  color: var(--color-text-information);
+}
+
+.ui-label--positive {
+  background: var(--color-background-success-light);
+  color: var(--color-text-success);
+}
+
+.ui-label--warning {
+  background: var(--color-background-warning-light);
+  color: var(--color-text-warning);
+}
+
+.ui-label--negative {
+  background: var(--color-background-error-light);
+  color: var(--color-text-error);
+}
+
+.ui-label__icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 12px;
+  height: 12px;
+  flex-shrink: 0;
+  color: currentColor;
+}
+
+.ui-label__text {
+  display: inline-flex;
+  align-items: center;
+}
+
+/* Interactive (tag) variant — only when onClick is wired */
+.ui-label--interactive {
+  cursor: pointer;
+  transition: filter 120ms ease, box-shadow 120ms ease;
+}
+
+.ui-label--interactive:hover {
+  filter: brightness(0.96);
+}
+
+.ui-label--interactive:focus-visible {
+  outline: 2px solid var(--color-blue-b100);
+  outline-offset: 2px;
+}

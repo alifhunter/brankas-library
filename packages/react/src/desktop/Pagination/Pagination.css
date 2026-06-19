@@ -1,0 +1,175 @@
+.ui-pagination {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  font-family: var(--brankas-typography-desktop-body-sm-medium-font-family);
+  color: var(--color-primary-blue);
+}
+
+.ui-pagination__pages {
+  display: inline-flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.ui-pagination__list {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.ui-pagination__item {
+  display: inline-flex;
+}
+
+.ui-pagination__nav {
+  appearance: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  padding: 0;
+  background: transparent;
+  border: 0;
+  border-radius: var(--radius-pill);
+  color: var(--color-primary-blue);
+  cursor: pointer;
+  transition: background-color 120ms ease, color 120ms ease;
+}
+
+.ui-pagination__nav:hover:not(:disabled) {
+  background: var(--color-background-subtlest);
+}
+
+.ui-pagination__nav:focus-visible {
+  outline: 2px solid var(--color-blue-b100);
+  outline-offset: 2px;
+}
+
+.ui-pagination__nav:disabled {
+  cursor: not-allowed;
+  color: var(--color-text-gray);
+}
+
+.ui-pagination__page {
+  appearance: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 32px;
+  height: 32px;
+  padding: 8px 16px;
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: var(--radius-pill);
+  color: var(--color-primary-blue);
+  font-family: var(--brankas-typography-desktop-body-sm-medium-font-family);
+  font-size: var(--brankas-typography-desktop-body-sm-medium-font-size);
+  font-weight: var(--brankas-typography-desktop-body-sm-medium-font-weight);
+  line-height: var(--brankas-typography-desktop-body-xs-medium-line-height);
+  cursor: pointer;
+  transition: background-color 120ms ease, border-color 120ms ease, color 120ms ease;
+}
+
+.ui-pagination__page:hover:not(:disabled):not(.ui-pagination__page--active) {
+  background: var(--color-background-subtlest);
+}
+
+.ui-pagination__page:focus-visible {
+  outline: 2px solid var(--color-blue-b100);
+  outline-offset: 2px;
+}
+
+.ui-pagination__page--active {
+  background: var(--color-background-default);
+  border-color: var(--color-blue-b300);
+  color: var(--color-text-information);
+}
+
+.ui-pagination__page:disabled {
+  cursor: not-allowed;
+  color: var(--color-text-gray);
+}
+
+.ui-pagination__ellipsis {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 32px;
+  height: 32px;
+  padding: 8px 16px;
+  color: var(--color-primary-blue);
+  font-family: var(--brankas-typography-desktop-body-sm-medium-font-family);
+  font-size: var(--brankas-typography-desktop-body-sm-medium-font-size);
+}
+
+/* Rows per page */
+.ui-pagination__rows {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.ui-pagination__rows-label {
+  font-family: var(--brankas-typography-desktop-body-sm-regular-font-family);
+  font-size: var(--brankas-typography-desktop-body-sm-regular-font-size);
+  line-height: 1.4;
+  color: var(--color-text-default);
+}
+
+.ui-pagination__rows-select-shell {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+}
+
+.ui-pagination__rows-select {
+  appearance: none;
+  display: inline-flex;
+  align-items: center;
+  height: 32px;
+  padding: 8px 36px 8px 16px;
+  background: var(--color-background-default);
+  border: 0;
+  border-radius: var(--radius-pill);
+  box-shadow:
+    0 -1px 1px rgb(0 0 0 / 2%),
+    0 4px 8px rgb(0 0 0 / 6%);
+  color: var(--color-primary-blue);
+  font-family: var(--brankas-typography-desktop-body-sm-medium-font-family);
+  font-size: var(--brankas-typography-desktop-body-sm-medium-font-size);
+  font-weight: var(--brankas-typography-desktop-body-sm-medium-font-weight);
+  line-height: var(--brankas-typography-desktop-body-xs-medium-line-height);
+  cursor: pointer;
+}
+
+.ui-pagination__rows-select:focus-visible {
+  outline: 2px solid var(--color-blue-b100);
+  outline-offset: 2px;
+}
+
+.ui-pagination__rows-select:disabled {
+  cursor: not-allowed;
+  color: var(--color-text-gray);
+}
+
+.ui-pagination__rows-chevron {
+  position: absolute;
+  right: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+  color: var(--color-primary-blue);
+}
+
+.ui-pagination--disabled {
+  opacity: 0.6;
+}

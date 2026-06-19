@@ -1,0 +1,28 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "noEmit": true
+  },
+  "include": [
+    ".storybook/**/*.ts",
+    ".storybook/**/*.tsx",
+    "src/**/*.ts",
+    "src/**/*.tsx",
+    "../../packages/react/src/**/*.ts",
+    "../../packages/react/src/**/*.tsx",
+    "../../packages/native/src/**/*.ts",
+    "../../packages/native/src/**/*.tsx"
+  ],
+  "exclude": [
+    "node_modules",
+    "storybook-static",
+    "../../packages/react/src/**/*.stories.ts",
+    "../../packages/react/src/**/*.stories.tsx",
+    "../../packages/react/src/**/*.test.ts",
+    "../../packages/react/src/**/*.test.tsx",
+    "../../packages/native/src/**/*.stories.ts",
+    "../../packages/native/src/**/*.stories.tsx",
+    "../../packages/native/src/**/*.test.ts",
+    "../../packages/native/src/**/*.test.tsx"
+  ]
+}

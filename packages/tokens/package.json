@@ -1,0 +1,24 @@
+{
+  "name": "@brankas/tokens",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    },
+    "./tokens.css": "./dist/tokens.css"
+  },
+  "scripts": {
+    "build": "pnpm run tokens:build && tsc -p tsconfig.json",
+    "tokens:build": "node ./scripts/build-tokens.mjs",
+    "dev": "tsc -p tsconfig.json --watch",
+    "lint": "eslint src",
+    "typecheck": "pnpm run tokens:build && tsc -p tsconfig.json --noEmit",
+    "test": "pnpm run tokens:build",
+    "clean": "rm -rf dist"
+  }
+}

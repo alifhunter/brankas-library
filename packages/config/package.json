@@ -1,0 +1,17 @@
+{
+  "name": "@brankas/config",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    "./tsconfig/base": "./tsconfig/base.json"
+  },
+  "scripts": {
+    "build": "echo \"No config build required\"",
+    "dev": "echo \"No config dev server required\"",
+    "lint": "echo \"No config lint required\"",
+    "typecheck": "echo \"No config typecheck required\"",
+    "test": "echo \"No config tests configured yet\"",
+    "clean": "echo \"No config clean required\""
+  }
+}

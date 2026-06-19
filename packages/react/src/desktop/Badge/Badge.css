@@ -1,0 +1,48 @@
+.ui-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-pill);
+  font-family: var(--brankas-typography-desktop-body-sm-semibold-font-family);
+  font-size: var(--brankas-typography-desktop-body-sm-semibold-font-size);
+  line-height: var(--brankas-typography-desktop-body-xs-semibold-line-height);
+  font-weight: var(--brankas-typography-desktop-body-sm-semibold-font-weight);
+  letter-spacing: var(--brankas-typography-desktop-body-sm-semibold-letter-spacing);
+  white-space: nowrap;
+}
+
+.ui-badge--type-number,
+.ui-badge--type-new {
+  min-width: 20px;
+  height: 20px;
+  padding: 2px 6px;
+}
+
+.ui-badge--type-dot {
+  width: 8px;
+  height: 8px;
+  min-width: 8px;
+  padding: 0;
+  font-size: 0;
+  line-height: 0;
+}
+
+.ui-badge--color-gray {
+  background: var(--color-background-subtle);
+  color: var(--color-text-default);
+}
+
+.ui-badge--color-primary {
+  background: var(--color-background-primary-blue);
+  color: var(--color-text-inverse);
+}
+
+.ui-badge--color-red {
+  background: var(--color-background-primary-red);
+  color: var(--color-text-inverse);
+}
+
+.ui-badge--color-blue {
+  background: var(--color-background-information);
+  color: var(--color-text-inverse);
+}

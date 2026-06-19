@@ -1,0 +1,33 @@
+.ui-skeleton {
+  display: inline-block;
+  vertical-align: middle;
+  /* Base gradient matches the Figma swatch: light → cool-gray */
+  background: linear-gradient(
+    90deg,
+    #f5f7f9 0%,
+    #e9f0f2 50%,
+    #f5f7f9 100%
+  );
+  background-size: 200% 100%;
+}
+
+.ui-skeleton--animated {
+  animation: ui-skeleton-shimmer 1.4s ease-in-out infinite;
+}
+
+@keyframes ui-skeleton-shimmer {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ui-skeleton--animated {
+    animation: none;
+    /* Hold the gradient steady at the same color stop the Figma shows */
+    background-position: 100% 0;
+  }
+}

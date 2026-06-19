@@ -1,0 +1,14 @@
+{
+  "shadow": {
+    "$type": "shadow",
+    "card": {
+      "$value": "{shadow.md}"
+    },
+    "hover": {
+      "$value": "{shadow.sm}"
+    },
+    "overlay": {
+      "$value": "{shadow.lg}"
+    }
+  }
+}
