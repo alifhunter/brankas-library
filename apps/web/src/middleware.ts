@@ -13,9 +13,11 @@ import type { NextRequest } from 'next/server';
  */
 export function middleware(request: NextRequest) {
   if (request.nextUrl.pathname === '/storybook') {
-    const url = request.nextUrl.clone();
-    url.pathname = '/storybook/';
-    return NextResponse.redirect(url, 308);
+    // Set the Location header directly. NextResponse.redirect / NextURL
+    // serialization strips the trailing slash back off (the app uses
+    // trailingSlash: false), which would redirect /storybook to itself.
+    const location = new URL('/storybook/', request.url).toString();
+    return new NextResponse(null, { status: 308, headers: { Location: location } });
   }
 
   return NextResponse.next();
