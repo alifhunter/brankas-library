@@ -28,17 +28,15 @@ const nextConfig = {
   // Storybook's static assets use relative URLs, so the proxied document must
   // keep its trailing slash (/storybook/). Disabling Next's automatic
   // trailing-slash redirect prevents /storybook/ -> /storybook stripping that
-  // would break those relative asset paths.
+  // would break those relative asset paths. (A redirect rule here would loop,
+  // because Next matches `/storybook` against `/storybook/` too.)
   skipTrailingSlashRedirect: true,
-  async redirects() {
-    return [
-      // Send the bare path to the trailing-slash form so relative assets resolve.
-      { source: '/storybook', destination: '/storybook/', permanent: false },
-    ];
-  },
   async rewrites() {
     return {
       beforeFiles: [
+        // Proxy the Storybook index and all of its assets. The bare /storybook
+        // path is sent to /storybook/ by middleware.ts first so the manager's
+        // relative asset URLs resolve under the /storybook/ prefix.
         { source: '/storybook/', destination: `${storybookOrigin}/` },
         { source: '/storybook/:path*', destination: `${storybookOrigin}/:path*` },
       ],
