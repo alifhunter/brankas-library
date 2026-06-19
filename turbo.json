@@ -1,5 +1,15 @@
 {
   "$schema": "https://turbo.build/schema.json",
+  "globalEnv": [
+    "NODE_ENV",
+    "DATABASE_URI",
+    "POSTGRES_URL",
+    "PAYLOAD_SECRET",
+    "PAYLOAD_SEED_ADMIN",
+    "PAYLOAD_SEED_CONTENT",
+    "PAYLOAD_ALLOWED_ORIGINS",
+    "NEXT_ALLOWED_DEV_ORIGINS"
+  ],
   "tasks": {
     "build": {
       "dependsOn": ["^build"],

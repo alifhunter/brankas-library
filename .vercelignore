@@ -1,0 +1,13 @@
+**/node_modules
+.git
+**/.turbo
+**/.next
+**/.expo
+.pnpm-store
+**/dist
+storybook-static
+**/*.log
+**/*.tsbuildinfo
+apps/native-prototype/ios
+apps/native-prototype/android
+apps/native-prototype/.expo
