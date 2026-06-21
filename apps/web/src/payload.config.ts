@@ -105,7 +105,12 @@ export default buildConfig({
     vercelBlobStorage({
       enabled: Boolean(process.env.BLOB_READ_WRITE_TOKEN),
       collections: {
-        [Media.slug]: true,
+        [Media.slug]: {
+          // Serve media straight from the public Blob CDN URL instead of
+          // routing through Payload's access-controlled /api/media/file route,
+          // so images render for anonymous website visitors.
+          disablePayloadAccessControl: true,
+        },
       },
       token: process.env.BLOB_READ_WRITE_TOKEN,
     }),
