@@ -62,7 +62,7 @@ The repository now contains the Phase 1 monorepo scaffold, a working Phase 2 tok
 
 The `apps/web` site is now deployed to Vercel at https://brankas-library.vercel.app, backed by a Neon Postgres database, with the GitHub repository at https://github.com/alifhunter/brankas-library (pushes to `main` auto-deploy). Payload `/admin` login is verified working in production against Neon. See the Deployment section of `README.md` for project configuration, environment variables, and secret rotation.
 
-Continue Phase 6 by connecting articles and releases to public website routes. Phase 5 visual review, Phase 4 pattern guidance, expanded component behavior tests, and visual screenshot review remain active hardening work.
+Published articles and releases now render on public website routes (`/articles`, `/articles/[slug]`, `/change-log/[releaseSlug]`), and media uploads (including rich-text image embeds) are stored in Vercel Blob. Remaining Phase 6 work: live preview/draft flows for articles. Phase 5 visual review, Phase 4 pattern guidance, expanded component behavior tests, and visual screenshot review remain active hardening work.
 
 ## In Progress
 
@@ -78,7 +78,7 @@ Continue Phase 6 by connecting articles and releases to public website routes. P
 - [x] Connect Payload component page content to `/components/[slug]`.
 - [x] Connect Payload site navigation to the navbar and sidebar.
 - [x] Validate Payload admin login against Postgres (verified in production against Neon).
-- [ ] Render published article and release content on the website.
+- [x] Render published article and release content on the website.
 - [x] Defer token documentation metadata until preview/docs content needs it.
 
 ## Next
@@ -96,7 +96,7 @@ Continue Phase 6 by connecting articles and releases to public website routes. P
 - [x] Start Phase 6 with embedded Payload CMS configuration.
 - [x] Provision Postgres (Neon) and verify `/admin` login.
 - [x] Deploy `apps/web` to Vercel and connect GitHub for auto-deploy.
-- [ ] Add CMS-driven article and release pages.
+- [x] Add CMS-driven article and release pages.
 - [ ] Add `@brankas/react/mobile` entrypoint when mobile components begin.
 
 ## Decision Log
@@ -126,6 +126,7 @@ Continue Phase 6 by connecting articles and releases to public website routes. P
 | 2026-06-19 | Deploy web app to Vercel + GitHub       | Pushed repo to private GitHub `alifhunter/brankas-library`; deployed `apps/web` to Vercel (https://brankas-library.vercel.app) backed by Neon Postgres. Monorepo deploy required Root Directory `apps/web`, env vars declared in `turbo.json` `globalEnv`, and a `.vercelignore` excluding native `ios`/`android` to stay under Vercel's file limit. Seeded Neon schema + admin via a one-time local dev run; prod seeding disabled. `/admin` login verified. Rotation guidance added to `README.md`. |
 | 2026-06-19 | Environment-aware Storybook nav link    | Resolved the 2026-05-08 hardcoded-localhost issue. `NEXT_PUBLIC_STORYBOOK_URL` now drives the Storybook top-nav link; `applyStorybookUrl` in `lib/site-navigation-data.ts` rewrites it at render time (overriding the CMS-stored value). Dev defaults to `http://localhost:6006`; production hides the link when the variable is unset. |
 | 2026-06-19 | Host Storybook at /storybook (multi-zone) | Deployed Storybook as a second Vercel project (`brankas-storybook`, root `apps/storybook`, same GitHub repo) and proxied it onto the main domain at `/storybook` via Next.js rewrites + `skipTrailingSlashRedirect` (`apps/web/next.config.mjs`) plus a `middleware.ts` redirect of bare `/storybook` → `/storybook/`. Trailing slash required because Storybook's manager uses relative asset URLs; a `redirects()` rule loops, so middleware handles it. `STORYBOOK_ORIGIN` overrides the proxy target; `NEXT_PUBLIC_STORYBOOK_URL=/storybook/` in prod. Verified index, manager assets, preview iframe, and `index.json` all proxy at 200. |
+| 2026-06-22 | CMS article/release pages + Blob media  | Added `/articles` + `/articles/[slug]` (lib/articles.ts) and cover-image rendering on `/change-log/[releaseSlug]`. Bumped fetcher `depth` to 1 so hero/cover images and rich-text `upload` embeds resolve. Media now stored in Vercel Blob (`@payloadcms/storage-vercel-blob`, store `brankas-media`) because Vercel's FS is ephemeral/read-only; `disablePayloadAccessControl: true` serves images from the public Blob CDN URL so anonymous visitors can load them. Verified prod upload → public blob URL → 200. Added Articles nav links (defaults + seed + live CMS via API) and two starter articles. |
 
 ## Validation Checklist
 
@@ -147,7 +148,7 @@ Use this checklist when updating the library:
 - [ ] Website page layout selection correctly shows or hides the sidebar.
 - [ ] Published `Component Pages` entries render at `/components/[slug]`.
 - [ ] `Site Navigation` edits in Payload appear in the navbar and sidebar.
-- [ ] Published CMS articles and releases render on the website.
+- [x] Published CMS articles and releases render on the website.
 - [ ] Payload CMS content does not replace source-controlled component API docs.
 - [ ] New assets are named clearly and consistently.
 - [ ] Accessibility expectations are documented for interactive components.

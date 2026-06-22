@@ -147,7 +147,8 @@ Current website routes:
 - `/components/[slug]`: starter component detail pages with package-backed live previews.
 - `/tokens`: CMS-backed token reference page with CSS variable and TypeScript export examples.
 - `/patterns`: CMS-backed pattern guidance page with package-backed examples and usage notes.
-- `/change-log`: CMS-backed changelog page.
+- `/articles`: list of published CMS articles; `/articles/[slug]`: article detail with hero image and rich-text content.
+- `/change-log`: CMS-backed changelog page; `/change-log/[releaseSlug]`: release detail with cover image and rich-text notes.
 
 ## Payload CMS
 
@@ -181,6 +182,25 @@ Each website page can choose a layout: documentation sidebar, no sidebar, or cus
 
 The `Component Pages` collection controls editable component detail pages at `/components/[slug]`. Payload owns page copy and metadata such as description, import name, anatomy, usage, and accessibility notes. Live previews remain package-backed from `@brankas/react/desktop`.
 
+### Articles and releases
+
+The `Articles` collection renders on the public website at `/articles` (list) and `/articles/[slug]` (detail). Only documents with `status: published` are shown. Each article supports a title, slug, excerpt, category, optional hero image, rich-text content, and `publishedAt` date. Drafts are enabled, so unpublished work stays out of the public list.
+
+The `Releases` collection renders at `/change-log/[releaseSlug]`, with an optional cover image, tags, and rich-text release notes.
+
+Both fetchers query at `depth: 1` so relationship fields (hero/cover image) and rich-text `upload` nodes resolve to real media URLs. If you add a deeply nested embed, increase the depth in `lib/articles.ts` / `lib/releases.ts`.
+
+### Media uploads (rich-text image embeds)
+
+The rich-text editor (`content` field) supports inline image embeds via Payload's default upload feature — insert a `Media` upload directly in the editor and it renders as a `<figure><img>` on the website (see `app/(frontend)/rich-text.tsx`).
+
+Uploaded media is stored in **Vercel Blob**, not on local disk, because Vercel's serverless filesystem is ephemeral and read-only. This is configured with `@payloadcms/storage-vercel-blob` in `payload.config.ts`:
+
+- The plugin is enabled whenever `BLOB_READ_WRITE_TOKEN` is present (Vercel deployments and local dev). Without it, Payload falls back to local-disk storage.
+- The `Media` collection uses `disablePayloadAccessControl: true`, so files are served directly from the public Blob CDN URL (e.g. `https://<id>.public.blob.vercel-storage.com/...`) rather than through Payload's access-controlled `/api/media/file` route — required so images load for anonymous website visitors.
+
+For local development, the `BLOB_READ_WRITE_TOKEN` is read from `apps/web/.env.local`. Create a Blob store and link it with `vercel blob create-store <name> --access public`, which adds the token to the Vercel project automatically.
+
 If the collection is empty in a local database, restart `pnpm --filter @brankas/web dev` with `PAYLOAD_SEED_CONTENT=true`. The website sidebar can still show component links because sidebar navigation is stored separately in the `Site Navigation` global.
 
 The `Site Navigation` global controls the website header and left documentation sidebar:
@@ -206,7 +226,7 @@ The `apps/web` website is deployed to Vercel and backed by a Neon (Postgres) dat
 This is a pnpm + Turborepo monorepo, so three settings are required and must not be reverted:
 
 1. **Root Directory** is set to `apps/web` in the Vercel project so Vercel installs at the pnpm workspace root and builds the web app.
-2. **`turbo.json` `globalEnv`** lists every runtime variable (`DATABASE_URI`, `PAYLOAD_SECRET`, `PAYLOAD_SEED_*`, `PAYLOAD_ALLOWED_ORIGINS`, `NEXT_PUBLIC_STORYBOOK_URL`, `STORYBOOK_ORIGIN`). Turbo strips environment variables from tasks unless they are declared here, which otherwise makes the Payload config throw at build time.
+2. **`turbo.json` `globalEnv`** lists every runtime variable (`DATABASE_URI`, `PAYLOAD_SECRET`, `PAYLOAD_SEED_*`, `BLOB_READ_WRITE_TOKEN`, `PAYLOAD_ALLOWED_ORIGINS`, `NEXT_PUBLIC_STORYBOOK_URL`, `STORYBOOK_ORIGIN`). Turbo strips environment variables from tasks unless they are declared here, which otherwise makes the Payload config throw at build time.
 3. **`.vercelignore`** excludes `node_modules`, build caches, and the `apps/native-prototype/ios` and `android` folders (CocoaPods generates thousands of files) so CLI deploys stay under Vercel's file limit. All workspace `package.json` files are kept so `pnpm install --frozen-lockfile` succeeds.
 
 ### Production environment variables
@@ -219,6 +239,7 @@ Set these on the Vercel project (Production scope):
 | `PAYLOAD_SECRET` | Signs Payload auth tokens. Use a long random value. |
 | `PAYLOAD_SEED_ADMIN` | `false` in production (the database is already seeded). |
 | `PAYLOAD_SEED_CONTENT` | `false` in production. |
+| `BLOB_READ_WRITE_TOKEN` | Vercel Blob token for media uploads. Added automatically when the Blob store is linked to the project. |
 | `PAYLOAD_ALLOWED_ORIGINS` | Must include the production origin (`https://brankas-library.vercel.app`) or `/admin` login fails the CSRF origin check. Add custom domains here too. |
 | `NEXT_PUBLIC_STORYBOOK_URL` | Set to `/storybook/` in production so the nav link targets the proxied Storybook. When unset, the link points to `http://localhost:6006` in development and is hidden in production. |
 | `STORYBOOK_ORIGIN` | Optional. Origin the `/storybook` rewrites proxy to. Defaults to `https://brankas-storybook.vercel.app`; override only if the Storybook project URL changes. |

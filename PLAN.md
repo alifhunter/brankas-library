@@ -247,7 +247,7 @@ Add self-hosted Payload CMS for editorial content.
 - [ ] Add content blocks for callouts, component references, token references, code blocks, and images.
 - [x] Enable draft storage for articles and releases.
 - [x] Enable website rendering for published website pages.
-- [ ] Enable website rendering for published articles and releases.
+- [x] Enable website rendering for published articles and releases.
 - [ ] Enable live preview flows for articles.
 
 Acceptance criteria:
@@ -259,7 +259,7 @@ Acceptance criteria:
 - [x] Component page content can drive `/components/[slug]` pages while live previews stay package-backed.
 - [x] Navbar and sidebar menus can be managed from Payload.
 - [x] Editorial content can be created in Payload against a running Postgres database (Neon in production; `/admin` login verified).
-- [ ] Published articles render on the website.
+- [x] Published articles render on the website (`/articles`, `/articles/[slug]`; releases at `/change-log/[releaseSlug]`).
 - [ ] Draft previews render before publishing.
 - [ ] CMS content can reference components and tokens without owning their API documentation.
 
