@@ -42,7 +42,7 @@ const defaultSiteNavigation = {
       title: 'Get Started',
       items: [
         { label: 'What is Brankas Design System?', href: '/what-is-brankas' },
-        { label: 'Design Principles', href: '/what-is-brankas#design-principles' },
+        { label: 'Design Principles', href: '/design-principles' },
       ],
     },
     {
@@ -97,6 +97,7 @@ export async function seedAdminUser(payload: Payload): Promise<void> {
 
   await seedHomePage(payload);
   await seedStandardWebsitePages(payload);
+  await seedEditorialPages(payload);
   await seedReleases(payload);
   await seedArticles(payload);
   await seedComponentPages(payload);
@@ -345,6 +346,107 @@ async function seedUser(payload: Payload): Promise<void> {
         password: seedPassword,
         role: 'admin',
         username: seedUsername,
+      },
+    });
+  }
+}
+
+const editorialPages: Array<{
+  intro: {
+    body: Array<{ body: string; heading?: string }>;
+    cardBody: string;
+    cardTitle: string;
+    eyebrow: string;
+    title: string;
+  };
+  slug: string;
+  title: string;
+}> = [
+  {
+    intro: {
+      body: [
+        {
+          heading: 'What is Brankas?',
+          body: 'Brankas is the shared design library for Bank Sinarmas product teams. It brings tokens, desktop and mobile components, reusable patterns, documentation, and live previews into one importable system.',
+        },
+        {
+          body: 'The library is built design-library-first: tokens and React components define the product language, then the website consumes those same package outputs for guidance, articles, and playground examples.',
+        },
+        {
+          heading: 'Who manages Brankas?',
+          body: 'Brankas is maintained by a collaborative group of designers, engineers, content designers, accessibility partners, and product teams. Release notes and long-form guidance are managed through the CMS.',
+        },
+        {
+          heading: 'Content',
+          body: 'Content guidance covers the product language used across Brankas experiences — labels, help text, status messages, empty states, and release notes. Keep writing clear, concise, and action-oriented.',
+        },
+      ],
+      cardBody:
+        'Brankas Design System enables easier collaboration to make cohesive experiences and scalable products for Bank Sinarmas.',
+      cardTitle: 'Brankas',
+      eyebrow: 'Get Started',
+      title: 'What is Brankas Design System?',
+    },
+    slug: 'what-is-brankas',
+    title: 'What is Brankas Design System?',
+  },
+  {
+    intro: {
+      body: [
+        {
+          heading: 'Token-first',
+          body: 'Build from design tokens, never hard-coded values. Tokens carry brand, theme, and accessibility decisions, so a single change propagates across every surface that consumes the library.',
+        },
+        {
+          heading: 'Consume the library',
+          body: 'Product surfaces and this website consume the same @brankas packages. There is no parallel, website-only design system — the library is the single source of truth.',
+        },
+        {
+          heading: 'Accessible by default',
+          body: 'Components ship with sensible keyboard behavior, focus states, and semantics. Accessibility is a baseline expectation for every interactive component, not an afterthought.',
+        },
+        {
+          heading: 'Desktop and mobile parity',
+          body: 'Desktop and mobile share primitive and semantic tokens. Platform-specific behavior is intentional and documented, never accidental drift between the two.',
+        },
+        {
+          heading: 'Consistency over novelty',
+          body: 'Reach for the closest existing component or pattern before inventing a new one. Predictable, familiar interfaces serve users better than clever one-offs.',
+        },
+      ],
+      cardBody: '',
+      cardTitle: '',
+      eyebrow: 'Get Started',
+      title: 'Design Principles',
+    },
+    slug: 'design-principles',
+    title: 'Design Principles',
+  },
+];
+
+async function seedEditorialPages(payload: Payload): Promise<void> {
+  for (const page of editorialPages) {
+    const existing = await payload.find({
+      collection: 'website-pages',
+      depth: 0,
+      limit: 1,
+      where: { slug: { equals: page.slug } },
+    });
+
+    if (existing.totalDocs > 0) {
+      continue;
+    }
+
+    await payload.create({
+      collection: 'website-pages',
+      data: {
+        hero: { title: page.title },
+        intro: page.intro,
+        layout: 'docs-sidebar',
+        pageType: 'custom',
+        slug: page.slug,
+        status: 'published',
+        title: page.title,
       },
     });
   }
@@ -906,8 +1008,11 @@ function repairNavigationHref(label: string | null | undefined, href: string | n
     return '/what-is-brankas';
   }
 
-  if (label === 'Design Principles' && href === '/#foundation') {
-    return '/what-is-brankas#design-principles';
+  if (
+    label === 'Design Principles' &&
+    (href === '/#foundation' || href === '/what-is-brankas#design-principles')
+  ) {
+    return '/design-principles';
   }
 
   if (

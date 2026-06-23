@@ -71,7 +71,7 @@ export const defaultSiteNavigation: SiteNavigation = {
       title: 'Get Started',
       items: [
         { label: 'What is Brankas Design System?', href: '/what-is-brankas' },
-        { label: 'Design Principles', href: '/what-is-brankas#design-principles' },
+        { label: 'Design Principles', href: '/design-principles' },
       ],
     },
     {
