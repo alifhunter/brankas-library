@@ -150,6 +150,8 @@ Current website routes:
 - `/articles`: list of published CMS articles; `/articles/[slug]`: article detail with hero image and rich-text content.
 - `/change-log`: CMS-backed changelog page; `/change-log/[releaseSlug]`: release detail with cover image and rich-text notes.
 
+A command-palette search (open with the sidebar button, `⌘K`/`Ctrl+K`, or `/`) searches components, foundations, tokens, patterns, pages, and published articles/releases. Its index is built server-side (`lib/search.ts`) and served at `/search-index`, which the client palette (`command-search.tsx`) fetches lazily on first open.
+
 ## Payload CMS
 
 Payload CMS is embedded in `apps/web` for team-authored articles, release notes, media, and longer-form guidance. It is self-hosted and uses Postgres.
