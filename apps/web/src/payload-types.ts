@@ -98,9 +98,11 @@ export interface Config {
   };
   fallbackLocale: null;
   globals: {
+    general: General;
     'site-navigation': SiteNavigation;
   };
   globalsSelect: {
+    general: GeneralSelect<false> | GeneralSelect<true>;
     'site-navigation': SiteNavigationSelect<false> | SiteNavigationSelect<true>;
   };
   locale: null;
@@ -797,6 +799,40 @@ export interface PayloadMigrationsSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "general".
+ */
+export interface General {
+  id: number;
+  /**
+   * Logo image shown in the navbar. Replaces the default “B” mark when set.
+   */
+  logo?: (number | null) | Media;
+  /**
+   * Bold brand title in the navbar.
+   */
+  brandName?: string | null;
+  /**
+   * Lighter product name shown next to the brand in the navbar.
+   */
+  productName?: string | null;
+  /**
+   * Website icon shown in the browser tab (favicon).
+   */
+  favicon?: (number | null) | Media;
+  /**
+   * The large hero at the top of the home page.
+   */
+  home?: {
+    heroTitle?: string | null;
+    heroDescription?: string | null;
+    heroCtaLabel?: string | null;
+    heroCtaHref?: string | null;
+  };
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "site-navigation".
  */
 export interface SiteNavigation {
@@ -832,6 +868,27 @@ export interface SiteNavigation {
     | null;
   updatedAt?: string | null;
   createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "general_select".
+ */
+export interface GeneralSelect<T extends boolean = true> {
+  logo?: T;
+  brandName?: T;
+  productName?: T;
+  favicon?: T;
+  home?:
+    | T
+    | {
+        heroTitle?: T;
+        heroDescription?: T;
+        heroCtaLabel?: T;
+        heroCtaHref?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

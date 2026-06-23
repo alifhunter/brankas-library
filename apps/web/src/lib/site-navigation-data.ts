@@ -2,6 +2,7 @@ export type SiteNavigation = {
   brand: {
     brandName: string;
     homeHref: string;
+    logoUrl?: string | null;
     productName: string;
   };
   sidebarSections: Array<{
@@ -64,6 +65,7 @@ export const defaultSiteNavigation: SiteNavigation = {
   brand: {
     brandName: 'Brankas',
     homeHref: '/',
+    logoUrl: null,
     productName: 'Bank Sinarmas Design System',
   },
   sidebarSections: [
@@ -178,6 +180,7 @@ export function normalizeSiteNavigation(navigation: PayloadSiteNavigation): Site
     brand: {
       brandName: navigation.brand?.brandName ?? defaultSiteNavigation.brand.brandName,
       homeHref: navigation.brand?.homeHref ?? defaultSiteNavigation.brand.homeHref,
+      logoUrl: null,
       productName: navigation.brand?.productName ?? defaultSiteNavigation.brand.productName,
     },
     sidebarSections:

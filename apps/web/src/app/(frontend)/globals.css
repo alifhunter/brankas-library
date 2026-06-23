@@ -2297,3 +2297,12 @@ a {
     animation: none;
   }
 }
+
+/* Navbar logo (General settings) */
+.brand-logo {
+  display: block;
+  height: 32px;
+  object-fit: contain;
+  width: auto;
+  max-width: 160px;
+}

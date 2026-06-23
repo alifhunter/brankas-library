@@ -103,6 +103,33 @@ export async function seedAdminUser(payload: Payload): Promise<void> {
   await seedComponentPages(payload);
   await seedFoundations(payload);
   await seedSiteNavigation(payload);
+  await seedGeneral(payload);
+}
+
+async function seedGeneral(payload: Payload): Promise<void> {
+  const existing = (await payload.findGlobal({ slug: 'general' })) as {
+    home?: { heroDescription?: string | null } | null;
+  };
+
+  // Populate once; don't clobber later manual edits.
+  if (existing?.home?.heroDescription) {
+    return;
+  }
+
+  await payload.updateGlobal({
+    slug: 'general',
+    data: {
+      brandName: 'Brankas',
+      home: {
+        heroCtaHref: '/what-is-brankas',
+        heroCtaLabel: 'Get Started',
+        heroDescription:
+          'Brankas provides components and tools to help product teams work more efficiently, and to make Bank Sinarmas products more cohesive.',
+        heroTitle: 'Brankas Design System',
+      },
+      productName: 'Bank Sinarmas Design System',
+    },
+  });
 }
 
 const starterFoundations: Array<{

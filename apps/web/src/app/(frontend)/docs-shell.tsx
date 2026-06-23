@@ -39,7 +39,12 @@ function SiteHeader({
   return (
     <header className="topbar">
       <Link aria-label="Brankas home" className="brand-lockup" href={navigation.brand.homeHref}>
-        <span className="brand-symbol">B</span>
+        {navigation.brand.logoUrl ? (
+          // eslint-disable-next-line @next/next/no-img-element
+          <img alt={navigation.brand.brandName} className="brand-logo" src={navigation.brand.logoUrl} />
+        ) : (
+          <span className="brand-symbol">B</span>
+        )}
         <span className="brand-name">
           <strong>{navigation.brand.brandName}</strong>
         </span>

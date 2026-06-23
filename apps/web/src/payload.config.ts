@@ -15,6 +15,7 @@ import {
   Users,
   WebsitePages,
 } from './payload/collections';
+import { General } from './payload/globals/General';
 import { SiteNavigation } from './payload/globals/SiteNavigation';
 import { seedAdminUser } from './payload/seedAdmin';
 
@@ -93,7 +94,7 @@ export default buildConfig({
   graphQL: {
     schemaOutputFile: path.resolve(dirname, 'payload-schema.graphql'),
   },
-  globals: [SiteNavigation],
+  globals: [General, SiteNavigation],
   onInit: async (payload) => {
     await seedAdminUser(payload);
   },
