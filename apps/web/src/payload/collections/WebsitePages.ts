@@ -96,8 +96,20 @@ export const WebsitePages: CollectionConfig = {
       required: true,
     },
     {
+      name: 'content',
+      type: 'richText',
+      admin: {
+        condition: (data) => data?.pageType === 'custom',
+        description:
+          'Single rich-text body for editorial (custom) pages such as What is Brankas and Design Principles. Headings become deep-linkable anchors.',
+      },
+    },
+    {
       name: 'hero',
       type: 'group',
+      admin: {
+        condition: (data) => data?.pageType !== 'custom',
+      },
       fields: [
         {
           name: 'eyebrow',
@@ -106,7 +118,6 @@ export const WebsitePages: CollectionConfig = {
         {
           name: 'title',
           type: 'text',
-          required: true,
         },
         {
           name: 'description',
@@ -126,6 +137,7 @@ export const WebsitePages: CollectionConfig = {
       name: 'visualCards',
       type: 'array',
       admin: {
+        condition: (data) => data?.pageType !== 'custom',
         description: 'Cards shown in the foundational visual styles section on the home page.',
       },
       fields: [
@@ -168,6 +180,9 @@ export const WebsitePages: CollectionConfig = {
     {
       name: 'intro',
       type: 'group',
+      admin: {
+        condition: (data) => data?.pageType !== 'custom',
+      },
       fields: [
         {
           name: 'eyebrow',
@@ -206,6 +221,7 @@ export const WebsitePages: CollectionConfig = {
       name: 'sections',
       type: 'array',
       admin: {
+        condition: (data) => data?.pageType !== 'custom',
         description: 'Generic page body sections rendered on /[slug] pages.',
       },
       fields: [
@@ -228,6 +244,9 @@ export const WebsitePages: CollectionConfig = {
     {
       name: 'changelog',
       type: 'group',
+      admin: {
+        condition: (data) => data?.pageType !== 'custom',
+      },
       fields: [
         {
           name: 'dateLabel',

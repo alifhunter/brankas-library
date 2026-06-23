@@ -186,9 +186,27 @@ export interface WebsitePage {
   layout: 'docs-sidebar' | 'no-sidebar' | 'custom';
   status: 'draft' | 'published';
   pageType: 'home' | 'generic' | 'tokens' | 'patterns' | 'changelog' | 'custom';
-  hero: {
+  /**
+   * Single rich-text body for editorial (custom) pages such as What is Brankas and Design Principles. Headings become deep-linkable anchors.
+   */
+  content?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  hero?: {
     eyebrow?: string | null;
-    title: string;
+    title?: string | null;
     description?: string | null;
     ctaLabel?: string | null;
     ctaHref?: string | null;
@@ -578,6 +596,7 @@ export interface WebsitePagesSelect<T extends boolean = true> {
   layout?: T;
   status?: T;
   pageType?: T;
+  content?: T;
   hero?:
     | T
     | {

@@ -90,20 +90,39 @@ function renderText(node: LexicalNode, key: string) {
 }
 
 function renderHeading(node: LexicalNode, key: string, children: ReactNode) {
+  const id = headingId(node);
+
   switch (node.tag) {
     case 'h1':
-      return <h2 key={key}>{children}</h2>;
+      return <h2 id={id} key={key}>{children}</h2>;
     case 'h2':
-      return <h2 key={key}>{children}</h2>;
+      return <h2 id={id} key={key}>{children}</h2>;
     case 'h4':
-      return <h4 key={key}>{children}</h4>;
+      return <h4 id={id} key={key}>{children}</h4>;
     case 'h5':
-      return <h5 key={key}>{children}</h5>;
+      return <h5 id={id} key={key}>{children}</h5>;
     case 'h6':
-      return <h6 key={key}>{children}</h6>;
+      return <h6 id={id} key={key}>{children}</h6>;
     default:
-      return <h3 key={key}>{children}</h3>;
+      return <h3 id={id} key={key}>{children}</h3>;
   }
+}
+
+function lexicalNodeText(node: LexicalNode): string {
+  if (typeof node.text === 'string') {
+    return node.text;
+  }
+  return (node.children ?? []).map(lexicalNodeText).join('');
+}
+
+// Slugify a heading's text into an `id` so it can be deep-linked.
+function headingId(node: LexicalNode): string | undefined {
+  const slug = lexicalNodeText(node)
+    .trim()
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-+|-+$/g, '');
+  return slug || undefined;
 }
 
 function renderList(node: LexicalNode, key: string, children: ReactNode) {

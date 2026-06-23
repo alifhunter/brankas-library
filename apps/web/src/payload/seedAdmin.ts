@@ -426,6 +426,10 @@ const editorialPages: Array<{
 
 async function seedEditorialPages(payload: Payload): Promise<void> {
   for (const page of editorialPages) {
+    const content = createLexicalFromSections(
+      page.intro.body.map((section) => ({ body: section.body, title: section.heading ?? '' })),
+    );
+
     const existing = await payload.find({
       collection: 'website-pages',
       depth: 0,
@@ -433,22 +437,27 @@ async function seedEditorialPages(payload: Payload): Promise<void> {
       where: { slug: { equals: page.slug } },
     });
 
-    if (existing.totalDocs > 0) {
-      continue;
+    const doc = existing.docs[0];
+    if (doc) {
+      await payload.update({
+        collection: 'website-pages',
+        id: doc.id,
+        data: { content, title: page.title },
+      });
+    } else {
+      await payload.create({
+        collection: 'website-pages',
+        data: {
+          content,
+          hero: { title: page.title },
+          layout: 'docs-sidebar',
+          pageType: 'custom',
+          slug: page.slug,
+          status: 'published',
+          title: page.title,
+        },
+      });
     }
-
-    await payload.create({
-      collection: 'website-pages',
-      data: {
-        hero: { title: page.title },
-        intro: page.intro,
-        layout: 'docs-sidebar',
-        pageType: 'custom',
-        slug: page.slug,
-        status: 'published',
-        title: page.title,
-      },
-    });
   }
 }
 

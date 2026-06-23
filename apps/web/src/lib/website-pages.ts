@@ -1,11 +1,14 @@
 import configPromise from '@payload-config';
 import { getPayload } from 'payload';
 
+import type { LexicalContent } from './releases';
+
 export type VisualCardTone = 'green' | 'light' | 'orange' | 'plain';
 export type WebsitePageLayout = 'custom' | 'docs-sidebar' | 'no-sidebar';
 export type WebsitePageType = 'changelog' | 'custom' | 'generic' | 'home' | 'patterns' | 'tokens';
 
 export type WebsitePageContent = {
+  content: LexicalContent | null;
   changelog: {
     dateLabel: string;
     summary: string;
@@ -47,6 +50,7 @@ export type WebsitePageContent = {
 };
 
 export const defaultHomePage: WebsitePageContent = {
+  content: null,
   changelog: {
     dateLabel: 'January 23, 2025',
     summary: 'Brankas 2.2 was released for use in the Simobi+ recolor project in 2025.',
@@ -96,6 +100,7 @@ export const defaultHomePage: WebsitePageContent = {
 };
 
 type PayloadWebsitePage = {
+  content?: LexicalContent | null;
   changelog?: {
     dateLabel?: string | null;
     summary?: string | null;
@@ -186,6 +191,7 @@ export function normalizeWebsitePage(page: PayloadWebsitePage): WebsitePageConte
   const base = normalizedSlug === 'home' ? defaultHomePage : createGenericFallback(normalizedSlug);
 
   return {
+    content: page.content ?? null,
     changelog: {
       dateLabel: page.changelog?.dateLabel ?? base.changelog.dateLabel,
       summary: page.changelog?.summary ?? base.changelog.summary,
