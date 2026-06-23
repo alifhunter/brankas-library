@@ -1332,7 +1332,7 @@ a {
 
 .components-extra.is-open {
   margin-top: 24px;
-  max-height: 1200px;
+  max-height: none;
   opacity: 1;
 }
 
@@ -1345,7 +1345,7 @@ a {
 }
 
 .components-extra.is-open .component-card {
-  opacity: 0.55;
+  opacity: 1;
   transform: none;
 }
 
@@ -1372,17 +1372,11 @@ a {
   .components-extra {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
-  .components-extra.is-open {
-    max-height: 1800px;
-  }
 }
 
 @media (max-width: 640px) {
   .components-extra {
     grid-template-columns: 1fr;
-  }
-  .components-extra.is-open {
-    max-height: 3200px;
   }
 }
 
