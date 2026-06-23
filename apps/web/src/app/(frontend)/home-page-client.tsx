@@ -212,7 +212,15 @@ export function HomePageClient({
               {thumbnails[doc.slug] ? (
                 <div className="component-card-thumb">
                   {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img alt="" src={thumbnails[doc.slug]} />
+                  <img
+                    alt=""
+                    onError={(event) => {
+                      // If the linked image fails to load (404, hotlink-blocked, etc.),
+                      // hide it so the placeholder gradient shows instead of a broken icon.
+                      event.currentTarget.style.display = 'none';
+                    }}
+                    src={thumbnails[doc.slug]}
+                  />
                 </div>
               ) : (
                 <div className="component-card-thumb" aria-hidden="true" />
@@ -233,7 +241,15 @@ export function HomePageClient({
               {thumbnails[doc.slug] ? (
                 <div className="component-card-thumb">
                   {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img alt="" src={thumbnails[doc.slug]} />
+                  <img
+                    alt=""
+                    onError={(event) => {
+                      // If the linked image fails to load (404, hotlink-blocked, etc.),
+                      // hide it so the placeholder gradient shows instead of a broken icon.
+                      event.currentTarget.style.display = 'none';
+                    }}
+                    src={thumbnails[doc.slug]}
+                  />
                 </div>
               ) : (
                 <div className="component-card-thumb" aria-hidden="true" />
