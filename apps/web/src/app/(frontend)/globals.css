@@ -2120,3 +2120,173 @@ a {
     grid-template-columns: 1fr;
   }
 }
+
+/* Command palette (search) */
+.search-shell {
+  cursor: pointer;
+  font: inherit;
+  text-align: left;
+  width: 100%;
+  transition:
+    border-color 150ms ease,
+    box-shadow 150ms ease;
+}
+.search-shell:hover {
+  border-color: var(--brankas-color-background-information, #1c77c3);
+  box-shadow: 0 6px 16px rgba(21, 36, 51, 0.08);
+}
+
+.cmdk-overlay {
+  align-items: flex-start;
+  background: rgba(15, 23, 42, 0.45);
+  backdrop-filter: blur(4px);
+  display: flex;
+  inset: 0;
+  justify-content: center;
+  padding: 12vh 16px 16px;
+  position: fixed;
+  z-index: 1000;
+  animation: cmdk-fade 140ms ease;
+}
+.cmdk-panel {
+  background: var(--brankas-color-background-default, #ffffff);
+  border: 1px solid var(--brankas-color-border-subtle, #f0f0f0);
+  border-radius: 16px;
+  box-shadow: 0 24px 70px rgba(15, 23, 42, 0.28);
+  display: flex;
+  flex-direction: column;
+  max-height: min(70vh, 560px);
+  overflow: hidden;
+  width: min(640px, 94vw);
+  animation: cmdk-pop 160ms cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+.cmdk-input-row {
+  align-items: center;
+  border-bottom: 1px solid var(--brankas-color-border-subtle, #f0f0f0);
+  display: flex;
+  gap: 12px;
+  padding: 16px 18px;
+}
+.cmdk-input-icon {
+  border: 2px solid var(--brankas-color-text-subtlest, #9ca3af);
+  border-radius: 999px;
+  flex: none;
+  height: 18px;
+  width: 18px;
+}
+.cmdk-input {
+  background: transparent;
+  border: none;
+  color: var(--brankas-color-text-default, #1f2937);
+  flex: 1;
+  font-size: 18px;
+  line-height: 24px;
+  outline: none;
+}
+.cmdk-input::placeholder {
+  color: var(--brankas-color-text-subtlest, #9ca3af);
+}
+.cmdk-esc {
+  background: var(--brankas-color-background-sublest, #f7f7f7);
+  border-radius: 6px;
+  color: var(--brankas-color-text-subtle, #6b7280);
+  flex: none;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 3px 7px;
+}
+.cmdk-results {
+  overflow-y: auto;
+  padding: 8px;
+}
+.cmdk-group-label {
+  color: var(--brankas-color-text-subtlest, #9ca3af);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  padding: 12px 12px 6px;
+  text-transform: uppercase;
+}
+.cmdk-item {
+  align-items: center;
+  background: transparent;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  display: flex;
+  gap: 12px;
+  justify-content: space-between;
+  padding: 10px 12px;
+  text-align: left;
+  width: 100%;
+}
+.cmdk-item.active {
+  background: var(--brankas-color-background-sublest, #f3f6fb);
+}
+.cmdk-item-text {
+  display: grid;
+  gap: 2px;
+  min-width: 0;
+}
+.cmdk-item-title {
+  color: var(--brankas-color-text-default, #1f2937);
+  font-size: 15px;
+  font-weight: 600;
+}
+.cmdk-item-desc {
+  color: var(--brankas-color-text-subtle, #6b7280);
+  font-size: 13px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.cmdk-item-group {
+  background: var(--brankas-color-background-sublest, #f7f7f7);
+  border-radius: 999px;
+  color: var(--brankas-color-text-subtle, #6b7280);
+  flex: none;
+  font-size: 11px;
+  font-weight: 600;
+  padding: 3px 9px;
+}
+.cmdk-item.active .cmdk-item-group {
+  background: var(--brankas-color-background-information, #1c77c3);
+  color: #ffffff;
+}
+.cmdk-empty {
+  color: var(--brankas-color-text-subtle, #6b7280);
+  font-size: 14px;
+  padding: 28px 16px;
+  text-align: center;
+}
+.cmdk-footer {
+  align-items: center;
+  border-top: 1px solid var(--brankas-color-border-subtle, #f0f0f0);
+  color: var(--brankas-color-text-subtlest, #9ca3af);
+  display: flex;
+  font-size: 12px;
+  gap: 16px;
+  padding: 10px 16px;
+}
+.cmdk-footer kbd {
+  background: var(--brankas-color-background-sublest, #f7f7f7);
+  border-radius: 5px;
+  color: var(--brankas-color-text-subtle, #6b7280);
+  font-size: 11px;
+  margin: 0 2px;
+  padding: 2px 6px;
+}
+@keyframes cmdk-fade {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+@keyframes cmdk-pop {
+  from { opacity: 0; transform: translateY(-8px) scale(0.985); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .cmdk-overlay,
+  .cmdk-panel {
+    animation: none;
+  }
+}

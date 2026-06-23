@@ -2,6 +2,7 @@ import type { ReactNode } from 'react';
 import Link from 'next/link';
 
 import { defaultSiteNavigation, type SiteNavigation } from '../../lib/site-navigation-data';
+import { CommandSearch } from './command-search';
 import { SidebarActiveScroll } from './sidebar-active-scroll';
 
 export function DocsShell({
@@ -22,6 +23,8 @@ export function DocsShell({
         {showSidebar ? <DocsSidebar activeHref={activeHref} navigation={navigation} /> : null}
         <main className="content">{children}</main>
       </div>
+      {/* Without a sidebar there is no visible trigger, but ⌘K / "/" still work. */}
+      {showSidebar ? null : <CommandSearch />}
     </div>
   );
 }
@@ -67,11 +70,7 @@ function DocsSidebar({
 }) {
   return (
     <aside className="left-rail" aria-label="Documentation navigation">
-      <div className="search-shell" role="search">
-        <span className="search-icon" aria-hidden="true" />
-        <span>Search...</span>
-        <kbd className="shortcut">⌘K</kbd>
-      </div>
+      <CommandSearch showTrigger />
 
       {navigation.sidebarSections.map((section) => (
         <SidebarSection
