@@ -92,37 +92,19 @@ export const ComponentPages: CollectionConfig = {
       required: true,
     },
     {
-      name: 'anatomy',
-      type: 'array',
-      fields: [
-        {
-          name: 'item',
-          type: 'text',
-          required: true,
-        },
-      ],
+      name: 'desktopContent',
+      type: 'richText',
+      admin: {
+        description:
+          'Desktop guidance shown below the live preview. Use headings, lists, callouts, and images — this replaces the old anatomy/usage/accessibility lists.',
+      },
     },
     {
-      name: 'usage',
-      type: 'array',
-      fields: [
-        {
-          name: 'item',
-          type: 'text',
-          required: true,
-        },
-      ],
-    },
-    {
-      name: 'accessibility',
-      type: 'array',
-      fields: [
-        {
-          name: 'item',
-          type: 'text',
-          required: true,
-        },
-      ],
+      name: 'mobileContent',
+      type: 'richText',
+      admin: {
+        description: 'Mobile guidance shown below the mobile preview. Leave empty for desktop-only components.',
+      },
     },
     {
       name: 'publishedAt',

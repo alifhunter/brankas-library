@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { ComponentExample } from './component-example';
+import { RichText } from '../../rich-text';
 import type {
   ComponentPageContent,
   ComponentPlatformContent,
@@ -96,11 +97,9 @@ function PlatformSection({
         <pre className="code-sample">{`import { ${detail.importName} } from '${detail.packageName}';`}</pre>
       </article>
 
-      {detail.anatomy.length > 0 ? <DocList title="Anatomy" items={detail.anatomy} /> : null}
-      {detail.usage.length > 0 ? <DocList title="Usage" items={detail.usage} /> : null}
-      {detail.accessibility.length > 0 ? (
-        <DocList title="Accessibility" items={detail.accessibility} />
-      ) : null}
+      <article className="detail-card detail-card-wide component-guidance">
+        <RichText content={detail.content} fallback={detail.description} />
+      </article>
     </section>
   );
 }
@@ -122,7 +121,7 @@ function PlatformAbsent({
           <h2>{availableLabel}-only component</h2>
           <p>
             This component does not have a {missingLabel} equivalent yet. Switch to the{' '}
-            {availableLabel} tab to see anatomy, usage, and accessibility guidance.
+            {availableLabel} tab to see its guidance.
           </p>
         </div>
         <div className="component-preview-surface mobile-coming-soon">
@@ -133,15 +132,3 @@ function PlatformAbsent({
   );
 }
 
-function DocList({ items, title }: { items: string[]; title: string }) {
-  return (
-    <article className="detail-card">
-      <h2>{title}</h2>
-      <ul className="doc-list">
-        {items.map((item) => (
-          <li key={item}>{item}</li>
-        ))}
-      </ul>
-    </article>
-  );
-}

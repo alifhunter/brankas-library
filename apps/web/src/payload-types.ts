@@ -261,24 +261,42 @@ export interface ComponentPage {
   description: string;
   importName: string;
   packageName: string;
-  anatomy?:
-    | {
-        item: string;
-        id?: string | null;
-      }[]
-    | null;
-  usage?:
-    | {
-        item: string;
-        id?: string | null;
-      }[]
-    | null;
-  accessibility?:
-    | {
-        item: string;
-        id?: string | null;
-      }[]
-    | null;
+  /**
+   * Desktop guidance shown below the live preview. Use headings, lists, callouts, and images — this replaces the old anatomy/usage/accessibility lists.
+   */
+  desktopContent?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  /**
+   * Mobile guidance shown below the mobile preview. Leave empty for desktop-only components.
+   */
+  mobileContent?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
   publishedAt?: string | null;
   updatedAt: string;
   createdAt: string;
@@ -623,24 +641,8 @@ export interface ComponentPagesSelect<T extends boolean = true> {
   description?: T;
   importName?: T;
   packageName?: T;
-  anatomy?:
-    | T
-    | {
-        item?: T;
-        id?: T;
-      };
-  usage?:
-    | T
-    | {
-        item?: T;
-        id?: T;
-      };
-  accessibility?:
-    | T
-    | {
-        item?: T;
-        id?: T;
-      };
+  desktopContent?: T;
+  mobileContent?: T;
   publishedAt?: T;
   updatedAt?: T;
   createdAt?: T;

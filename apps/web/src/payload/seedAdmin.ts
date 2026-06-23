@@ -1,6 +1,6 @@
 import type { Payload } from 'payload';
 
-import { componentDocs, getMergedComponentDocs } from '../app/(frontend)/library-data';
+import { getMergedComponentDocs } from '../app/(frontend)/library-data';
 import { resolveStorybookUrl } from '../lib/site-navigation-data';
 
 const seedUsername = 'brankas';
@@ -525,37 +525,132 @@ async function repairStandardWebsitePages(payload: Payload): Promise<void> {
   );
 }
 
+type GuideDetail = {
+  accessibility: string[];
+  anatomy: string[];
+  description: string;
+  usage: string[];
+};
+
+function lexicalText(text: string) {
+  return { detail: 0, format: 0, mode: 'normal', style: '', text, type: 'text', version: 1 };
+}
+
+function lexicalHeading(text: string) {
+  return {
+    children: [lexicalText(text)],
+    direction: 'ltr' as const,
+    format: '' as const,
+    indent: 0,
+    tag: 'h3' as const,
+    type: 'heading',
+    version: 1,
+  };
+}
+
+function lexicalList(items: string[]) {
+  return {
+    children: items.map((item, index) => ({
+      children: [lexicalText(item)],
+      direction: 'ltr' as const,
+      format: '' as const,
+      indent: 0,
+      type: 'listitem',
+      value: index + 1,
+      version: 1,
+    })),
+    direction: 'ltr' as const,
+    format: '' as const,
+    indent: 0,
+    listType: 'bullet' as const,
+    start: 1,
+    tag: 'ul' as const,
+    type: 'list',
+    version: 1,
+  };
+}
+
+/**
+ * Converts the code-owned anatomy/usage/accessibility lists into a single
+ * Lexical rich-text document (heading + bullet list per section) so the new
+ * per-platform editor opens pre-filled instead of blank.
+ */
+function createLexicalGuide(detail: GuideDetail) {
+  const children: Array<{ [key: string]: unknown; type: string; version: number }> = [];
+  const addSection = (title: string, items: string[]) => {
+    if (items.length > 0) {
+      children.push(lexicalHeading(title));
+      children.push(lexicalList(items));
+    }
+  };
+
+  addSection('Anatomy', detail.anatomy);
+  addSection('Usage', detail.usage);
+  addSection('Accessibility', detail.accessibility);
+
+  if (children.length === 0) {
+    return createLexicalContent(detail.description);
+  }
+
+  return {
+    root: {
+      children,
+      direction: 'ltr' as const,
+      format: '' as const,
+      indent: 0,
+      type: 'root',
+      version: 1,
+    },
+  };
+}
+
 async function seedComponentPages(payload: Payload): Promise<void> {
+  const merged = getMergedComponentDocs();
+  const canonicalSlugs = new Set(merged.map((doc) => doc.slug));
+
   const existingPages = await payload.find({
     collection: 'component-pages',
     depth: 0,
-    limit: 100,
+    limit: 300,
   });
+  const bySlug = new Map(existingPages.docs.map((page) => [page.slug, page]));
 
-  const existingSlugs = new Set(existingPages.docs.map((page) => page.slug));
-  const missingDocs = componentDocs.filter((doc) => !existingSlugs.has(doc.slug));
+  for (const doc of merged) {
+    const platform: 'Desktop' | 'Mobile' = doc.desktop ? 'Desktop' : 'Mobile';
+    const detail = doc.desktop ?? doc.mobile;
+    if (!detail) {
+      continue;
+    }
 
-  await Promise.all(
-    missingDocs.map((doc) =>
-      payload.create({
-        collection: 'component-pages',
-        data: {
-          accessibility: doc.accessibility.map((item) => ({ item })),
-          anatomy: doc.anatomy.map((item) => ({ item })),
-          componentStatus: doc.status,
-          description: doc.description,
-          importName: doc.importName,
-          name: doc.name,
-          packageName: doc.packageName ?? '@brankas/react/desktop',
-          platform: doc.platform,
-          publishedAt: new Date().toISOString(),
-          slug: doc.slug,
-          status: 'published',
-          usage: doc.usage.map((item) => ({ item })),
-        },
-      }),
-    ),
-  );
+    const data = {
+      componentStatus: detail.status,
+      description: detail.description,
+      desktopContent: doc.desktop ? createLexicalGuide(doc.desktop) : null,
+      importName: detail.importName,
+      mobileContent: doc.mobile ? createLexicalGuide(doc.mobile) : null,
+      name: doc.name,
+      packageName: detail.packageName,
+      platform,
+      publishedAt: new Date().toISOString(),
+      slug: doc.slug,
+      status: 'published' as const,
+    };
+
+    const existing = bySlug.get(doc.slug);
+    if (existing) {
+      await payload.update({ collection: 'component-pages', id: existing.id, data });
+    } else {
+      await payload.create({ collection: 'component-pages', data });
+    }
+  }
+
+  // Remove legacy pages keyed by non-canonical slugs (e.g. mobile- prefixed),
+  // which are superseded by the canonical per-platform pages above.
+  for (const page of existingPages.docs) {
+    if (page.slug && !canonicalSlugs.has(page.slug)) {
+      await payload.delete({ collection: 'component-pages', id: page.id });
+    }
+  }
 }
 
 async function seedReleases(payload: Payload): Promise<void> {
