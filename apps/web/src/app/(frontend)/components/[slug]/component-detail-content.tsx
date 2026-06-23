@@ -92,7 +92,7 @@ function PlatformSection({
         </article>
       )}
 
-      <article className="detail-card">
+      <article className="detail-card detail-card-wide">
         <h2>Import</h2>
         <pre className="code-sample">{`import { ${detail.importName} } from '${detail.packageName}';`}</pre>
       </article>
