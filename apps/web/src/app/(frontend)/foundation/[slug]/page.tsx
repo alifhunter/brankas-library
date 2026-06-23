@@ -3,6 +3,7 @@ import { notFound } from 'next/navigation';
 import { getFoundation } from '../../../../lib/foundations';
 import { getSiteNavigation } from '../../../../lib/site-navigation';
 import { DocsShell } from '../../docs-shell';
+import { RichText } from '../../rich-text';
 
 export const dynamic = 'force-dynamic';
 
@@ -33,16 +34,9 @@ export default async function FoundationPage({
           </div>
         </section>
 
-        {page.sections.length > 0 ? (
-          <section className="text-block">
-            {page.sections.map((section) => (
-              <section key={section.title}>
-                <h2>{section.title}</h2>
-                <p>{section.body}</p>
-              </section>
-            ))}
-          </section>
-        ) : null}
+        <section className="text-block rich-text-block">
+          <RichText content={page.content} fallback={page.description} />
+        </section>
 
         {page.tokenReferences.length > 0 ? (
           <section className="section">

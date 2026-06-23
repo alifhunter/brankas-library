@@ -254,6 +254,49 @@ const starterFoundations: Array<{
   },
 ];
 
+function lexicalParagraph(text: string) {
+  return {
+    children: [lexicalText(text)],
+    direction: 'ltr' as const,
+    format: '' as const,
+    indent: 0,
+    type: 'paragraph',
+    version: 1,
+  };
+}
+
+/**
+ * Converts the code-owned title/body sections into a single Lexical document
+ * (heading + paragraph per section) so the new foundation editor opens
+ * pre-filled instead of blank.
+ */
+function createLexicalFromSections(sections: Array<{ body: string; title: string }>) {
+  const children: Array<{ [key: string]: unknown; type: string; version: number }> = [];
+  for (const section of sections) {
+    if (section.title) {
+      children.push(lexicalHeading(section.title));
+    }
+    if (section.body) {
+      children.push(lexicalParagraph(section.body));
+    }
+  }
+
+  if (children.length === 0) {
+    return createLexicalContent('');
+  }
+
+  return {
+    root: {
+      children,
+      direction: 'ltr' as const,
+      format: '' as const,
+      indent: 0,
+      type: 'root',
+      version: 1,
+    },
+  };
+}
+
 async function seedFoundations(payload: Payload): Promise<void> {
   const existing = await payload.find({
     collection: 'foundations',
@@ -261,49 +304,26 @@ async function seedFoundations(payload: Payload): Promise<void> {
     limit: 100,
   });
   const existingBySlug = new Map(existing.docs.map((doc) => [doc.slug, doc]));
-  const missing = starterFoundations.filter((f) => !existingBySlug.has(f.slug));
 
-  await Promise.all(
-    missing.map((f) =>
-      payload.create({
-        collection: 'foundations',
-        data: {
-          description: f.description,
-          eyebrow: 'Foundation',
-          name: f.name,
-          publishedAt: new Date().toISOString(),
-          sections: f.sections,
-          slug: f.slug,
-          status: 'published',
-          ...(f.tokenReferences ? { tokenReferences: f.tokenReferences } : {}),
-        },
-      }),
-    ),
-  );
+  for (const f of starterFoundations) {
+    const data = {
+      content: createLexicalFromSections(f.sections),
+      description: f.description,
+      eyebrow: 'Foundation',
+      name: f.name,
+      publishedAt: new Date().toISOString(),
+      slug: f.slug,
+      status: 'published' as const,
+      ...(f.tokenReferences ? { tokenReferences: f.tokenReferences } : {}),
+    };
 
-  // One-shot upgrade: backfill tokenReferences on rows that don't have any
-  // (preserves manual edits to description/sections).
-  await Promise.all(
-    starterFoundations.map((f) => {
-      const refs = f.tokenReferences;
-      if (!refs || refs.length === 0) {
-        return;
-      }
-      const doc = existingBySlug.get(f.slug);
-      if (!doc) {
-        return;
-      }
-      const existingRefs = (doc as { tokenReferences?: unknown[] }).tokenReferences;
-      if (Array.isArray(existingRefs) && existingRefs.length > 0) {
-        return;
-      }
-      return payload.update({
-        collection: 'foundations',
-        id: (doc as { id: string | number }).id,
-        data: { tokenReferences: refs },
-      });
-    }),
-  );
+    const doc = existingBySlug.get(f.slug);
+    if (doc) {
+      await payload.update({ collection: 'foundations', id: doc.id, data });
+    } else {
+      await payload.create({ collection: 'foundations', data });
+    }
+  }
 }
 
 async function seedUser(payload: Payload): Promise<void> {

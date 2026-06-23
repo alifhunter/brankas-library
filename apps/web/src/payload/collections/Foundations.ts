@@ -44,23 +44,12 @@ export const Foundations: CollectionConfig = {
       required: true,
     },
     {
-      name: 'sections',
-      type: 'array',
+      name: 'content',
+      type: 'richText',
       admin: {
-        description: 'Sub-sections rendered as paragraphs on the foundation page.',
+        description:
+          'Foundation guidance shown below the intro. Use headings, lists, callouts, and images — this replaces the old per-section title/body fields.',
       },
-      fields: [
-        {
-          name: 'title',
-          type: 'text',
-          required: true,
-        },
-        {
-          name: 'body',
-          type: 'textarea',
-          required: true,
-        },
-      ],
     },
     {
       name: 'tokenReferences',

@@ -317,15 +317,23 @@ export interface Foundation {
   eyebrow?: string | null;
   description: string;
   /**
-   * Sub-sections rendered as paragraphs on the foundation page.
+   * Foundation guidance shown below the intro. Use headings, lists, callouts, and images — this replaces the old per-section title/body fields.
    */
-  sections?:
-    | {
-        title: string;
-        body: string;
-        id?: string | null;
-      }[]
-    | null;
+  content?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
   /**
    * Optional list of CSS variables or token names relevant to this foundation.
    */
@@ -658,13 +666,7 @@ export interface FoundationsSelect<T extends boolean = true> {
   status?: T;
   eyebrow?: T;
   description?: T;
-  sections?:
-    | T
-    | {
-        title?: T;
-        body?: T;
-        id?: T;
-      };
+  content?: T;
   tokenReferences?:
     | T
     | {

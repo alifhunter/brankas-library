@@ -1,20 +1,22 @@
 import configPromise from '@payload-config';
 import { getPayload } from 'payload';
 
+import type { LexicalContent } from './releases';
+
 export type FoundationContent = {
+  content: LexicalContent | null;
   description: string;
   eyebrow: string;
   name: string;
-  sections: Array<{ body: string; title: string }>;
   slug: string;
   tokenReferences: Array<{ name: string; value: string }>;
 };
 
 type PayloadFoundation = {
+  content?: LexicalContent | null;
   description?: string | null;
   eyebrow?: string | null;
   name?: string | null;
-  sections?: Array<{ body?: string | null; title?: string | null }> | null;
   slug?: string | null;
   status?: 'draft' | 'published' | null;
   tokenReferences?: Array<{ name?: string | null; value?: string | null }> | null;
@@ -58,13 +60,10 @@ function normalizeFoundation(page: PayloadFoundation): FoundationContent {
   const slug = page.slug ?? '';
 
   return {
+    content: page.content ?? null,
     description: page.description ?? '',
     eyebrow: page.eyebrow ?? 'Foundation',
     name: page.name ?? slug,
-    sections:
-      page.sections
-        ?.map((section) => ({ body: section.body ?? '', title: section.title ?? '' }))
-        .filter((section) => section.title && section.body) ?? [],
     slug,
     tokenReferences:
       page.tokenReferences
