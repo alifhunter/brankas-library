@@ -27,12 +27,15 @@ export type LexicalContent = {
 
 export type LexicalNode = {
   children?: LexicalNode[];
+  colSpan?: number | null;
   fields?: {
     newTab?: boolean | null;
     url?: string | null;
   };
   format?: number | string;
+  headerState?: number | null;
   listType?: string | null;
+  rowSpan?: number | null;
   tag?: string | null;
   text?: string | null;
   type?: string | null;

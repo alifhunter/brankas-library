@@ -1,5 +1,5 @@
 import { postgresAdapter } from '@payloadcms/db-postgres';
-import { lexicalEditor } from '@payloadcms/richtext-lexical';
+import { EXPERIMENTAL_TableFeature, lexicalEditor } from '@payloadcms/richtext-lexical';
 import { vercelBlobStorage } from '@payloadcms/storage-vercel-blob';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -90,7 +90,9 @@ export default buildConfig({
       connectionString: databaseUri,
     },
   }),
-  editor: lexicalEditor(),
+  editor: lexicalEditor({
+    features: ({ defaultFeatures }) => [...defaultFeatures, EXPERIMENTAL_TableFeature()],
+  }),
   graphQL: {
     schemaOutputFile: path.resolve(dirname, 'payload-schema.graphql'),
   },

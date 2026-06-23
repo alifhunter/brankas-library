@@ -2308,3 +2308,29 @@ a {
   width: auto;
   max-width: 160px;
 }
+
+/* Rich-text tables */
+.rich-text-table-wrap {
+  overflow-x: auto;
+  margin: 18px 0;
+}
+.rich-text-table {
+  border-collapse: collapse;
+  width: 100%;
+  font-size: 14px;
+  line-height: 22px;
+}
+.rich-text-table th,
+.rich-text-table td {
+  border: 1px solid var(--brankas-color-border-default, #e0e6ed);
+  padding: 10px 14px;
+  text-align: left;
+  vertical-align: top;
+}
+.rich-text-table th {
+  background: var(--brankas-color-background-sublest, #f7f8fa);
+  font-weight: 700;
+}
+.rich-text-table p {
+  margin: 0;
+}

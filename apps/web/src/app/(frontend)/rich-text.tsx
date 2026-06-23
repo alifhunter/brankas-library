@@ -57,9 +57,34 @@ function renderNode(node: LexicalNode, index: number): ReactNode {
       return <hr key={key} />;
     case 'upload':
       return renderUpload(node, key);
+    case 'table':
+      return (
+        <div className="rich-text-table-wrap" key={key}>
+          <table className="rich-text-table">
+            <tbody>{children}</tbody>
+          </table>
+        </div>
+      );
+    case 'tablerow':
+      return <tr key={key}>{children}</tr>;
+    case 'tablecell':
+      return renderTableCell(node, key, children);
     default:
       return children ? <div key={key}>{children}</div> : null;
   }
+}
+
+function renderTableCell(node: LexicalNode, key: string, children: ReactNode) {
+  const isHeader = typeof node.headerState === 'number' && node.headerState > 0;
+  const colSpan = node.colSpan && node.colSpan > 1 ? node.colSpan : undefined;
+  const rowSpan = node.rowSpan && node.rowSpan > 1 ? node.rowSpan : undefined;
+  const Cell = isHeader ? 'th' : 'td';
+
+  return (
+    <Cell colSpan={colSpan} key={key} rowSpan={rowSpan}>
+      {children}
+    </Cell>
+  );
 }
 
 function renderText(node: LexicalNode, key: string) {
