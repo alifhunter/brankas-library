@@ -1039,6 +1039,7 @@ a {
 }
 
 .changelog-meta {
+  align-content: start;
   border-left: 1px solid var(--brankas-color-border-default, #e0e6ed);
   display: grid;
   gap: 10px;
@@ -1073,6 +1074,7 @@ a {
 }
 
 .changelog-tags {
+  align-items: flex-start;
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
