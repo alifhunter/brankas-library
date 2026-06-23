@@ -182,7 +182,7 @@ Payload also includes a `Website Pages` collection. The seeded `home` page contr
 
 Each website page can choose a layout: documentation sidebar, no sidebar, or custom. The top navbar is not owned by the `home` page; it is owned by the `Site Navigation` global.
 
-The `Component Pages` collection controls editable component detail pages at `/components/[slug]`. Payload owns page copy and metadata such as description, import name, anatomy, usage, and accessibility notes. Live previews remain package-backed from `@brankas/react/desktop`.
+The `Component Pages` collection controls the editable guidance on component detail pages at `/components/[slug]`. Each page is laid out as a **code-owned live preview on top** (rendered from `@brankas/react`, never copied into the CMS) with a **single rich-text body below it**, authored in Payload's WYSIWYG editor. The body is per platform (`desktopContent` / `mobileContent`), switched by the Desktop/Mobile tabs. This replaced the earlier separate anatomy/usage/accessibility list fields — those were migrated into the rich-text bodies. The live preview, import snippet, and component metadata stay code-owned in `library-data.ts`; only the written guidance is CMS-owned.
 
 ### Articles and releases
 
