@@ -88,8 +88,15 @@ export async function getComponentThumbnails(): Promise<Record<string, string>> 
 
     const map: Record<string, string> = {};
     for (const doc of result.docs) {
-      const page = doc as { slug?: string | null; thumbnail?: { url?: string | null } | string | null };
-      const url = page.thumbnail && typeof page.thumbnail === 'object' ? page.thumbnail.url : null;
+      const page = doc as {
+        slug?: string | null;
+        thumbnail?: { url?: string | null } | string | null;
+        thumbnailUrl?: string | null;
+      };
+      const uploaded = page.thumbnail && typeof page.thumbnail === 'object' ? page.thumbnail.url : null;
+      const linked = page.thumbnailUrl?.trim();
+      // Prefer an uploaded image; fall back to an external image URL.
+      const url = uploaded || (linked && /^https?:\/\//.test(linked) ? linked : null);
       if (page.slug && url) {
         map[page.slug] = url;
       }

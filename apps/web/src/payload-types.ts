@@ -281,6 +281,10 @@ export interface ComponentPage {
    * Image shown as this component’s card thumbnail in the Components grid.
    */
   thumbnail?: (number | null) | Media;
+  /**
+   * Optional: paste an external image URL to use as the thumbnail instead of uploading one. Used only when no uploaded thumbnail is set.
+   */
+  thumbnailUrl?: string | null;
   importName: string;
   packageName: string;
   /**
@@ -671,6 +675,7 @@ export interface ComponentPagesSelect<T extends boolean = true> {
   platform?: T;
   description?: T;
   thumbnail?: T;
+  thumbnailUrl?: T;
   importName?: T;
   packageName?: T;
   desktopContent?: T;

@@ -89,6 +89,14 @@ export const ComponentPages: CollectionConfig = {
       },
     },
     {
+      name: 'thumbnailUrl',
+      type: 'text',
+      admin: {
+        description:
+          'Optional: paste an external image URL to use as the thumbnail instead of uploading one. Used only when no uploaded thumbnail is set.',
+      },
+    },
+    {
       name: 'importName',
       type: 'text',
       required: true,
