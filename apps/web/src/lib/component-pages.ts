@@ -71,6 +71,35 @@ async function getComponentBodies(canonicalSlug: string): Promise<ComponentPageB
   }
 }
 
+/**
+ * Returns a map of canonical component slug -> thumbnail image URL for every
+ * published component page that has a thumbnail set. Used to render the
+ * Components grid cards. Empty on database error.
+ */
+export async function getComponentThumbnails(): Promise<Record<string, string>> {
+  try {
+    const payload = await getPayload({ config: configPromise });
+    const result = await payload.find({
+      collection: 'component-pages',
+      depth: 1,
+      limit: 300,
+      where: { status: { equals: 'published' } },
+    });
+
+    const map: Record<string, string> = {};
+    for (const doc of result.docs) {
+      const page = doc as { slug?: string | null; thumbnail?: { url?: string | null } | string | null };
+      const url = page.thumbnail && typeof page.thumbnail === 'object' ? page.thumbnail.url : null;
+      if (page.slug && url) {
+        map[page.slug] = url;
+      }
+    }
+    return map;
+  } catch {
+    return {};
+  }
+}
+
 function toContent(doc: MergedComponentDoc, bodies: ComponentPageBodies): ComponentPageContent {
   return {
     defaultPlatform: doc.defaultPlatform,

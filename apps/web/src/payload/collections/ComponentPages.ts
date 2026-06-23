@@ -81,6 +81,14 @@ export const ComponentPages: CollectionConfig = {
       required: true,
     },
     {
+      name: 'thumbnail',
+      type: 'upload',
+      relationTo: 'media',
+      admin: {
+        description: 'Image shown as this component’s card thumbnail in the Components grid.',
+      },
+    },
+    {
       name: 'importName',
       type: 'text',
       required: true,

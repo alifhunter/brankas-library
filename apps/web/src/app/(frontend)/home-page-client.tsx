@@ -38,9 +38,11 @@ const foundationCards: FoundationCard[] = [
 export function HomePageClient({
   navigation,
   page,
+  thumbnails = {},
 }: {
   navigation: SiteNavigation;
   page: WebsitePageContent;
+  thumbnails?: Record<string, string>;
 }) {
   const [componentPlatform, setComponentPlatform] = useState<PlatformFilter>('All');
   const [showAllComponents, setShowAllComponents] = useState(false);
@@ -207,7 +209,14 @@ export function HomePageClient({
         <div className="components-grid">
           {featuredComponents.map((doc) => (
             <Link className="component-card" href={`/components/${doc.slug}`} key={doc.slug}>
-              <div className="component-card-thumb" aria-hidden="true" />
+              {thumbnails[doc.slug] ? (
+                <div className="component-card-thumb">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img alt="" src={thumbnails[doc.slug]} />
+                </div>
+              ) : (
+                <div className="component-card-thumb" aria-hidden="true" />
+              )}
               <div className="component-card-body">
                 <h3>{doc.name}</h3>
                 <p>{(doc.desktop ?? doc.mobile)?.description}</p>
@@ -221,7 +230,14 @@ export function HomePageClient({
         >
           {extraComponents.map((doc) => (
             <Link className="component-card" href={`/components/${doc.slug}`} key={doc.slug}>
-              <div className="component-card-thumb" aria-hidden="true" />
+              {thumbnails[doc.slug] ? (
+                <div className="component-card-thumb">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img alt="" src={thumbnails[doc.slug]} />
+                </div>
+              ) : (
+                <div className="component-card-thumb" aria-hidden="true" />
+              )}
               <div className="component-card-body">
                 <h3>{doc.name}</h3>
                 <p>{(doc.desktop ?? doc.mobile)?.description}</p>

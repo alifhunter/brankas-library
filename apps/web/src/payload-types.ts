@@ -277,6 +277,10 @@ export interface ComponentPage {
   componentStatus: 'Draft' | 'Ready';
   platform: 'Desktop' | 'Mobile' | 'Shared';
   description: string;
+  /**
+   * Image shown as this component’s card thumbnail in the Components grid.
+   */
+  thumbnail?: (number | null) | Media;
   importName: string;
   packageName: string;
   /**
@@ -666,6 +670,7 @@ export interface ComponentPagesSelect<T extends boolean = true> {
   componentStatus?: T;
   platform?: T;
   description?: T;
+  thumbnail?: T;
   importName?: T;
   packageName?: T;
   desktopContent?: T;
