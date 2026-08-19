@@ -89,6 +89,28 @@ const SCREENS = [
   },
   {
     components: [
+      'Button',
+      'Checkbox',
+      'Chips',
+      'Dropdown',
+      'Label',
+      'Table',
+      'Tabs (default)',
+      'Tabs (chips)',
+      'Text field',
+      'Select',
+      'Toast',
+      'Tooltip',
+    ],
+    description:
+      'An approvals queue built around six controls that are easy to confuse: default Tabs for the queue, chip Tabs for the method slice, selection Chips for risk flags, a Text field and a Select for filtering, and a Button that opens a Dropdown of bulk actions.',
+    href: '/examples/approvals',
+    name: 'Approvals queue',
+    watchFor:
+      'Chip Tabs sitting a few pixels above selection Chips. At rest they are near-identical pills — same padding, same radius, borders differing only by #ebebeb vs #e0e6ed. Judge whether their active states make it obvious which one is navigation and which is a filter.',
+  },
+  {
+    components: [
       'Banner',
       'Button',
       'Checkbox',
@@ -162,7 +184,7 @@ export default async function ExamplesPage() {
           </div>
           <div className="detail-status">
             <span>@brankas/react/desktop</span>
-            <span>5 screens</span>
+            <span>6 screens</span>
           </div>
         </section>
 
@@ -208,7 +230,7 @@ export default async function ExamplesPage() {
         </section>
 
         <section className="section text-block">
-          <h2>Why these five</h2>
+          <h2>Why these six</h2>
           <p>
             A dashboard, a search-with-filters page and a list page cover most of the adjacency
             problems a product team will hit. Between them they place every desktop component next

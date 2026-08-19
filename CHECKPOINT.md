@@ -43,6 +43,7 @@ Brankas Library is a React/Next-first design system with importable tokens, comp
 - [x] Added `apps/native-prototype`, a local Expo SDK 55 app that consumes `@brankas/native` and auto-discovers screens from `cases/`.
 - [x] Added full example screens at `/examples` covering all 31 desktop components in one coherent product scenario.
 - [x] Added `/examples/new-payout` (four-step stepper flow) and `/examples/settings` (single-page sectioned form), and wired the previously dead "New payout" buttons to the flow.
+- [x] Added `/examples/approvals`, placing default Tabs, chip Tabs, selection Chips, Select, Text field and a Dropdown-triggering Button on one screen. Surfaced that chip Tabs and selection Chips are near-identical at rest (same padding and pill radius; borders differ only by `#ebebeb` vs `#e0e6ed`) and diverge only when active — left unchanged pending a design decision.
 - [x] Documented the radius rule (pill actions vs 8px inputs) on the `radius` foundation page.
 - [x] Aligned the Dropdown menu radius with the Select panel (both `radius-sm`).
 - [x] Added `@brankas/patterns/desktop` entrypoint.

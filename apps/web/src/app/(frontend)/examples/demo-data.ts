@@ -314,3 +314,153 @@ export function formatDate(iso: string): string {
   }
   return `${Number(day)} ${months[Number(month) - 1] ?? month} ${year}`;
 }
+
+/* ---------- Approvals queue ---------- */
+
+export type ApprovalFlag = 'high-value' | 'unverified' | 'expiring';
+export type ApprovalState = 'pending' | 'approved' | 'rejected';
+
+export type ApprovalRequest = {
+  amount: number;
+  bank: string;
+  beneficiary: string;
+  /** Risk markers a reviewer filters on. A request can carry several. */
+  flags: ApprovalFlag[];
+  id: string;
+  method: 'Instant' | 'SKN' | 'RTGS';
+  reference: string;
+  requestedAt: string;
+  requestedBy: string;
+  state: ApprovalState;
+};
+
+export const APPROVAL_FLAG_COPY: Record<ApprovalFlag, string> = {
+  expiring: 'Expires today',
+  'high-value': 'Above IDR 100M',
+  unverified: 'Unverified beneficiary',
+};
+
+export const REQUESTERS = ['Rina Wijaya', 'Andi Pratama', 'Maya Kusuma', 'Doni Saputra'];
+
+export const APPROVALS: ApprovalRequest[] = [
+  {
+    amount: 152_000_000,
+    bank: 'BNI',
+    beneficiary: 'PT Andalan Distribusi',
+    flags: ['high-value', 'expiring'],
+    id: 'a-1',
+    method: 'RTGS',
+    reference: 'DIS-20260810-0039',
+    requestedAt: '2026-08-10',
+    requestedBy: 'Andi Pratama',
+    state: 'pending',
+  },
+  {
+    amount: 88_250_000,
+    bank: 'Permata',
+    beneficiary: 'PT Andalan Distribusi',
+    flags: ['expiring'],
+    id: 'a-2',
+    method: 'RTGS',
+    reference: 'DIS-20260807-0031',
+    requestedAt: '2026-08-07',
+    requestedBy: 'Rina Wijaya',
+    state: 'pending',
+  },
+  {
+    amount: 31_000_000,
+    bank: 'BNI',
+    beneficiary: 'CV Bangun Sejahtera',
+    flags: ['unverified'],
+    id: 'a-3',
+    method: 'SKN',
+    reference: 'DIS-20260808-0033',
+    requestedAt: '2026-08-08',
+    requestedBy: 'Maya Kusuma',
+    state: 'pending',
+  },
+  {
+    amount: 210_400_000,
+    bank: 'BCA',
+    beneficiary: 'PT Trans Cepat Indonesia',
+    flags: ['high-value'],
+    id: 'a-4',
+    method: 'RTGS',
+    reference: 'DIS-20260810-0043',
+    requestedAt: '2026-08-10',
+    requestedBy: 'Andi Pratama',
+    state: 'pending',
+  },
+  {
+    amount: 6_750_000,
+    bank: 'Mandiri',
+    beneficiary: 'Dewi Lestari',
+    flags: ['unverified'],
+    id: 'a-5',
+    method: 'Instant',
+    reference: 'DIS-20260810-0044',
+    requestedAt: '2026-08-10',
+    requestedBy: 'Doni Saputra',
+    state: 'pending',
+  },
+  {
+    amount: 24_500_000,
+    bank: 'BCA',
+    beneficiary: 'PT Sumber Pangan Jaya',
+    flags: [],
+    id: 'a-6',
+    method: 'Instant',
+    reference: 'DIS-20260810-0041',
+    requestedAt: '2026-08-10',
+    requestedBy: 'Rina Wijaya',
+    state: 'approved',
+  },
+  {
+    amount: 46_800_000,
+    bank: 'Permata',
+    beneficiary: 'PT Mitra Niaga Utama',
+    flags: [],
+    id: 'a-7',
+    method: 'SKN',
+    reference: 'DIS-20260809-0037',
+    requestedAt: '2026-08-09',
+    requestedBy: 'Maya Kusuma',
+    state: 'approved',
+  },
+  {
+    amount: 67_900_000,
+    bank: 'BCA',
+    beneficiary: 'PT Trans Cepat Indonesia',
+    flags: [],
+    id: 'a-8',
+    method: 'RTGS',
+    reference: 'DIS-20260808-0035',
+    requestedAt: '2026-08-08',
+    requestedBy: 'Andi Pratama',
+    state: 'approved',
+  },
+  {
+    amount: 3_200_000,
+    bank: 'BRI',
+    beneficiary: 'Siti Rahmawati',
+    flags: ['unverified'],
+    id: 'a-9',
+    method: 'Instant',
+    reference: 'DIS-20260809-0038',
+    requestedAt: '2026-08-09',
+    requestedBy: 'Doni Saputra',
+    state: 'rejected',
+  },
+  {
+    amount: 12_900_000,
+    bank: 'CIMB Niaga',
+    beneficiary: 'Agus Setiawan',
+    flags: [],
+    id: 'a-10',
+    method: 'Instant',
+    reference: 'DIS-20260806-0029',
+    requestedAt: '2026-08-06',
+    requestedBy: 'Rina Wijaya',
+    state: 'rejected',
+  },
+];

@@ -31,6 +31,7 @@ const NAV_ITEMS: SidebarMenuItem[] = [
     defaultExpanded: true,
     children: [
       { href: '/examples/new-payout', label: 'New payout', value: 'new-payout' },
+      { href: '/examples/approvals', label: 'Approvals', value: 'approvals' },
       { href: '/examples/transactions', label: 'Transactions', value: 'transactions' },
       { href: '/examples/beneficiaries', label: 'Beneficiaries', value: 'beneficiaries' },
     ],

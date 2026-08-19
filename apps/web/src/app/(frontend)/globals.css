@@ -3183,3 +3183,64 @@ a {
     position: static;
   }
 }
+
+/* --- Approvals queue (/examples/approvals) --------------------------------
+   Six easily-confused controls in one hierarchy. The chip Tabs and the
+   selection Chips deliberately sit within ~20px of each other: at rest they
+   are near-identical pills, and the screen only reads if their active states
+   tell you which is navigation and which is a filter. */
+
+.demo-slice-row {
+  border-bottom: 1px solid var(--color-border-subtle, #f2f2f2);
+  padding-bottom: 16px;
+}
+
+.demo-approval-bar {
+  align-items: flex-end;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  justify-content: space-between;
+}
+
+.demo-approval-filters {
+  align-items: flex-end;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.demo-approval-filters .ui-textfield {
+  max-width: 220px;
+}
+
+.demo-bulk-anchor {
+  flex-shrink: 0;
+}
+
+/* Bulk actions hangs off the right edge, so its menu opens leftwards. */
+.demo-pop--right {
+  left: auto;
+  right: 0;
+}
+
+.demo-flag-row {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.demo-flag-label {
+  color: var(--color-text-subtlest, #8d8d8d);
+  font-size: 12px;
+  letter-spacing: 0.04em;
+  margin-right: 2px;
+  text-transform: uppercase;
+}
+
+.demo-flag-cell {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
