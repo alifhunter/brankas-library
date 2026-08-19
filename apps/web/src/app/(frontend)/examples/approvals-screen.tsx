@@ -141,10 +141,12 @@ export function ApprovalsScreen() {
   };
 
   const list = (
-    <>
+    // Tabs panels have no layout of their own, so the sections inside one
+    // stack flush unless the panel content supplies its own rhythm.
+    <div className="demo-approval-body">
       {/* Row 2: the six-control bar. Chip tabs sit directly above the
           selection chips on purpose — that adjacency is the thing to judge. */}
-      <div className="demo-slice-row">
+      <div>
         <Tabs
           aria-label="Payout method"
           type="chips"
@@ -339,7 +341,7 @@ export function ApprovalsScreen() {
           </Table>
         </div>
       )}
-    </>
+    </div>
   );
 
   return (

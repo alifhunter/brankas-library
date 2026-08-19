@@ -3196,10 +3196,31 @@ a {
    are near-identical pills, and the screen only reads if their active states
    tell you which is navigation and which is a filter. */
 
-.demo-slice-row {
-  border-bottom: 1px solid var(--color-border-subtle, #f2f2f2);
-  padding-bottom: 16px;
+/* Vertical rhythm inside the Tabs panel. `.ui-tabs__panel` is a plain block
+   with no layout, so these sections stacked flush — unlike the other screens,
+   where the same blocks are direct children of `.demo-card` and inherit its
+   16px gap. Spacing here encodes grouping rather than being uniform:
+
+     chip tabs   →  16px  →  filter bar     different kinds of control
+     filter bar  →  12px  →  risk chips     both filters, one group
+     risk chips  →  24px  →  table          control block ends, content starts
+
+   The chip-tab row carries no divider of its own: the default tab strip
+   already draws one a row above, and two faint rules that close together
+   read as noise rather than structure. */
+.demo-approval-body > * + * {
+  margin-top: 16px;
 }
+
+.demo-approval-body > .demo-flag-row {
+  margin-top: 12px;
+}
+
+.demo-approval-body > .demo-table-scroll,
+.demo-approval-body > .demo-empty {
+  margin-top: 24px;
+}
+
 
 .demo-approval-bar {
   align-items: flex-end;
