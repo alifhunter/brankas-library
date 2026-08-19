@@ -236,7 +236,7 @@ export function NewPayoutScreen() {
     >
       <Toaster position="top-right" />
 
-      <div className="demo-stepper-shell">
+      <ConsoleCard className="demo-stepper-card">
         <ProgressIndicator
           steps={STEPS}
           currentStep={step}
@@ -249,7 +249,7 @@ export function NewPayoutScreen() {
             }
           }}
         />
-      </div>
+      </ConsoleCard>
 
       <div className="demo-stepper-layout">
         <ConsoleCard className="demo-form-card">

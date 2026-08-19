@@ -3027,11 +3027,13 @@ a {
 
 /* --- Stepper flow + settings form (/examples/new-payout, /examples/settings) --- */
 
-.demo-stepper-shell {
-  background: var(--color-background-default, #ffffff);
-  border: 1px solid var(--color-border-default, #e0e6ed);
-  border-radius: 12px;
-  overflow: hidden;
+/* The stepper uses the same card as the form and summary beside it, so all
+   three read as one surface treatment. ProgressIndicator is built as a
+   full-bleed page strip — its steps carry a 16px bottom padding and no top
+   padding, so the card's own 20px bottom padding is cut to 4px to land the
+   same 20px optical inset on both sides. */
+.demo-stepper-card {
+  padding-bottom: 4px;
 }
 
 .demo-stepper-layout {
