@@ -131,6 +131,7 @@ export const defaultSiteNavigation: SiteNavigation = {
       items: [
         { label: 'Token reference', href: '/tokens' },
         { label: 'Pattern guidance', href: '/patterns' },
+        { label: 'Example screens', href: '/examples' },
         { label: 'Playground', href: '/playground' },
         { label: 'Articles', href: '/articles' },
         { label: 'Releases', href: '/change-log' },

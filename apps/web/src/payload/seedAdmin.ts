@@ -71,6 +71,7 @@ const defaultSiteNavigation = {
       items: [
         { label: 'Token reference', href: '/tokens' },
         { label: 'Pattern guidance', href: '/patterns' },
+        { label: 'Example screens', href: '/examples' },
         { label: 'Playground', href: '/playground' },
         { label: 'Articles', href: '/articles' },
         { label: 'Releases', href: '/change-log' },
@@ -210,11 +211,34 @@ const starterFoundations: Array<{
     name: 'Radius',
     sections: [
       {
-        title: 'How radius is graded',
-        body: 'Radius scales from sharp utility surfaces to friendly hero containers. Use radius.sm for inputs, radius.md for cards, and radius.lg for marketing surfaces.',
+        title: 'Two shapes, one rule',
+        body: 'Radius in Brankas encodes what a thing is, not how friendly it should look. Actions and status objects are fully rounded pills: Button, Chip, Badge, Avatar. Surfaces you put content into are soft rectangles at 8px: Text field, Text area, Select, Search, Date picker, and the panels they open. Read the corner and you know whether you press it or fill it in.',
+      },
+      {
+        title: 'The scale',
+        body: 'radius.xs (4px) for small nested elements such as menu item hit areas and skeleton blocks. radius.sm (8px) for input controls, floating panels, and dense cards. radius.md (12px) for page-level cards and containers. radius.lg (16px) for hero and marketing surfaces. radius.pill (999px) for actions, chips, badges, and avatars.',
+      },
+      {
+        title: 'Pills next to inputs are correct',
+        body: 'A filter toolbar puts an 8px Select directly beside a pill Reset button, and the corners do not match. That is the system working, not a defect. The mismatch is the signal: the pill is the thing that acts, the rectangle is the thing that holds a value. Do not round the button down or the select up to make the row look uniform — you would delete the only visual cue separating the two roles. Align them on height and vertical centre instead, which is what actually makes a toolbar read as one row.',
+      },
+      {
+        title: 'Floating surfaces',
+        body: 'Every popover surface uses radius.sm (8px) — the Select panel, the Dropdown menu, and the Date picker shell. A floating panel should match the radius of the control that opened it so the two read as one object while the panel is open.',
+      },
+      {
+        title: 'Check it in a composition',
+        body: 'Radius decisions are invisible in isolation and obvious in a row. Before changing a radius, open the example screens and look at the component beside its neighbours rather than on its own detail page.',
       },
     ],
     slug: 'radius',
+    tokenReferences: [
+      { name: 'radius.xs', value: '4px' },
+      { name: 'radius.sm', value: '8px' },
+      { name: 'radius.md', value: '12px' },
+      { name: 'radius.lg', value: '16px' },
+      { name: 'radius.pill', value: '999px' },
+    ],
   },
   {
     description:
