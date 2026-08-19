@@ -1,5 +1,6 @@
 .ui-carousel {
-  width: min(100%, 328px);
+  /* Fills its container. The old 328px cap was a Figma artboard width. */
+  width: 100%;
   height: 24px;
   display: inline-flex;
   align-items: center;

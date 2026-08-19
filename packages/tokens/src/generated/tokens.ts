@@ -345,6 +345,12 @@ export const tokens = {
       },
     ],
   },
+  size: {
+    '432': 432,
+    '1056': 1056,
+    'field-max': 432,
+    'content-max': 1056,
+  },
   spacing: {
     '2': 2,
     '4': 4,
@@ -3785,6 +3791,62 @@ export const tokenList = [
     },
   },
   {
+    name: 'size.1056',
+    path: ['size', '1056'],
+    type: 'dimension',
+    layer: 'primitives',
+    value: 1056,
+    resolvedValue: 1056,
+    cssValue: '1056px',
+    cssVariable: '--brankas-size-1056',
+    cssVariables: {
+      '--brankas-size-1056': '1056px',
+    },
+  },
+  {
+    name: 'size.432',
+    path: ['size', '432'],
+    type: 'dimension',
+    layer: 'primitives',
+    value: 432,
+    resolvedValue: 432,
+    cssValue: '432px',
+    cssVariable: '--brankas-size-432',
+    cssVariables: {
+      '--brankas-size-432': '432px',
+    },
+  },
+  {
+    name: 'size.content-max',
+    path: ['size', 'content-max'],
+    type: 'dimension',
+    layer: 'semantic',
+    value: '{size.1056}',
+    resolvedValue: 1056,
+    cssValue: '1056px',
+    cssVariable: '--brankas-size-content-max',
+    cssVariables: {
+      '--brankas-size-content-max': '1056px',
+    },
+    description:
+      'Maximum readable width for a run of prose: long banner messages, article bodies, help text. Beyond this, line length hurts scanning.',
+  },
+  {
+    name: 'size.field-max',
+    path: ['size', 'field-max'],
+    type: 'dimension',
+    layer: 'semantic',
+    value: '{size.432}',
+    resolvedValue: 432,
+    cssValue: '432px',
+    cssVariable: '--brankas-size-field-max',
+    cssVariables: {
+      '--brankas-size-field-max': '432px',
+    },
+    description:
+      'Maximum comfortable width for a single form control. Components never apply this themselves — they fill their container. Apply it from the layout when a field would otherwise stretch across a wide page.',
+  },
+  {
     name: 'spacing.12',
     path: ['spacing', '12'],
     type: 'spacing',
@@ -5646,6 +5708,10 @@ export const cssVariables = {
   '--brankas-shadow-overlay':
     '0px 4px 6px -2px rgba(16,24,40,0.03), 0px 12px 16px -4px rgba(16,24,40,0.08)',
   '--brankas-shadow-sm': '0px 4px 8px 0px rgba(0,0,0,0.06), 0px -1px 1px 0px rgba(0,0,0,0.02)',
+  '--brankas-size-1056': '1056px',
+  '--brankas-size-432': '432px',
+  '--brankas-size-content-max': '1056px',
+  '--brankas-size-field-max': '432px',
   '--brankas-spacing-12': '12px',
   '--brankas-spacing-16': '16px',
   '--brankas-spacing-2': '2px',

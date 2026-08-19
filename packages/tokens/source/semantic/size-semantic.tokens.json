@@ -1,0 +1,13 @@
+{
+  "size": {
+    "$type": "dimension",
+    "field-max": {
+      "$value": "{size.432}",
+      "$description": "Maximum comfortable width for a single form control. Components never apply this themselves — they fill their container. Apply it from the layout when a field would otherwise stretch across a wide page."
+    },
+    "content-max": {
+      "$value": "{size.1056}",
+      "$description": "Maximum readable width for a run of prose: long banner messages, article bodies, help text. Beyond this, line length hurts scanning."
+    }
+  }
+}

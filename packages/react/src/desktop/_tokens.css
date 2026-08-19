@@ -221,6 +221,12 @@
   --space-5: 20px;
   --space-6: 24px;
 
+  /* Layout caps. Components never apply these to themselves — every component
+     fills its container. Apply them from the layout when a control or a run of
+     prose would otherwise stretch across a wide page. */
+  --size-field-max: 432px;
+  --size-content-max: 1056px;
+
   --shadow-soft: 0 8px 24px rgb(20 24 51 / 10%);
   --shadow-toggle-hover: 0 -1px 1px rgb(0 0 0 / 2%), 0 4px 8px rgb(0 0 0 / 6%);
 }

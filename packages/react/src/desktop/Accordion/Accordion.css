@@ -1,5 +1,6 @@
 .ui-accordion {
-  width: min(100%, 767px);
+  /* Fills its container. The old 767px cap was a Figma artboard width. */
+  width: 100%;
   display: grid;
   gap: 0;
   padding: var(--space-5);

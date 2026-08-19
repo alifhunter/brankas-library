@@ -1,5 +1,7 @@
 .ui-textfield {
-  width: min(100%, 432px);
+  /* Fills its container. Constrain from the layout with `--size-field-max`
+     when a field would otherwise stretch across a wide page. */
+  width: 100%;
   display: grid;
   gap: 8px;
   font-family: var(--brankas-typography-desktop-body-md-regular-font-family);
