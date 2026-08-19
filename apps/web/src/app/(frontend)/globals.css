@@ -3047,9 +3047,15 @@ a {
   gap: 24px;
 }
 
-/* Components fill their container, so a form column has to say where to stop.
-   `--size-field-max` is the documented cap for a single control. */
-.demo-form--narrow {
+/* Cap the inputs, not the column.
+   `--size-field-max` is the documented cap for *a single form control*.
+   Putting it on the wrapper capped everything inside — so a full-width
+   Banner, a review list and a fieldset all stopped at 432px too. Only the
+   controls that actually read badly when stretched are constrained; notices
+   and summaries fill the card like they should. */
+.demo-form--narrow > .ui-textfield,
+.demo-form--narrow > .ui-textarea,
+.demo-form--narrow > .demo-pop-anchor {
   max-width: var(--size-field-max, 432px);
 }
 
