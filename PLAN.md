@@ -101,23 +101,28 @@ Acceptance criteria:
 
 ## Phase 3: React Component Library
 
-Build the importable React component package using generated tokens. Brankas supports both mobile and desktop components; they should be differentiated with explicit package entrypoints while sharing the same token foundation.
+Build the importable React component package using generated tokens. Brankas supports both mobile and desktop components; they are differentiated at the package level while sharing the same token foundation.
 
 - [x] Create component package exports.
 - [x] Add explicit `@brankas/react/desktop` and `@brankas/react/shared` entrypoints.
-- [ ] Add explicit `@brankas/react/mobile` entrypoint when mobile components begin.
+- [x] Ship mobile as the standalone `@brankas/native` package with a root entrypoint and a `theme` subpath. **Supersedes the planned `@brankas/react/mobile` subpath** — React Native needs different peer dependencies and a different build and test toolchain than the DOM package, so a shared package would have forced RN dependencies onto every web consumer.
 - [x] Keep shared primitives and utilities in the shared entrypoint.
 - [x] Build the first desktop foundational components.
 - [x] Add second desktop component batch for feedback, selection, navigation, disclosure, upload, and progress patterns.
 - [x] Rework the second desktop component batch using Figma node context.
 - [x] Add desktop input, menu, navigation, loading, table, toast, and tooltip components from Figma node context.
+- [x] Build the mobile component set in `@brankas/native` (26 components across primitives, form controls, navigation, feedback/overlays, and content/disclosure).
+- [x] Add `@brankas/icons-native` with the `Icon` SVG wrapper for React Native.
+- [ ] Grow `@brankas/icons-native` into a real icon set — it currently ships only `Icon`, `DEFAULT_ICON_SIZE`, and a single generated `CheckIcon`, so native components inline their own SVG paths.
 - [x] Use generated token outputs for all styling.
 - [x] Include props, types, accessibility notes, and examples for the first pass.
 - [x] Add initial component tests for behavior and key states.
-- [ ] Expand component tests across the full desktop component set.
+- [x] Expand component tests across the full desktop component set (all 31 desktop components have a co-located test).
+- [ ] Add the one missing native component test (`CurveBackground`); the other 25 are covered.
 - [x] Add Storybook stories for the first desktop components.
 - [x] Add Storybook examples for the second desktop component batch.
 - [x] Add Storybook examples for the Search, Sidebar, Dropdown, Select, Skeleton, Tabs, Table cell, Text field, Text area, Toast, and Tooltip batch.
+- [x] Add Storybook examples for the native components, rendered through `react-native-web`.
 
 Initial shared component targets:
 
@@ -168,25 +173,29 @@ Initial desktop-specific targets:
 - Sidebar navigation
 - Desktop pagination
 
-Initial mobile-specific targets:
+Initial mobile-specific targets, against what `@brankas/native` now ships:
 
-- Bottom sheet
-- Mobile navigation
-- List item
-- Touch-friendly form controls
-- Mobile pagination
+- [x] Bottom sheet — `BottomSheet`
+- [x] Mobile navigation — `BottomNav`, `Header`, `Tabs`, `TabsChip`
+- [x] List item — `AccountItem`, `SourceOfFund`
+- [x] Touch-friendly form controls — `Checkbox`, `InputAmount`, `Search`, `TextArea`, `TextField`, `Toggle`, `ToggleText`
+- [ ] Mobile pagination — not built
+
+Delivered beyond the original target list: `Accordion`, `AnnouncementBanner`, `Avatar`, `Badge`, `Button`, `CurveBackground`, `Dialog`, `Overlay`, `SectionBanner`, `Toast`, `Tooltip`, `Tracker`.
 
 Acceptance criteria:
 
 - [x] First desktop components can be imported from `@brankas/react/desktop`.
 - [x] First desktop components use token-generated styling.
+- [x] Mobile components can be imported from `@brankas/native`, with resolved tokens from `@brankas/native/theme`.
 - [x] Mobile and desktop components share primitive and semantic tokens.
-- [x] Platform-specific component tokens exist only when the component behavior requires them.
+- [x] Platform-specific component tokens exist only when the component behavior requires them (currently only the typography scale, split into desktop and mobile semantic files).
 - [x] Initial keyboard and accessibility behavior checks are covered for representative interactive components.
 - [ ] Full keyboard and accessibility behavior coverage is added for all stable interactive components.
 - [x] Storybook renders the first desktop components.
 - [x] Storybook renders the second desktop component batch.
 - [x] Storybook renders the Search, Sidebar, Dropdown, Select, Skeleton, Tabs, Table cell, Text field, Text area, Toast, and Tooltip batch.
+- [x] Storybook renders the native components through `react-native-web`.
 - [x] Component API docs are source-controlled with the component package through typed props and stories.
 - [x] Search component source and requirements are confirmed.
 - [ ] Figma screenshot comparison is added for desktop component parity.
@@ -198,7 +207,7 @@ Create reusable product patterns after core components are stable.
 - [x] Define pattern package exports.
 - [x] Add explicit `@brankas/patterns/desktop` entrypoint.
 - [x] Build starter layout and form patterns.
-- [x] Add Storybook examples for starter patterns.
+- [ ] **Render `@brankas/patterns` somewhere.** The five patterns (page header, filter toolbar, form section, empty list state, detail panel) are built and exported but consumed nowhere: `packages/patterns` is not in the Storybook `stories` glob and is not imported by `apps/web`. The `/patterns` page renders six recipes implemented locally in `apps/web/src/app/(frontend)/patterns/pattern-examples.tsx`, not the package. Decide whether the package or the local recipes is the real home and delete the other.
 - [x] Connect patterns to component and token usage.
 - [ ] Expand pattern guidance with usage rules and anti-patterns.
 - [ ] Add pattern tests once composition behavior becomes interactive.
@@ -206,8 +215,8 @@ Create reusable product patterns after core components are stable.
 Acceptance criteria:
 
 - [x] Patterns compose existing components.
-- [x] Pattern examples are documented in Storybook.
-- [x] Pattern guidance is visible in Storybook or the preview site.
+- [ ] Pattern examples are documented in Storybook — **not met**, `packages/patterns` has zero stories.
+- [x] Pattern guidance is visible on the preview site (`/patterns`, via local recipes).
 - [ ] Pattern guidance covers when not to use each pattern.
 
 ## Phase 5: Live Preview and Playground Website
@@ -223,6 +232,9 @@ Build the Next.js website after the token and component foundations exist.
 - [ ] Add deeper playground controls for themes and viewport sizes.
 - [x] Add first token detail page and token references.
 - [x] Add first pattern guidance page.
+- [x] Add full example screens at `/examples` (dashboard, transaction search, beneficiary list) so component adjacency can be reviewed in a real layout rather than on isolated detail pages.
+- [x] Add the two form screens — a stepper flow (`/examples/new-payout`) and a single-page form (`/examples/settings`) — covering both validation models and both answers to "how wide should a form column be".
+- [ ] Extend the example screens to mobile once `@brankas/native` has a web-rendered preview surface.
 
 Acceptance criteria:
 
@@ -265,7 +277,9 @@ Acceptance criteria:
 
 ## Phase 7: Versioning, Publishing, Governance, and Scaling
 
-Prepare the library for real team usage.
+Prepare the library for real team usage. **Not started.** Every package is still `private: true` at version `0.0.0` and is consumed only through the pnpm workspace.
+
+This phase blocks Phase 8: designers cannot install packages from Expo Snack until they are published.
 
 - [ ] Add Changesets for package versioning and changelogs.
 - [ ] Define component status labels: experimental, beta, stable, deprecated.
@@ -303,7 +317,9 @@ The constraint: zero local install (no Node, no Xcode, no terminal). The only to
 
 ### Engineering setup (one-time)
 
-- [ ] Publish `@brankas/native`, `@brankas/icons-native`, and `@brankas/tokens` to a private npm scope (`@banksinarmas/*`). Required so Snack can install them.
+Publishing is not a config flip. Two things block it today: all packages are `private: true` at `0.0.0` with no versioning workflow (Phase 7), and `@brankas/icons-native` has no real icon set yet — it ships only the `Icon` wrapper and one `CheckIcon`, so publishing it as-is would give Snack users nothing usable.
+
+- [ ] Publish `@brankas/native`, `@brankas/icons-native`, and `@brankas/tokens` to a private npm scope (`@banksinarmas/*`). Required so Snack can install them. Depends on Phase 7.
 - [ ] Verify peer deps (`react-native-svg`, `react-native-safe-area-context`, `react-native-gesture-handler`, `react-native-reanimated`) resolve cleanly in Snack.
 - [ ] Build a master "Brankas Mobile UI Kit" Snack that imports the published library and renders one example screen.
 - [ ] Build 5–8 forkable starter templates as separate Snacks: Login, Onboarding, Dashboard, Transfer, Profile, QRIS scan, History, Settings.
@@ -311,7 +327,8 @@ The constraint: zero local install (no Node, no Xcode, no terminal). The only to
 
 ### Higher-fidelity options (optional, layer on top)
 
-- **Expo demo app + EAS Update** — a single QR code that always shows the latest internal prototype. Engineers maintain the build; designers consume it. Better for navigation-heavy flows that exceed Snack's one-screen comfort zone.
+- **`apps/native-prototype` (built).** A local Expo SDK 55 app that already consumes `@brankas/native` as a workspace dependency and auto-discovers screens from `cases/` (currently `dashboard-vision`, `open-account-flow`, `transfer-success`). This covers the engineer-facing half of the workflow today, but it requires a local Xcode or Android toolchain, so it does not satisfy the zero-install constraint above.
+- **Expo demo app + EAS Update** — a single QR code that always shows the latest internal prototype. Engineers maintain the build; designers consume it. Better for navigation-heavy flows that exceed Snack's one-screen comfort zone. `apps/native-prototype` is the natural starting point for this.
 - **Vite + react-native-web prototype** deployed to Vercel — single shareable URL for stakeholders who don't want Expo Go installed. Loses native gesture fidelity but works in any browser, including Cowork's sandbox.
 
 ### Acceptance criteria

@@ -2,9 +2,11 @@
 
 ## Current Status
 
-Project direction has been clarified. Brankas Library will be a React/Next-first design system with importable tokens, components, and patterns; a live preview and playground website; and a self-hosted Payload CMS for articles and editorial content.
+Brankas Library is a React/Next-first design system with importable tokens, components, and patterns; a live preview and playground website; and a self-hosted Payload CMS for articles and editorial content.
 
-The repository now contains the Phase 1 monorepo scaffold, a working Phase 2 token generation pipeline, an expanded Phase 3 desktop React component set, initial Phase 4 desktop product patterns, an expanded Phase 5 live preview/playground website with starter detail pages, and the Phase 6 Payload CMS foundation inside the web app.
+**Phases 1 through 6 are delivered and running in production.** The repository contains the Phase 1 monorepo, the Phase 2 token generation pipeline, the Phase 3 component libraries for **both** desktop (`@brankas/react/desktop`, 31 components) and mobile (`@brankas/native`, 26 components), starter Phase 4 desktop product patterns, the Phase 5 preview/playground website, and the Phase 6 Payload CMS — all deployed at https://brankas-library.vercel.app.
+
+**Phase 7 (versioning, publishing, governance) and Phase 8 (designer prototyping) have not started.** Every package is still `private: true` at version `0.0.0`, which is what blocks Phase 8.
 
 ## Completed
 
@@ -33,9 +35,19 @@ The repository now contains the Phase 1 monorepo scaffold, a working Phase 2 tok
 - [x] Implemented desktop Search, Search result panel, Sidebar, Sidebar menu, Dropdown, Select, Skeleton, Tabs, Table cell, Text field, Text area, Toast, and Tooltip from provided Figma node context.
 - [x] Added Storybook examples for the implemented desktop components.
 - [x] Added React component test runner and initial behavior/key-state coverage for desktop components.
+- [x] Added co-located behavior tests for all 31 desktop components.
+- [x] Built the `@brankas/native` React Native component package (26 components) on the shared token foundation.
+- [x] Exposed resolved native tokens from `@brankas/native/theme`.
+- [x] Added co-located tests for 25 of 26 native components and Storybook stories rendered through `react-native-web`.
+- [x] Added `@brankas/icons-native` with the `Icon` SVG wrapper for React Native.
+- [x] Added `apps/native-prototype`, a local Expo SDK 55 app that consumes `@brankas/native` and auto-discovers screens from `cases/`.
+- [x] Added full example screens at `/examples` covering all 31 desktop components in one coherent product scenario.
+- [x] Added `/examples/new-payout` (four-step stepper flow) and `/examples/settings` (single-page sectioned form), and wired the previously dead "New payout" buttons to the flow.
+- [x] Documented the radius rule (pill actions vs 8px inputs) on the `radius` foundation page.
+- [x] Aligned the Dropdown menu radius with the Select panel (both `radius-sm`).
 - [x] Added `@brankas/patterns/desktop` entrypoint.
 - [x] Implemented starter desktop Page header, Filter toolbar, Form section, Empty list state, and Detail panel patterns.
-- [x] Added Storybook examples for starter desktop patterns.
+- [x] Added six interactive pattern recipes to the `/patterns` page (implemented locally in `apps/web`, not from `@brankas/patterns`).
 - [x] Built first Next.js home preview for tokens, desktop components, desktop patterns, and playground controls.
 - [x] Imported token CSS variables into the website from `@brankas/tokens/tokens.css`.
 - [x] Confirmed the website consumes `@brankas/react/desktop` and `@brankas/patterns/desktop`.
@@ -62,12 +74,24 @@ The repository now contains the Phase 1 monorepo scaffold, a working Phase 2 tok
 
 The `apps/web` site is now deployed to Vercel at https://brankas-library.vercel.app, backed by a Neon Postgres database, with the GitHub repository at https://github.com/alifhunter/brankas-library (pushes to `main` auto-deploy). Payload `/admin` login is verified working in production against Neon. See the Deployment section of `README.md` for project configuration, environment variables, and secret rotation.
 
-Published articles and releases now render on public website routes (`/articles`, `/articles/[slug]`, `/change-log/[releaseSlug]`), and media uploads (including rich-text image embeds) are stored in Vercel Blob. Remaining Phase 6 work: live preview/draft flows for articles. Phase 5 visual review, Phase 4 pattern guidance, expanded component behavior tests, and visual screenshot review remain active hardening work.
+Published articles and releases now render on public website routes (`/articles`, `/articles/[slug]`, `/change-log/[releaseSlug]`), and media uploads (including rich-text image embeds) are stored in Vercel Blob.
+
+Remaining work, by phase:
+
+- **Phase 4** — pattern usage rules and anti-patterns; pattern tests.
+- **Phase 5** — deeper playground controls for themes and viewport sizes; visual review of detail pages across widths.
+- **Phase 6** — live preview and draft flows for articles; content blocks; authors and categories.
+- **Phase 7** — not started. Changesets, component status labels, visual regression, release gates. This is the gate for Phase 8.
+- **Phase 8** — not started. `apps/native-prototype` covers the local, engineer-facing path; the zero-install Expo Snack path needs published packages first.
+
+Cross-cutting: Figma screenshot parity checks, and a real icon set for `@brankas/icons-native`.
 
 ## In Progress
 
 - [x] Add initial component behavior tests.
-- [ ] Expand component behavior tests across the full desktop component set.
+- [x] Expand component behavior tests across the full desktop component set (31/31 covered).
+- [ ] Add the missing `CurveBackground` test in `@brankas/native` (25/26 covered).
+- [ ] Grow `@brankas/icons-native` beyond the `Icon` wrapper and single `CheckIcon`.
 - [ ] Add visual regression or screenshot comparison for Figma parity.
 - [ ] Add component-level token source files when component-specific token overrides are needed.
 - [ ] Expand pattern guidance with usage rules and anti-patterns.
@@ -97,7 +121,9 @@ Published articles and releases now render on public website routes (`/articles`
 - [x] Provision Postgres (Neon) and verify `/admin` login.
 - [x] Deploy `apps/web` to Vercel and connect GitHub for auto-deploy.
 - [x] Add CMS-driven article and release pages.
-- [ ] Add `@brankas/react/mobile` entrypoint when mobile components begin.
+- [x] Ship the mobile component library as standalone `@brankas/native` (supersedes the planned `@brankas/react/mobile` entrypoint).
+- [ ] Start Phase 7: add Changesets, component status labels, and unprivate the packages.
+- [ ] Start Phase 8 once packages publish: master Expo Snack plus forkable starter templates.
 
 ## Decision Log
 
@@ -135,6 +161,10 @@ Published articles and releases now render on public website routes (`/articles`
 | 2026-06-22 | Foundation pages: single rich-text body   | Replaced the per-section title/body array on the `Foundations` collection with one WYSIWYG rich-text `content` body, rendered below the intro (`foundation/[slug]`); `tokenReferences` stays a structured field. `lib/foundations.ts` reads `content`. Neon schema migrated via drizzle push (auto-confirmed the `foundations_sections` drop with piped `yes`); seed converts section title/body into Lexical bodies and upserts. All 9 foundations back-filled. Mirrors the component-page change. |
 | 2026-06-22 | Component pages: single rich-text body   | Replaced the per-section anatomy/usage/accessibility fields on `ComponentPages` with one WYSIWYG body per platform (`desktopContent`/`mobileContent`), rendered below the code-owned live preview. Also wired component detail pages to the CMS — they previously rendered 100% from static `library-data.ts` (editing in Payload did nothing). `lib/component-pages.ts` now fetches CMS bodies and merges with code-owned preview/import metadata. Neon schema migrated via drizzle push (auto-confirmed the data-loss drop by piping `yes`); seed converts existing lists into Lexical bodies (heading + list per section), keyed by canonical slug, and removes legacy `mobile-*` pages. 44 pages back-filled. |
 | 2026-06-22 | Real command-palette search             | Replaced the cosmetic sidebar search box with a working palette (`command-search.tsx`): centered overlay, grouped live results, keyboard nav, opens via button / ⌘K / "/". Index built server-side (`lib/search.ts`) from static component/pattern/token docs + live nav + published articles/releases, served at `/search-index`, fetched lazily on first open. `DocsShell` kept sync (the home page is a client component that renders it; importing the payload-backed index there pulled `pg` into the client bundle). Also fixed the broken "See all components" reveal (cards stuck at opacity 0.55 + `max-height` clamp clipped most of ~50 components). |
+| 2026-08-10 | Mobile ships as `@brankas/native`       | *Recorded retroactively — this work predates the squashed 2026-06-19 initial commit, so the original date is not recoverable from git.* Mobile components ship as a standalone React Native package (26 components, root entrypoint + `theme` subpath) instead of the planned `@brankas/react/mobile` subpath. React Native needs different peer deps (`react-native-svg`, `react-native-safe-area-context`, `react-native-gesture-handler`, `react-native-reanimated`) and a different build/test toolchain (Babel + jest RN preset) than the DOM package; a shared package would have forced those onto every web consumer. Both packages consume the same primitive and semantic tokens from `@brankas/tokens`; only the typography scale is split by platform. `@brankas/icons-native` was added alongside but is still only the `Icon` wrapper + one `CheckIcon`. Storybook renders native stories via `react-native-web` with local gesture-handler/reanimated stubs. |
+| 2026-08-10 | `apps/native-prototype` Expo app        | *Recorded retroactively — predates the squashed initial commit.* Local Expo SDK 55 app consuming `@brankas/native` as a workspace dep, so flows can be tested on real devices with the actual components. Screens auto-discover from `cases/` (drop in a `.tsx`, no registry to edit); current cases are `dashboard-vision`, `open-account-flow`, `transfer-success`. This is the Phase 8 "higher-fidelity option", not the zero-install designer path — it needs a local Xcode/Android toolchain. Its `ios`/`android` folders are excluded via `.vercelignore` to stay under Vercel's file limit. |
+| 2026-08-10 | Example screens + the radius rule          | From engineering review: components look fine reviewed one at a time, so nobody had checked how they look *adjacent*. Added `/examples` — three working screens (overview, transaction search, beneficiary list) from one fictional disbursements console sharing one dataset, covering all 31 desktop components. Code-owned, not CMS-owned, so changes arrive as a reviewable diff. The review's specific catch — Button (`radius-pill`, 999px) beside Select (`radius-sm`, 8px) — is **intentional and now documented**: pills are actions and status objects, 8px is anything holding a value. The real defect was that `/foundation/radius` never mentioned the pill despite it being the most-used radius (28 usages vs 20 for `sm`), so the pairing read as an accident. A genuine inconsistency the same method surfaced: Dropdown's menu panel was `radius-xs` (4px) while Select's panel was `radius-sm` (8px) — two floating surfaces, two radii; Dropdown is now `radius-sm`. Also found and recorded: `@brankas/patterns` is dead code (no Storybook glob, no `apps/web` import), and the docs' claim of pattern Storybook examples was false. |
+| 2026-08-10 | Components fill; width is the layout's job | The first review on a real screen caught it immediately: a page-level Banner capped at 320px. Five components carried Figma artboard widths as `width: min(100%, Npx)` — Banner (328/320/1052), Accordion (767), Carousel (328), TextField (432), TextArea (340). All now `width: 100%`. The caps that were worth keeping became semantic tokens instead: `size.field-max` (432px) and `size.content-max` (1056px), new `size` primitives + `size-semantic` sources, exposed as `--size-field-max` / `--size-content-max`. Components never apply them to themselves; layouts do. `apps/web` applies `--size-field-max` inside `.example-variant__body` so component-page previews still sit side by side. This is the class of bug that is invisible on a component detail page and obvious in a composition — the argument for `/examples` existing. |
 
 ## Validation Checklist
 
@@ -146,8 +176,13 @@ Use this checklist when updating the library:
 - [ ] Generated TypeScript exports match token source values and aliases.
 - [ ] Components use generated token outputs.
 - [ ] New desktop components are represented in Storybook.
-- [ ] Mobile and desktop React components use explicit subpath exports.
+- [ ] New native components are represented in Storybook and have a co-located test.
+- [ ] New or changed components are checked on an `/examples` screen, beside their neighbours, not only on their own detail page.
+- [ ] Radius choices follow the documented rule: pill for actions and status, 8px for surfaces that hold a value.
+- [ ] Components fill their container. No component caps its own width — width constraints come from the layout via `--size-field-max` / `--size-content-max`.
+- [ ] Mobile and desktop React components are separated at the package level (`@brankas/native` vs `@brankas/react`), not by subpath.
 - [ ] Mobile and desktop React components share primitive and semantic tokens.
+- [ ] Native components use `@brankas/native/theme` rather than hardcoded values.
 - [ ] The website consumes library packages instead of duplicating styling.
 - [x] Payload admin works against a running Postgres database.
 - [ ] Payload REST and GraphQL routes respond in local development.

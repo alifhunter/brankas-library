@@ -30,18 +30,21 @@ The design library comes first. The website must consume the library styling and
 
 Tailwind is not required for token authoring or styling. Canonical token files should be user-provided DTCG-style JSON files, then converted into generated outputs such as CSS variables and TypeScript exports.
 
-## Planned Repository Structure
+## Repository Structure
 
 ```text
 .
 ├── apps/
-│   ├── web/
-│   └── storybook/
+│   ├── web/               # Next.js preview site + embedded Payload CMS
+│   ├── storybook/         # Storybook host (renders desktop and native stories)
+│   └── native-prototype/  # Local Expo app for prototyping with @brankas/native
 ├── packages/
-│   ├── tokens/
-│   ├── react/
-│   ├── patterns/
-│   └── config/
+│   ├── tokens/            # DTCG token sources + generated CSS/TS outputs
+│   ├── react/             # Desktop DOM components (@brankas/react)
+│   ├── native/            # React Native components (@brankas/native)
+│   ├── icons-native/      # React Native icon primitives (@brankas/icons-native)
+│   ├── patterns/          # Composed product patterns (@brankas/patterns)
+│   └── config/            # Shared TypeScript/lint configuration
 ├── README.md
 ├── PLAN.md
 └── CHECKPOINT.md
@@ -49,30 +52,49 @@ Tailwind is not required for token authoring or styling. Canonical token files s
 
 ## Token Source Structure
 
-Canonical token files should live in separate files by layer and category or component:
+Canonical token files live in separate files by layer and category or component. The current source tree is:
 
 ```text
 packages/tokens/source/
 ├── primitives/
+│   ├── breakpoint.tokens.json
 │   ├── color.tokens.json
-│   ├── typography.tokens.json
-│   ├── spacing.tokens.json
 │   ├── radius.tokens.json
 │   ├── shadow.tokens.json
-│   └── breakpoint.tokens.json
+│   ├── size.tokens.json
+│   ├── spacing.tokens.json
+│   └── typography.tokens.json
 ├── semantic/
-│   ├── color.tokens.json
-│   ├── typography.tokens.json
-│   ├── spacing.tokens.json
-│   ├── radius.tokens.json
-│   ├── shadow.tokens.json
-│   └── breakpoint.tokens.json
-└── components/
-    ├── button.tokens.json
-    ├── input.tokens.json
-    ├── card.tokens.json
-    └── dialog.tokens.json
+│   ├── breakpoint-semantic.tokens.json
+│   ├── color-semantic.tokens.json
+│   ├── shadow-semantic.tokens.json
+│   ├── size-semantic.tokens.json
+│   └── typography/
+│       ├── typography.desktop.tokens.json
+│       └── typography.mobile.tokens.json
+└── components/            # intentionally empty
 ```
+
+`components/` is intentionally empty. Component tokens are only added when a component needs a value that the semantic layer cannot express; until then, components alias semantic tokens directly. Typography is the one layer already split by platform, because desktop and mobile need different type scales.
+
+### Width is the layout's job, not the component's
+
+Every component fills the container it is placed in. No component caps its own width.
+
+This was not always true: Banner, Accordion, Carousel, TextField and TextArea each shipped with a `width: min(100%, Npx)` cap carried over from the Figma artboard they were drawn on — which meant a page-level Banner stopped at 320px in the middle of a full-width page. Those caps are gone.
+
+When something genuinely should not stretch, constrain it from the layout using the semantic size tokens:
+
+- `--size-field-max` (432px) — maximum comfortable width for a single form control
+- `--size-content-max` (1056px) — maximum readable width for a run of prose
+
+```css
+.signup-form .ui-textfield {
+  max-width: var(--size-field-max);
+}
+```
+
+The rule of thumb: if the constraint depends on the surrounding page, it belongs to the page.
 
 The three token layers are:
 
@@ -105,37 +127,87 @@ The initial implementation should focus on the design library before the website
 
 1. Set up the monorepo.
 2. Build the token package and generated outputs.
-3. Build the React component package.
-4. Build patterns and usage guidelines.
-5. Build the live preview and playground website using the library.
-6. Add Payload CMS for articles, releases, and long-form guidance.
+3. Build the desktop React component package.
+4. Build the React Native component package on the same tokens.
+5. Build patterns and usage guidelines.
+6. Build the live preview and playground website using the library.
+7. Add Payload CMS for articles, releases, and long-form guidance.
 
 ## Package Consumption
 
-The intended package outputs are:
+The package outputs are:
 
 - `@brankas/tokens` for token CSS variables and TypeScript exports
-- `@brankas/react` for React components, with explicit desktop, mobile, and shared entrypoints
-- `@brankas/patterns` for reusable layouts and product patterns, with explicit desktop and future mobile entrypoints
+- `@brankas/react` for desktop DOM components, with explicit `desktop` and `shared` entrypoints
+- `@brankas/native` for React Native components, with a root entrypoint and a `theme` subpath
+- `@brankas/icons-native` for React Native icon primitives
+- `@brankas/patterns` for reusable layouts and product patterns, with an explicit desktop entrypoint
 
 Preferred component imports:
 
 ```ts
 import { Button } from '@brankas/react/desktop';
-import { Button as MobileButton } from '@brankas/react/mobile';
 import { VisuallyHidden } from '@brankas/react/shared';
 import { PageHeader } from '@brankas/patterns/desktop';
+
+// React Native
+import { Button as NativeButton } from '@brankas/native';
+import { tokens } from '@brankas/native/theme';
 ```
 
-Exact package names can be adjusted when publishing details are finalized.
+Mobile components are **not** exposed as `@brankas/react/mobile`. They ship as the standalone `@brankas/native` package, because React Native requires different peer dependencies and a different build and test toolchain than the DOM package. Both consume the same primitive and semantic tokens from `@brankas/tokens`.
+
+Every package is currently `private` at version `0.0.0` and consumed through the pnpm workspace. Nothing is published to a registry yet — see Phase 7 in `PLAN.md`.
 
 ## Current Desktop Components
 
-The desktop entrypoint currently includes foundational components for disclosure, identity, feedback, selection, navigation, upload, progress states, search, sidebars, menus, form fields, tables, loading states, toasts, and tooltips. Current components are implemented from the provided Figma node context and exposed from `@brankas/react/desktop`.
+The desktop entrypoint currently includes foundational components for disclosure, identity, feedback, selection, navigation, upload, progress states, search, sidebars, menus, form fields, tables, loading states, toasts, and tooltips. Current components are implemented from the provided Figma node context and exposed from `@brankas/react/desktop`. Every desktop component has a co-located `.test.tsx` and a co-located `.stories.tsx`.
+
+## Current Mobile Components
+
+`@brankas/native` is the React Native component library. It shares the primitive and semantic token layers with the desktop package and exposes its resolved token objects from `@brankas/native/theme`.
+
+- Primitives and identity: `Avatar`, `Badge`, `Button`, `CurveBackground`
+- Form controls: `Checkbox`, `InputAmount`, `Search`, `TextArea`, `TextField`, `Toggle`, `ToggleText`
+- Navigation: `BottomNav`, `Header`, `Tabs`, `TabsChip`
+- Feedback and overlays: `AnnouncementBanner`, `BottomSheet`, `Dialog`, `Overlay`, `SectionBanner`, `Toast`, `Tooltip`
+- Content and disclosure: `Accordion`, `AccountItem`, `SourceOfFund`, `Tracker`
+
+Peer dependencies: `react-native`, `react-native-svg`, `react-native-safe-area-context`, `react-native-gesture-handler`, and `react-native-reanimated`.
+
+Components have co-located tests (all except `CurveBackground`) and co-located stories. Storybook renders them through `react-native-web`, with local stubs for gesture-handler and reanimated.
+
+`@brankas/icons-native` is still a starting point rather than a finished icon set: it provides the `Icon` SVG wrapper, `DEFAULT_ICON_SIZE`, and a single generated `CheckIcon`. Native components that need other glyphs currently inline their own SVG paths.
+
+### Native prototype app
+
+`apps/native-prototype` is a local Expo (SDK 55) app that consumes `@brankas/native` as a workspace dependency, so flows can be exercised on a real iOS or Android device with the actual components.
+
+The app opens to a grouped list of cases. Drop a `.tsx` file into `apps/native-prototype/cases/` and it appears in the list on the next reload — there is no registry to edit. A case can be one screen or a multi-step flow. Current cases: `dashboard-vision`, `open-account-flow`, and `transfer-success`.
+
+This app requires a local Xcode or Android toolchain. See `apps/native-prototype/README.md` for the one-time machine setup. The zero-install path for designers (Expo Snack) is Phase 8 and is not built yet.
 
 ## Current Desktop Patterns
 
 The desktop patterns entrypoint currently includes starter product patterns for page headers, filter toolbars, form sections, empty list states, and detail panels. Patterns compose `@brankas/react/desktop` components and shared token helpers; they should not introduce a parallel styling system.
+
+> **Known gap:** `@brankas/patterns` is not consumed anywhere. It is absent from the Storybook `stories` glob in `apps/storybook/.storybook/main.ts` and is not imported by `apps/web`. The `/patterns` page and the `/examples` screens both compose components directly. Resolve this before treating the package as shipped — see Phase 4 in `PLAN.md`.
+
+## Example Screens
+
+`/examples` renders complete product screens rather than isolated components. Every screen belongs to one fictional product — a Brankas Open Finance disbursements console for a business customer — and all three read from a single dataset in `apps/web/src/app/(frontend)/examples/demo-data.ts`.
+
+- `/examples/overview` — dashboard: balances, daily-limit progress, approvals queue, recent payouts, skeleton and loader states.
+- `/examples/transactions` — search with working filters, sorting, bulk selection, pagination and an empty state. Its filter row is the only place all four of Chips, Select, Text field and Button appear together: pill Chip presets, three 8px Select triggers, two 8px Text fields for the amount range, then a pill Reset — two radii and two label positions in one row.
+- `/examples/beneficiaries` — list with tabs and a three-step data-entry dialog that ends in a toast.
+- `/examples/new-payout` — four-step stepper flow: `ProgressIndicator`, a running summary, per-step validation that blocks Continue, a discard confirmation and a terminal success state.
+- `/examples/settings` — single-page sectioned form: two-column field grid, live inline validation, a dirty-state sticky save bar, and a destructive action behind a confirmation.
+
+The last two are a deliberate pair. A stepper and a settings page are built from nearly the same components but answer opposite questions — one carries someone through a decision made once, the other exposes everything at once to someone who knows what they came to change. They also validate differently: the stepper gates each Continue and reveals errors only on advance, while the settings form validates as you type because it has no Continue to gate.
+
+These exist because components reviewed one at a time all look correct; the failures show up at the seams. The screens deliberately place controls that differ next to each other — most visibly a pill Button beside an 8px Select in the transaction filter row — so those decisions get reviewed in context rather than argued about in the abstract. See `/foundation/radius` for the rule that governs that pairing.
+
+They are code-owned, not CMS-owned, so changes arrive as a reviewable diff.
 
 ## Current Preview Website
 
@@ -146,7 +218,8 @@ Current website routes:
 - `/`: landing preview with foundation, component, pattern, playground, and changelog sections.
 - `/components/[slug]`: starter component detail pages with package-backed live previews.
 - `/tokens`: CMS-backed token reference page with CSS variable and TypeScript export examples.
-- `/patterns`: CMS-backed pattern guidance page with package-backed examples and usage notes.
+- `/patterns`: CMS-backed pattern guidance page with six interactive recipes. The recipes are implemented in `apps/web/src/app/(frontend)/patterns/pattern-examples.tsx` — they do **not** come from `@brankas/patterns`, which is currently unused by the site and by Storybook.
+- `/examples`: index of full example screens; `/examples/overview`, `/examples/transactions`, `/examples/beneficiaries`: complete product screens from one fictional disbursements console, used to review how components look beside each other.
 - `/articles`: list of published CMS articles; `/articles/[slug]`: article detail with hero image and rich-text content.
 - `/change-log`: CMS-backed changelog page; `/change-log/[releaseSlug]`: release detail with cover image and rich-text notes.
 
