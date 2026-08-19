@@ -3027,13 +3027,13 @@ a {
 
 /* --- Stepper flow + settings form (/examples/new-payout, /examples/settings) --- */
 
-/* The stepper uses the same card as the form and summary beside it, so all
-   three read as one surface treatment. ProgressIndicator is built as a
-   full-bleed page strip — its steps carry a 16px bottom padding and no top
-   padding, so the card's own 20px bottom padding is cut to 4px to land the
-   same 20px optical inset on both sides. */
-.demo-stepper-card {
-  padding-bottom: 4px;
+/* No card behind the stepper. ProgressIndicator hardcodes a white
+   background because it is built as a full-bleed page strip; on the
+   console's cool-gray page that reads as a floating white slab. Made
+   transparent so it sits on the page, keeping its own border-bottom as the
+   track the active step's underline overlaps. */
+.demo-stepper-row .ui-progress-indicator {
+  background: transparent;
 }
 
 .demo-stepper-layout {
