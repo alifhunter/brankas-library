@@ -93,6 +93,7 @@ Cross-cutting: Figma screenshot parity checks, and a real icon set for `@brankas
 - [x] Expand component behavior tests across the full desktop component set (31/31 covered).
 - [ ] Add the missing `CurveBackground` test in `@brankas/native` (25/26 covered).
 - [ ] Grow `@brankas/icons-native` beyond the `Icon` wrapper and single `CheckIcon`.
+- [ ] Add a shared control-height token. Button, Select and Search each declare `height: 40px` independently, while Chip, Tabs (chips) and Text field derive height from padding plus line-height and land on 38px and 42px. The example screens normalise this to 40px in `apps/web`, but nothing stops the next component from landing somewhere else.
 - [ ] Add visual regression or screenshot comparison for Figma parity.
 - [ ] Add component-level token source files when component-specific token overrides are needed.
 - [ ] Expand pattern guidance with usage rules and anti-patterns.

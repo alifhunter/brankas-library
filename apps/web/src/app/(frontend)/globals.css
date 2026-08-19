@@ -2851,12 +2851,13 @@ a {
 }
 
 /* Preset chips are pills with no label above them, so they sit on the row's
-   bottom edge like the Button rather than aligning with the field labels. */
+   bottom edge like the Button rather than aligning with the field labels.
+   No bottom padding: chips are now the same 40px as the Select and Button
+   beside them, so the flex-end baseline already lines them up. */
 .demo-quick-filters {
   display: flex;
   flex-wrap: wrap;
   gap: 6px;
-  padding-bottom: 4px;
 }
 
 .demo-amount-range .ui-textfield {
@@ -2964,8 +2965,13 @@ a {
   grid-template-columns: minmax(0, 1fr) minmax(0, 180px);
 }
 
+/* Nudges a Select down so its control lines up with the control of the
+   labelled Text field beside it: 20px label line-height + the 8px grid gap
+   inside .ui-textfield. Deliberately not `align-items: end` on the row —
+   that would align the boxes, and a field showing an error message is
+   taller than one that isn't. */
 .demo-field-select {
-  padding-top: 26px;
+  padding-top: 28px;
 }
 
 .demo-fieldset {
@@ -3243,4 +3249,37 @@ a {
   display: flex;
   flex-wrap: wrap;
   gap: 4px;
+}
+
+/* --- One control height across the example screens -------------------------
+   Three different heights were landing in the same toolbar row:
+
+     Button (large)   height: 40px            explicit   40
+     Select           height: 40px            explicit   40
+     Search           height: 40px            explicit   40
+     Chip             8+8 padding, 20 lh, 2 border       38
+     Tabs (chips)     8+8 padding, 20 lh, 2 border       38
+     Text field       8+8 padding, 24 wrap, 2 border     42
+
+   40px is the only value anything states outright, so it wins. Chips gain
+   2px, text fields lose 2px, and everything in a filter bar now sits on the
+   same baseline. Scoped to the example screens: the underlying inconsistency
+   lives in the components and is a system decision, not a demo fix.
+
+   Text area is deliberately excluded — it is a multi-line box and has no
+   business being 40px tall. */
+
+.example-screen-page {
+  --demo-control-height: 40px;
+}
+
+.example-screen-page .ui-textfield__control {
+  height: var(--demo-control-height);
+  padding-top: 0;
+  padding-bottom: 0;
+}
+
+.example-screen-page .ui-chip,
+.example-screen-page .ui-tabs__tab--chips {
+  min-height: var(--demo-control-height);
 }
